@@ -1,0 +1,48 @@
+<docs>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference</id>
+		<title>PoiNK Reference</title>
+		<desc>PoiNK Reference</desc>
+		<uri>res:/resources/documentation/title.txt</uri>
+		<category>doc</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:representation</id>
+		<title>Representation</title>
+		<desc>Representation</desc>
+		<uri>res:/resources/documentation/representation.txt</uri>
+		<category>doc</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:representation:workbook</id>
+		<title>Representation - Workbook</title>
+		<desc>Representation - Workbook</desc>
+		<uri>res:/resources/documentation/representation_workbook.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,representation,workbook</keywords>
+		<category>doc representation</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:representation:sheet</id>
+		<title>Representation - Sheet</title>
+		<desc>Representation - Sheet</desc>
+		<uri>res:/resources/documentation/representation_sheet.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,representation,sheet</keywords>
+		<category>doc representation</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:representation:row</id>
+		<title>Representation - Row</title>
+		<desc>Representation - Row</desc>
+		<uri>res:/resources/documentation/representation_row.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,representation,row</keywords>
+		<category>doc representation</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:representation:cell</id>
+		<title>Representation - Cell</title>
+		<desc>Representation - Cell</desc>
+		<uri>res:/resources/documentation/representation_cell.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,representation,cell</keywords>
+		<category>doc representation</category>
+	</doc>
+</docs>

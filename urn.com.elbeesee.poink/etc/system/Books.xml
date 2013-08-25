@@ -1,0 +1,20 @@
+<books>
+	<book>
+		<id>book:com:elbeesee:poink:reference</id>
+		<title>PoiNK Reference</title>
+		<desc>POI for NetKernel Reference</desc>
+		<author>Tom Geudens</author>
+		<date>2013/08/25</date>
+		<keywords>excel,apache,poi,xls,poink,spreadsheet</keywords>
+		<toc>
+			<item id="doc:com:elbeesee:poink:reference">
+				<item id="doc:com:elbeesee:poink:reference:representation">
+					<item id="doc:com:elbeesee:poink:reference:representation:workbook"/>
+					<item id="doc:com:elbeesee:poink:reference:representation:sheet"/>
+					<item id="doc:com:elbeesee:poink:reference:representation:row"/>
+					<item id="doc:com:elbeesee:poink:reference:representation:cell"/>
+				</item>
+			</item>
+		</toc>
+	</book>
+</books>

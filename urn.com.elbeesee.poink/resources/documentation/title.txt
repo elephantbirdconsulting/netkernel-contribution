@@ -1,0 +1,4 @@
+=PoiNK Reference=
+
+This book contains the documentation for the "POI for NetKernel" (PoiNK) module. PoiNK provides services and infrastructure to read spreadsheets
+from within NetKernel using the Apache POI library.

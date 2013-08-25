@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:poink</uri>
+			<version>3.9.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / poink</name>
+			<description>elephant bird consulting / apache poi for netkernel</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+		<classloader>
+			<exports>
+				<match>org\.apache\.poi\..*</match>
+				<match>com\.elbeesee\.poink\.representation\..*</match>
+			</exports>
+		</classloader>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee poink"
+		public="true"
+		uri="urn:com:elbeesee:poink">
+
+		<representation>
+			<id>poink:IHSSFWorkbookRepresentation</id>
+			<class>com.elbeesee.poink.representation.IHSSFWorkbookRepresentation</class>
+		</representation>
+
+		<representation>
+			<class>com.elbeesee.poink.representation.HSSFWorkbookImplementation</class>
+		</representation>
+
+		<representation>
+			<class>com.elbeesee.poink.representation.IHSSFSheetRepresentation</class>
+		</representation>
+
+		<representation>
+			<class>com.elbeesee.poink.representation.HSSFSheetImplementation</class>
+		</representation>
+
+		<representation>
+			<class>com.elbeesee.poink.representation.IHSSFRowRepresentation</class>
+		</representation>
+
+		<representation>
+			<class>com.elbeesee.poink.representation.HSSFRowImplementation</class>
+		</representation>
+
+		<transreptor>
+			<class>com.elbeesee.poink.transreptor.ReadableBinaryStreamToHSSFWorkbook</class>
+		</transreptor>
+
+		<transreptor>
+			<class>com.elbeesee.poink.transreptor.HSSFWorkbookToXML</class>
+		</transreptor>
+
+		<transreptor>
+			<class>com.elbeesee.poink.transreptor.HSSFSheetToXML</class>
+		</transreptor>
+
+		<transreptor>
+			<class>com.elbeesee.poink.transreptor.HSSFRowToXML</class>
+		</transreptor>
+
+		<transreptor>
+			<class>com.elbeesee.poink.transreptor.HSSFCellToXML</class>
+		</transreptor>
+		
+		<import>
+			<uri>urn:com:elbeesee:poink:import</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee poink import" 
+		public="false"
+		uri="urn:com:elbeesee:poink:import">
+
+		<!-- general toolkit -->
+		<import>
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+
+		<!-- xml toolkit -->
+		<import>
+			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+	</rootspace>
+
+	
+	<rootspace
+		name="elbeesee poink documentation" 
+		public="true"
+		uri="urn:com:elbeesee:poink:documentation">
+		
+		<fileset>
+			<regex>res:/etc/system/(Books|Docs).xml</regex>
+    	</fileset>
+    
+    	<fileset>
+    		<regex>res:/resources/documentation/.*\.txt</regex>
+    	</fileset>
+	</rootspace>
+</module>
