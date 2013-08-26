@@ -14,12 +14,35 @@
 		<category>doc</category>
 	</doc>
 	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor</id>
+		<title>Transreption</title>
+		<desc>Transreption</desc>
+		<uri>res:/resources/documentation/transreptor.txt</uri>
+		<category>doc</category>
+	</doc>
+	<doc>
 		<id>doc:com:elbeesee:poink:reference:representation:workbook</id>
 		<title>Representation - Workbook</title>
 		<desc>Representation - Workbook</desc>
 		<uri>res:/resources/documentation/representation_workbook.txt</uri>
 		<keywords>excel,apache,poi,xls,poink,representation,workbook</keywords>
 		<category>doc representation</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor:readablebinarystreamtoworkbook</id>
+		<title>Transreption - ReadableBinaryStreamToWorkbook</title>
+		<desc>Transreption - ReadableBinaryStreamToWorkbook</desc>
+		<uri>res:/resources/documentation/transreptor_readablebinarystream_to_workbook.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,transreptor,readablebinarystream,workbook</keywords>
+		<category>doc</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor:workbooktoxml</id>
+		<title>Transreption - HSSFWorkbookToXML</title>
+		<desc>Transreption - HSSFWorkbookToXML</desc>
+		<uri>res:/resources/documentation/transreptor_workbook_to_xml.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,transreptor,workbook,xml</keywords>
+		<category>doc</category>
 	</doc>
 	<doc>
 		<id>doc:com:elbeesee:poink:reference:representation:sheet</id>
@@ -30,6 +53,14 @@
 		<category>doc representation</category>
 	</doc>
 	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor:sheettoxml</id>
+		<title>Transreption - HSSFSheetToXML</title>
+		<desc>Transreption - HSSFSheetToXML</desc>
+		<uri>res:/resources/documentation/transreptor_sheet_to_xml.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,transreptor,sheet,xml</keywords>
+		<category>doc</category>
+	</doc>
+	<doc>
 		<id>doc:com:elbeesee:poink:reference:representation:row</id>
 		<title>Representation - Row</title>
 		<desc>Representation - Row</desc>
@@ -38,11 +69,27 @@
 		<category>doc representation</category>
 	</doc>
 	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor:rowtoxml</id>
+		<title>Transreption - HSSFRowToXML</title>
+		<desc>Transreption - HSSFRowToXML</desc>
+		<uri>res:/resources/documentation/transreptor_row_to_xml.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,transreptor,row,xml</keywords>
+		<category>doc</category>
+	</doc>
+	<doc>
 		<id>doc:com:elbeesee:poink:reference:representation:cell</id>
 		<title>Representation - Cell</title>
 		<desc>Representation - Cell</desc>
 		<uri>res:/resources/documentation/representation_cell.txt</uri>
 		<keywords>excel,apache,poi,xls,poink,representation,cell</keywords>
 		<category>doc representation</category>
+	</doc>
+	<doc>
+		<id>doc:com:elbeesee:poink:reference:transreptor:celltoxml</id>
+		<title>Transreption - HSSFCellToXML</title>
+		<desc>Transreption - HSSFCellToXML</desc>
+		<uri>res:/resources/documentation/transreptor_cell_to_xml.txt</uri>
+		<keywords>excel,apache,poi,xls,poink,transreptor,cell,xml</keywords>
+		<category>doc</category>
 	</doc>
 </docs>

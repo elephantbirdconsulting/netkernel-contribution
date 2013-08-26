@@ -14,6 +14,13 @@
 					<item id="doc:com:elbeesee:poink:reference:representation:row"/>
 					<item id="doc:com:elbeesee:poink:reference:representation:cell"/>
 				</item>
+				<item id="doc:com:elbeesee:poink:reference:transreptor">
+					<item id="doc:com:elbeesee:poink:reference:transreptor:readablebinarystreamtoworkbook"/>
+					<item id="doc:com:elbeesee:poink:reference:transreptor:workbooktoxml"/>
+					<item id="doc:com:elbeesee:poink:reference:transreptor:sheettoxml"/>
+					<item id="doc:com:elbeesee:poink:reference:transreptor:rowtoxml"/>
+					<item id="doc:com:elbeesee:poink:reference:transreptor:celltoxml"/>
+				</item>
 			</item>
 		</toc>
 	</book>
