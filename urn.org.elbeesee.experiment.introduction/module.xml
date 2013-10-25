@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:org:elbeesee:experiment:introduction</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / experiment / introduction</name>
+			<description>elbeesee / experiment / introduction</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee experiment introduction" 
+		public="true"
+		uri="urn:org:elbeesee:experiment:introduction">
+
+		<fileset>
+			<regex>res:/introduction/helloworld-file</regex>
+			<rewrite>res:/resources/txt/helloworld.txt</rewrite>
+		</fileset>
+		
+		<literal type="string" uri="res:/introduction/helloworld-literal">Hello World</literal>
+		
+		<accessor>
+			<id>elbeesee:experiment:introduction:helloworld:accessor</id>
+			<class>org.elbeesee.experiment.introduction.HelloWorldAccessor</class>
+			<grammar>res:/introduction/helloworld-accessor</grammar>
+		</accessor>
+						
+		<import>
+			<uri>urn:org:elbeesee:experiment:introduction:import</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee experiment introduction import" 
+		public="false"
+		uri="urn:org:elbeesee:experiment:introduction:import">
+	</rootspace>
+</module>
