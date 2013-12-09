@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:amazonaws:sdk</uri>
+			<version>1.6.7</version>
+		</identity>
+		<info>
+			<name>amazonaws / sdk</name>
+			<description>amazonaws / sdk</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="amazonaws sdk" 
+		public="true"
+		uri="urn:com:amazonaws:sdk">
+		
+		<mapper>
+			<config>
+				<endpoint>
+					<grammar>
+						<simple>res:/amazonaws/baseurl/{service}-{region}</simple>
+					</grammar>
+					<request>
+						<identifier>active:xsltc</identifier>
+						<argument name="operand">https://raw.github.com/aws/aws-sdk-java/master/src/main/resources/etc/regions.xml</argument>
+						<argument name="operator">res:/resources/xsl/regions.xsl</argument>
+						<argument method="as-string" name="region">[[arg:region]]</argument>
+						<argument method="as-string" name="service">[[arg:service]]</argument>
+						<representation>java.lang.String</representation>
+					</request>
+				</endpoint>
+			</config>
+			<space>
+				<import>
+					<uri>urn:com:amazonaws:sdk:import</uri>
+					<private/>
+				</import>
+			</space>
+		</mapper>
+	</rootspace>
+
+
+	<rootspace 
+		name="amazonaws sdk import" 
+		public="false"
+		uri="urn:com:amazonaws:sdk:import">
+		
+		<fileset>
+			<regex>res:/resources/(xml|xsl)/.*</regex>
+		</fileset>
+		
+		<import>
+			<!-- active:xsltc -->
+			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+		
+		<import>
+			<!-- http:// scheme  -->
+			<uri>urn:org:netkernel:client:http</uri>
+		</import>
+	</rootspace>
+
+	
+	<rootspace
+		name="amazonaws sdk unittest" 
+		public="true"
+		uri="urn:com:amazonaws:sdk:unittest">
+		
+		<literal type="hds" uri="res:/etc/system/Tests.xml">
+			<tests>
+				<test>
+					<id>test:amazonaws:sdk:import</id>
+					<name>amazonaws sdk import unittest</name>
+					<desc>amazonaws sdk import unittest</desc>
+					<uri>res:/resources/unittest/sdk-import.xml</uri>
+				</test>
+				<test>
+					<id>test:amazonaws:sdk</id>
+					<name>amazonaws sdk unittest</name>
+					<desc>amazonaws sdk unittest</desc>
+					<uri>res:/resources/unittest/sdk.xml</uri>
+				</test>
+			</tests>
+		</literal>
+
+		<endpoint>
+			<prototype>Limiter</prototype>
+			<grammar>
+				res:/etc/system/
+				<regex type="anything"/>
+			</grammar>
+		</endpoint>
+
+		<literal type="hds" uri="res:/resources/unittest/sdk-import.xml">
+			<testlist>
+				<test name="SOURCE regions.xml resource">
+					<request>
+						<identifier>res:/resources/xml/regions.xml</identifier>
+						<verb>SOURCE</verb>	
+					</request>
+					<assert>
+						<notNull/>
+					</assert>
+				</test>
+			</testlist>
+		</literal>
+
+		<literal type="hds" uri="res:/resources/unittest/sdk.xml">
+			<testlist>
+				<test name="SOURCE s3 eu-west-1 resource">
+					<request>
+						<identifier>res:/amazonaws/baseurl/s3-eu-west-1</identifier>
+						<verb>SOURCE</verb>	
+					</request>
+					<assert>
+						<stringEquals>s3-eu-west-1.amazonaws.com</stringEquals>
+					</assert>
+				</test>
+			</testlist>
+		</literal>
+  
+		<import>
+			<!-- public space to test -->
+			<uri>urn:com:amazonaws:sdk</uri>
+		</import>
+		
+		<import>
+			<!-- private space to test -->
+			<uri>urn:com:amazonaws:sdk:import</uri>
+		</import>
+
+		<import>
+			<!-- Limiter prototype -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+</module>
