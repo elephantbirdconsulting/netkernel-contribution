@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+  <meta>
+    <identity>
+      <uri>urn:test:org:netkernel:neo4j:embedded</uri>
+      <version>1.7.2</version>
+    </identity>
+    <info>
+      <name>test neo4j embedded</name>
+      <description>test neo4j embedded</description>
+    </info>
+  </meta>
+  
+  <system>
+    <dynamic/>
+  </system>
+
+  <rootspace
+    name="test neo4j embedded unittest"
+    public="true"
+    uri="urn:test:org:netkernel:neo4j:embedded:unittest">
+    <fileset>
+      <regex>res:/etc/system/Tests.xml</regex>
+    </fileset>
+
+    <endpoint>
+      <prototype>Limiter</prototype>
+      <grammar>res:/etc/system/
+        <regex type="anything"/>
+      </grammar>
+    </endpoint>
+    
+    <fileset>
+      <regex>res:/resources/unittest/.*</regex>
+    </fileset>
+
+    <fileset>
+      <regex>res:/resources/groovy/.*</regex>
+    </fileset>
+  
+    <!-- provides res:/etc/neo4jConfig.xml -->
+    <literal type="xml" uri="res:/etc/neo4jConfig.xml">
+      <config>
+        <path>unittest/</path>
+      </config>
+    </literal>
+
+    <!-- provides active:neo4jinstance -->
+    <import>
+      <uri>urn:org:netkernel:neo4j:embedded:accessors</uri>
+    </import>
+
+    <!-- provides active:groovy -->
+    <import>
+      <uri>urn:org:netkernel:lang:groovy</uri>
+    </import>
+
+    <!-- provides transreption for neo4jConfig resource -->
+    <import>
+      <uri>urn:org:netkernel:xml:core</uri>
+    </import>
+
+    <!-- provides Limiter prototype -->
+    <import>
+      <uri>urn:org:netkernel:ext:layer1</uri>
+    </import>
+  </rootspace>
+</module>

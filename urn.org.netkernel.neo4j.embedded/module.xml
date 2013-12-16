@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+  <meta>
+    <identity>
+      <uri>urn:org:netkernel:neo4j:embedded</uri>
+      <version>1.7.2</version>
+    </identity>
+    <info>
+      <name>netkernel neo4j embedded</name>
+      <description>netkernel neo4j graph database embedded</description>
+    </info>
+  </meta>
+  
+  <system>
+    <dynamic/>
+    <classloader>
+      <exports>
+        <match>org\.neo4j\..*</match>
+        <match>org\.netkernel\.neo4j\..*</match>
+      </exports>
+    </classloader>
+  </system>
+
+  <rootspace
+    name="netkernel neo4j embedded accessors"
+    public="true"
+    uri="urn:org:netkernel:neo4j:embedded:accessors">
+
+    <accessor>
+      <id>neo4j.embedded.instance.accessor</id>
+      <grammar>
+        <active>
+          <identifier>active:neo4jinstance</identifier>
+        </active>
+      </grammar>
+      <class>org.netkernel.neo4j.embedded.endpoint.Neo4jInstanceAccessor</class>
+    </accessor>
+
+    <accessor>
+      <id>neo4j.embedded.node.accessor</id>
+      <grammar>
+        <active>
+          <identifier>active:neo4jnode</identifier>
+          <argument name="id" desc="node id" max="1" min="0"/>
+          <argument name="graph" desc="graph name" max="1" min="0"/>
+          <argument name="entity" desc="entity name" max="1" min="0"/>
+          <argument name="properties" desc="properties" max="1" min="0"/>
+          <argument name="node" desc="node" max="1" min="0"/>
+          <argument name="instance" desc="database instance" max="1" min="0"/>
+        </active>
+      </grammar>
+      <class>org.netkernel.neo4j.embedded.endpoint.Neo4jNodeAccessor</class>
+    </accessor>
+
+    <accessor>
+      <id>neo4j.embedded.relationship.accessor</id>
+      <grammar>
+        <active>
+          <identifier>active:neo4jrelationship</identifier>
+          <argument name="id" desc="relationship id" max="1" min="0"/>
+          <argument name="relationship" desc="relationship" max="1" min="0"/>
+          <argument name="name" desc="relationship type" max="1" min="0"/>
+          <argument name="outgoing" desc="node for which the relationship is outgoing" max="1" min="0"/>
+          <argument name="incoming" desc="node for which the relationship is incoming" max="1" min="0"/>
+          <argument name="properties" desc="properties" max="1" min="0"/>
+          <argument name="instance" desc="database instance" max="1" min="0"/>
+        </active>
+      </grammar>
+      <class>org.netkernel.neo4j.embedded.endpoint.Neo4jRelationshipAccessor</class>
+    </accessor>
+
+    <accessor>
+      <id>neo4j.embedded.transaction.accessor</id>
+      <grammar>
+        <active>
+          <identifier>active:neo4jtransaction</identifier>
+          <argument name="name" desc="transaction name" max="1" min="0"/>
+          <argument name="status" desc="transaction status" max="1" min="0"/>
+          <argument name="instance" desc="database instance" max="1" min="0"/>
+        </active>
+      </grammar>
+      <class>org.netkernel.neo4j.embedded.endpoint.Neo4jTransactionAccessor</class>
+    </accessor>
+
+    <accessor>
+      <id>neo4j.embedded.retrieve.accessor</id>
+      <grammar>
+        <active>
+          <identifier>active:neo4jretrieve</identifier>
+          <argument name="graph" desc="graph name" max="1" min="0"/>
+          <argument name="entity" desc="entity name" max="1" min="0"/>
+          <argument name="properties" desc="properties" max="1" min="0"/>
+          <argument name="instance" desc="database instance" max="1" min="1"/>
+        </active>
+      </grammar>
+      <class>org.netkernel.neo4j.embedded.endpoint.Neo4jRetrieveAccessor</class>
+    </accessor>
+
+    <representation>
+      <class>org.netkernel.neo4j.embedded.representation.Neo4jInstance</class>
+      <name>neo4j instance representation</name>
+      <description>neo4j instance representation</description>
+    </representation>
+
+    <representation>
+      <class>org.netkernel.neo4j.embedded.representation.Neo4jNode</class>
+      <name>neo4j node representation</name>
+      <description>neo4j node representation</description>
+    </representation>
+
+    <representation>
+      <class>org.netkernel.neo4j.embedded.representation.Neo4jRelationship</class>
+      <name>neo4j relationship representation</name>
+      <description>neo4j relationship representation</description>
+    </representation>
+    
+    <import>
+      <uri>urn:org:netkernel:ext:system</uri>
+      <private/>
+    </import>
+
+    <import>
+      <uri>urn:org:netkernel:ext:layer1</uri>
+      <private/>
+    </import>
+  </rootspace>
+
+
+  <rootspace
+    name="netkernel neo4j embedded documentation"
+    public="true"
+    uri="urn:org:netkernel:neo4j:embedded:documentation">
+
+    <fileset>
+      <regex>res:/etc/system/(Books|Docs).xml</regex>
+    </fileset>
+
+    <fileset>
+      <regex>res:/resources/documentation/.*</regex>
+    </fileset>
+  </rootspace>
+</module>

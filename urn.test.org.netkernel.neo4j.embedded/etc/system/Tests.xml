@@ -1,0 +1,8 @@
+<tests>
+  <test>
+    <id>test:neo4j:embedded</id>
+    <name>test neo4j embedded</name>
+    <desc>test neo4j embedded</desc>
+    <uri>res:/resources/unittest/neo4j_embedded.xml</uri>
+  </test>
+</tests>

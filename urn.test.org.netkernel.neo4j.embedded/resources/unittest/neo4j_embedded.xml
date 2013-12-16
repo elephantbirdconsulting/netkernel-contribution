@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testlist>
+  <test name="start database - get instance">
+    <request>
+      <identifier>active:neo4jinstance</identifier>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <class>org.netkernel.neo4j.embedded.representation.Neo4jInstance</class>
+    </assert>
+  </test>
+  <test name="create node with graph = sparta and entity = spartan">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/create_spartan_node.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <class>org.netkernel.neo4j.embedded.representation.Neo4jNode</class>
+    </assert>
+  </test>
+  <test name="create spartan and update to be leonidas">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/update_spartan_node.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <class>java.util.HashMap</class>
+    </assert>
+  </test>
+  <test name="show sparta graph">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/show_sparta_graph.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <regex>\[Node.*\]\]</regex>
+    </assert>
+  </test>
+  <test name="show spartan entity">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/show_spartan_entity.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <regex>\[Node.*\]\]</regex>
+    </assert>
+  </test>
+  <test name="show leonidas">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/show_leonidas.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <regex>\[Node.*\]\]</regex>
+    </assert>
+  </test>
+  <test name="delete leonidas">
+    <request>
+      <identifier>active:groovy</identifier>
+      <argument name="operator">res:/resources/groovy/delete_leonidas.groovy</argument>
+      <verb>SOURCE</verb>
+    </request>
+    <assert>
+      <class>java.lang.Boolean</class>
+    </assert>
+  </test>
+  <test name="stop database">
+    <request>
+      <identifier>active:neo4jinstance</identifier>
+      <verb>DELETE</verb>
+    </request>
+    <assert>
+      <true/>
+    </assert>
+  </test>
+</testlist>
