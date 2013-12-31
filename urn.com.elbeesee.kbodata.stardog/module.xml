@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:kbodata:stardog</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / kbodata / stardog</name>
+			<description>elbeesee / kbodata / stardog</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee kbodata stardog" 
+		public="true"
+		uri="urn:com:elbeesee:kbodata:stardog">
+
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:kbodatastardogsparql</identifier>
+					<argument name="database" desc="database name" max="1" min="0"/>
+					<argument name="query" desc="query" max="1" min="0"/>
+					<argument name="accept" desc="accept header" max="1" min="0"/>
+					<argument name="expiry" desc="expiry" max="1" min="0"/>
+					<argument name="credentials" desc="http credentials" max="1" min="0"/>					
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/kbodatastardogsparql.groovy</script>
+		</accessor>
+				
+		<import>
+			<uri>urn:com:elbeesee:kbodata:stardog:import</uri>
+			<private/>
+		</import>	
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee kbodata stardog import" 
+		public="false"
+		uri="urn:com:elbeesee:kbodata:stardog:import">		
+		
+		<literal type="string" uri="kbodata:database">kbo</literal>
+		
+		<literal type="string" uri="kbodata:query">SELECT ?s ?o WHERE {?s &lt;http://www.w3.org/2004/02/skos/core#prefLabel&gt; ?o .} LIMIT 10</literal>
+		
+		<literal type="string" uri="kbodata:accept">application/sparql-results+xml</literal>
+		
+		<literal type="long" uri="kbodata:expiry">86400000</literal>
+
+		<literal type="hds" uri="kbodata:credentials">
+			<httpCredentials>
+				<host>localhost</host>
+				<port>5820</port>
+				<username>admin</username>
+				<password>admin</password>
+			</httpCredentials>
+		</literal>
+		
+		<fileset>
+			<regex>res:/resources/groovy/.*</regex>
+		</fileset>
+		
+		<import>
+			<!-- GroovyPrototype -->
+			<uri>urn:org:netkernel:lang:groovy</uri>
+		</import>
+		
+		<import>
+			<!-- active:stardogsparql -->
+			<uri>urn:com:elbeesee:stardog</uri>
+			<version-min>1.0.0</version-min>
+		</import>
+	</rootspace>
+</module>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:kbodata:server</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / kbodata / server</name>
+			<description>elbeesee / kbodata / server</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee kbodata server" 
+		public="true"
+		uri="urn:com:elbeesee:kbodata:server">
+		
+        <literal type="xml" uri="res:/etc/system/SimpleDynamicImportHook.xml">
+			<connection>
+				<type>KBOData</type>
+			</connection>
+        </literal>
+        
+		<endpoint>
+			<prototype>Limiter</prototype>
+			<grammar>res:/etc/system/
+				<regex type="anything"/>
+			</grammar>
+		</endpoint>
+        
+		<overlay>
+			<prototype>RESTOverlay</prototype>
+			<config>
+				<basepath>/</basepath>
+				<auto404/>
+			</config>
+			<space>
+				<mapper>
+					<config>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple></simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatahome</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>res:/resources/html/defaultRoot.html</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>sparql</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatastardogsparqlrestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatastardogsparql</identifier>
+								<argument name="query">httpRequest:/param/query</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>{owner:(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}.{extension:(rdf|ttl|nt|html)}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatabyidwithextensionrestoverlay</identifier>
+									<argument name="owner"/>
+									<argument name="id"/>
+									<argument name="extension"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatabyid</identifier>
+								<argument name="owner" method="as-string">[[arg:owner]]</argument>
+								<argument name="id" method="as-string">[[arg:id]]</argument>
+								<argument name="extension" method="as-string">[[arg:extension]]</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>{owner:(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active::kbodatabyidrestoverlay</identifier>
+									<argument name="owner"/>
+									<argument name="id"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatabyid</identifier>
+								<argument name="owner" method="as-string">[[arg:owner]]</argument>
+								<argument name="id" method="as-string">[[arg:id]]</argument>
+							</request>
+						</endpoint>
+					</config>
+					<space>
+						<import>
+							<uri>urn:com:elbeesee:kbodata:server:import</uri>
+							<private/>
+						</import>
+					</space>
+				</mapper>
+			</space>
+		</overlay>
+		
+		<import>
+			<!-- RESTOverlay -->
+			<uri>urn:org:netkernel:tpt:http</uri>
+		</import>
+		
+		<import>
+			<!-- Limiter -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee kbodata server import" 
+		public="false"
+		uri="urn:com:elbeesee:kbodata:server:import">
+
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:kbodatabyid</identifier>
+					<argument name="owner" desc="owner" max="1" min="1"/>				
+					<argument name="id" desc="id" max="1" min="1"/>				
+					<argument name="extension" desc="extension" max="1" min="0"/>				
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/kbodatabyid.groovy</script>
+		</accessor>
+
+		<fileset>
+			<regex>res:/resources/groovy/.*</regex>
+		</fileset>
+		
+		<fileset>
+			<regex>res:/resources/freemarker/.*</regex>
+		</fileset>
+
+		<fileset>
+			<regex>res:/resources/xsl/.*</regex>
+		</fileset>
+
+		<fileset>
+			<regex>res:/resources/html/.*</regex>
+		</fileset>
+		
+		<import>
+			<!-- GroovyPrototype -->
+			<uri>urn:org:netkernel:lang:groovy</uri>
+		</import>
+		
+		<import>
+			<!-- active:freemarker -->
+			<uri>urn:org:netkernel:lang:freemarker</uri>
+		</import>
+
+		<import>
+			<!-- active:jRDFParseXML, active:active:jRDFSerializeXXXXXX -->
+			<uri>urn:org:netkernel:rdf:jena</uri>
+		</import>
+
+		<import>
+			<!-- active:xslt -->
+			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+		
+		<import>
+			<!-- httpRequest:/ scheme -->
+			<uri>urn:org:netkernel:tpt:http</uri>
+		</import>
+		
+		<import>
+			<!-- active:kbodatastardogsparql -->
+			<uri>urn:com:elbeesee:kbodata:stardog</uri>
+			<version-min>1.0.0</version-min>
+		</import>
+	</rootspace>
+</module>
