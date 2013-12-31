@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:stardog</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / stardog</name>
+			<description>elbeesee / stardog</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee stardog" 
+		public="true"
+		uri="urn:com:elbeesee:stardog">
+		
+		<accessor>
+			<id>elbeesee:stardog:sparql:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:stardogsparql</identifier>
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="query" desc="query" max="1" min="1"/>
+					<argument name="accept" desc="accept header" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.stardog.SPARQLAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:stardog:import</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee stardog import" 
+		public="false"
+		uri="urn:com:elbeesee:stardog:import">
+
+		<import>
+			<!-- http:// scheme -->
+			<uri>urn:org:netkernel:client:http</uri>
+		</import>
+	</rootspace>
+</module>
