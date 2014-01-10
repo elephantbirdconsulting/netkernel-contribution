@@ -1,0 +1,4 @@
+"name" : "Kruispuntbank Ondernemingen Reconciliation",
+"identifierSpace" : "http://data.kbodata.be",
+"schemaSpace" : "http://data.kbodata.be/def",
+"view":{"url":"{{id}}"}

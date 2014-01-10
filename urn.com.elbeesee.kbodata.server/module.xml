@@ -64,6 +64,24 @@
 						<endpoint>
 							<meta>
 								<rest>
+									<simple>reconcile</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatareconcilerestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatareconcile</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
 									<simple>sparql</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
@@ -78,6 +96,100 @@
 							<request>
 								<identifier>active:kbodatastardogsparql</identifier>
 								<argument name="query">httpRequest:/param/query</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>download/kbo.ttl</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatadownload</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>file:/var/opt/stardog/data/kbo.ttl</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>dataset/kbo.{extension:(rdf|ttl|nt|html)}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatavoidwithextensionrestoverlay</identifier>
+									<argument name="extension"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatavoid</identifier>
+								<argument name="extension" method="as-string">[[arg:extension]]</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>dataset/kbo</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatavoidrestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatavoid</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>def.{extension:(rdf|ttl|nt|html)}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatadefwithextensionrestoverlay</identifier>
+									<argument name="extension"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatadef</identifier>
+								<argument name="extension" method="as-string">[[arg:extension]]</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>def</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatadefrestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatadef</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
@@ -166,6 +278,38 @@
 			<prototype>GroovyPrototype</prototype>
 			<script>res:/resources/groovy/kbodatabyid.groovy</script>
 		</accessor>
+		
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:kbodatadef</identifier>			
+					<argument name="extension" desc="extension" max="1" min="0"/>				
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/kbodatadef.groovy</script>
+		</accessor>
+		
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:kbodatavoid</identifier>			
+					<argument name="extension" desc="extension" max="1" min="0"/>				
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/kbodatavoid.groovy</script>
+		</accessor>
+		
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:kbodatareconcile</identifier>			
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/kbodatareconcile.groovy</script>
+		</accessor>
 
 		<fileset>
 			<regex>res:/resources/groovy/.*</regex>
@@ -174,6 +318,10 @@
 		<fileset>
 			<regex>res:/resources/freemarker/.*</regex>
 		</fileset>
+		
+		<fileset>
+			<regex>res:/resources/json/.*</regex>
+		</fileset>
 
 		<fileset>
 			<regex>res:/resources/xsl/.*</regex>
@@ -181,6 +329,10 @@
 
 		<fileset>
 			<regex>res:/resources/html/.*</regex>
+		</fileset>
+
+		<fileset>
+			<regex>res:/resources/sparql/.*</regex>
 		</fileset>
 		
 		<import>
@@ -197,10 +349,20 @@
 			<!-- active:jRDFParseXML, active:active:jRDFSerializeXXXXXX -->
 			<uri>urn:org:netkernel:rdf:jena</uri>
 		</import>
+		
+		<import>
+			<!-- JSONObject -->
+			<uri>urn:org:netkernel:json:core</uri>
+		</import>
 
 		<import>
 			<!-- active:xslt -->
 			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+		
+		<import>
+			<!-- file:/ scheme -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
 		</import>
 		
 		<import>

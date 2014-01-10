@@ -1,0 +1,102 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX kbo: <http://data.kbodata.be/def#>
+PREFIX locn: <http://www.w3.org/ns/locn#>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX oslo: <http://purl.org/oslo/ns/localgov#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+CONSTRUCT {
+	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity;
+		rdfs:label "KBO dataset"@nl;
+		dcterms:title "Dataset van de Kruispuntbank van Ondernemingen"@nl;
+		dcterms:description "Kruispuntbank van Ondernemingen: entries en controlled vocabularies"@nl;
+		dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
+		prov:generatedAtTime ?today;
+		prov:wasGeneratedBy <http://data.kbodata.be/activity/CSV2RDFbyTarqlScript>;
+		void:dataDump <http://data.kbodata.be/download/kbo.ttl>;
+		void:feature <http://www.w3.org/ns/formats/RDF_XML>;
+		void:feature <http://www.w3.org/ns/formats/Turtle>;
+		void:feature <http://www.w3.org/ns/formats/N-Triples>;
+		void:sparqlEndpoint "TBD";
+		void:exampleResource ?organisatie ;
+		void:exampleResource ?site;
+		void:exampleResource ?conceptscheme;
+		void:exampleResource ?concept;
+		void:uriRegexPattern "^http://data\\.kbodata\\.be/(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)/(.*)#id$";
+		void:vocabulary <http://purl.org/dc/terms/>;
+		void:vocabulary <http://xmlns.com/foaf/0.1/>;
+		void:vocabulary <http://data.kbodata.be/def#>;
+		void:vocabulary <http://www.w3.org/ns/locn#>;
+		void:vocabulary <http://www.w3.org/ns/org#>;
+		void:vocabulary <http://purl.org/oslo/ns/localgov#>;
+		void:vocabulary <http://www.w3.org/2002/07/owl#>;
+		void:vocabulary <http://www.w3.org/1999/02/22-rdf-syntax-ns#>;
+		void:vocabulary <http://www.w3.org/2000/01/rdf-schema#>;
+		void:vocabulary <http://www.w3.org/ns/regorg#>;
+		void:vocabulary <http://schema.org/>;
+		void:vocabulary <http://www.w3.org/2004/02/skos/core#>;
+		void:vocabulary <http://www.w3.org/2006/vcard/ns#>;
+		void:vocabulary <http://rdfs.org/ns/void#>;
+		void:vocabulary <http://www.w3.org/2001/XMLSchema#>;
+		void:triples ?triples;
+		void:distinctSubjects ?subjects;
+		void:distinctObjects ?objects;
+		void:classes ?classes;
+		void:properties ?properties;
+		void:entities ?entities.
+}
+WHERE {
+	{SELECT (count(distinct *) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
+		WHERE {
+			?a ?b ?c.
+			FILTER (contains(xsd:string(?a),'kbodata'))
+		}
+	}
+	{SELECT (count (distinct ?x) as ?classes)
+  		WHERE {
+  			?x a owl:Class.
+  			?y a ?x.
+  		}
+  	}
+  	{SELECT (count(distinct ?a) as ?entities)
+  		WHERE {
+  			?a ?b ?c.
+  			FILTER (isURI(?a) && contains(xsd:string(?a),'kbodata'))
+  		}
+  	}
+  	{SELECT ?organisatie
+		WHERE {
+			?organisatie a rov:RegisteredOrganization .
+		}
+		LIMIT 2
+	}
+	{SELECT ?site
+		WHERE {
+			?site a org:Site .
+		}
+		LIMIT 2
+	}
+	{SELECT ?conceptscheme
+		WHERE {
+			?conceptscheme a skos:ConceptScheme .
+		}
+		LIMIT 2
+	}
+	{SELECT ?concept
+		WHERE {
+			?concept a skos:Concept .
+		}
+		LIMIT 2
+	}
+	BIND (now() as ?today)
+}

@@ -1,0 +1,21 @@
+PREFIX dcterms:  <http://purl.org/dc/terms/>
+PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+PREFIX kbo:     <http://data.kbodata.be/def#>
+PREFIX locn:    <http://www.w3.org/ns/locn#>
+PREFIX org:     <http://www.w3.org/ns/org#>
+PREFIX oslo:    <http://purl.org/oslo/ns/localgov#>
+PREFIX owl:     <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rov:     <http://www.w3.org/ns/regorg#>
+PREFIX schema:  <http://schema.org/>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+PREFIX vcard:   <http://www.w3.org/2006/vcard/ns#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {?p ?prop ?value} 
+WHERE {
+	?s ?p ?v . 
+	GRAPH <http://data.kbodata.be/vocab/kbo#id> {?p ?prop ?value .} 
+	FILTER(STRSTARTS(STR(?p), 'http://data.kbodata.be/def#'))
+}

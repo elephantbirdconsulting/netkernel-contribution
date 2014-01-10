@@ -2,7 +2,7 @@
  *
  * Elephant Bird Consulting - KBO data.
  *
- * @author Tom Geudens. 2013/12/24.
+ * @author Tom Geudens. 2014/01/08.
  *
  */
 
@@ -15,10 +15,8 @@ import org.netkernel.layer0.representation.impl.*;
 
 /**
  *
- * KBO data by id Accessor.
+ * KBO data def Accessor.
  *
- * @param  owner  owner
- * @param  id  id
  * @param  extension  extension
  *
  */
@@ -26,30 +24,6 @@ import org.netkernel.layer0.representation.impl.*;
 
 // context
 INKFRequestContext aContext = (INKFRequestContext)context;
-//
-
-// owner (mandatory)
-String aOwner = null;
-if (aContext.getThisRequest().argumentExists("owner")) {
-	try {
-		aOwner = aContext.source("arg:owner", String.class);
-	}
-	catch (Exception e) {
-		throw new NKFException("request does not have a valid - owner - argument");
-	}
-}
-//
-
-// id (mandatory)
-String aID = null;
-if (aContext.getThisRequest().argumentExists("id")) {
-	try {
-		aID = aContext.source("arg:id", String.class);
-	}
-	catch (Exception e) {
-		throw new NKFException("request does not have a valid - id - argument");
-	}
-}
 //
 
 // extension (optional)
@@ -90,16 +64,8 @@ else {
 }
 //
 
-INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
-freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
-freemarkerrequest.addArgumentByValue("owner", aOwner);
-freemarkerrequest.addArgumentByValue("id", aID);
-freemarkerrequest.addArgumentByValue("extension", aExtension);
-freemarkerrequest.setRepresentationClass(String.class);
-String vQuery = (String)aContext.issueRequest(freemarkerrequest);
-
 INKFRequest stardogrequest = aContext.createRequest("active:kbodatastardogsparql");
-stardogrequest.addArgumentByValue("query", vQuery);
+stardogrequest.addArgument("query", "res:/resources/sparql/def.sparql");
 stardogrequest.addArgumentByValue("accept", "application/rdf+xml");
 Object vSparqlResult = aContext.issueRequest(stardogrequest);
 
@@ -139,9 +105,7 @@ if (aExtension.equals("html")) {
 
 	INKFRequest xsltrequest = aContext.createRequest("active:xslt");
 	xsltrequest.addArgumentByValue("operand", vRBS);
-	xsltrequest.addArgument("operator", "res:/resources/xsl/html.xsl");
-	xsltrequest.addArgumentByValue("owner", aOwner);
-	xsltrequest.addArgumentByValue("id", aID);
+	xsltrequest.addArgument("operator", "res:/resources/xsl/def.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	
 	vResponse = aContext.createResponseFrom(vHTML);

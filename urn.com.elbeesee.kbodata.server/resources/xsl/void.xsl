@@ -25,17 +25,14 @@
     	encoding="UTF-8"
     	omit-xml-declaration="yes"
     	media-type="text/html"/>
-	
-	<xsl:param name="owner" nk:class="java.lang.String" />
-	<xsl:param name="id" nk:class="java.lang.String" />
-    	
-    <xsl:template match="/">
-    	<html>
-    		<head>
-    			<title><xsl:value-of select="$owner"/> : <xsl:value-of select="$id"/></title>
-    		</head>
-    		<body>
-   				<h1><xsl:value-of select="$owner"/> : <xsl:value-of select="$id"/></h1>
+   	
+   	<xsl:template match="/">
+   		<html>
+   			<head>
+   				<title>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</title>
+   			</head>
+   			<body>
+   				<h1>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</h1>
    				<xsl:for-each select="descendant::rdf:Description">
 					<xsl:variable name="label">
 						<xsl:choose>
@@ -69,8 +66,7 @@
 						</table>
 					</div>
 				</xsl:for-each>
-    		</body>
-    	</html>
-    </xsl:template>
-
+   			</body>
+   		</html>
+   	</xsl:template>
 </xsl:stylesheet>
