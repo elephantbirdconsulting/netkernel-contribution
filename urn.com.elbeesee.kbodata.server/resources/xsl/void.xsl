@@ -29,43 +29,67 @@
    	<xsl:template match="/">
    		<html>
    			<head>
+    			<meta charset="utf-8"/>
    				<title>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</title>
+   			    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   			    
+   			    <!-- Le styles -->
+   			    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
+   			    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+   			    <style type="text/css">
+	   			    body {
+						padding-top: 20px;
+					}
+				</style>
    			</head>
    			<body>
-   				<h1>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</h1>
-   				<xsl:for-each select="descendant::rdf:Description">
-					<xsl:variable name="label">
-						<xsl:choose>
-							<xsl:when test="rdfs:label">
-								<xsl:value-of select="rdfs:label"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="@rdf:about"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
-					<div id="{substring-after(@rdf:about,'#')}" about="{@rdf:about}" >
-						<h2><xsl:value-of select="$label"/></h2>
-						<table>
-							<xsl:for-each select="*">
-								<xsl:sort select="local-name()"/>
-								<tr>
-									<th><a href="{concat(namespace-uri(.),local-name())}"><xsl:value-of select="local-name()"/></a></th>
-									<td>
-										<xsl:choose>
-											<xsl:when test="@rdf:resource">
-												<a property="{local-name()}" href="{@rdf:resource}" resource="{@rdf:resource}"><xsl:value-of select="@rdf:resource"/></a><br/>
-											</xsl:when>
-											<xsl:otherwise>
-												<span><xsl:attribute name="property"><xsl:value-of select="local-name(.)"/></xsl:attribute><xsl:value-of select="."/></span><br/>
-											</xsl:otherwise>
-										</xsl:choose>											
-									</td>
-								</tr>
-							</xsl:for-each>
-						</table>
+   				<div class="container">
+   					<h1>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</h1>
+   					<xsl:for-each select="descendant::rdf:Description">
+						<xsl:variable name="label">
+							<xsl:choose>
+								<xsl:when test="rdfs:label">
+									<xsl:value-of select="rdfs:label"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="@rdf:about"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<div id="{substring-after(@rdf:about,'#')}" about="{@rdf:about}" class="span12">
+							<h2><xsl:value-of select="$label"/></h2>
+							<table class="table table-condensed table-bordered">
+								<xsl:for-each select="*">
+									<xsl:sort select="local-name()"/>
+									<tr>
+										<th><a href="{concat(namespace-uri(.),local-name())}"><xsl:value-of select="local-name()"/></a></th>
+										<td>
+											<xsl:choose>
+												<xsl:when test="@rdf:resource">
+													<a property="{local-name()}" href="{@rdf:resource}" resource="{@rdf:resource}"><xsl:value-of select="@rdf:resource"/></a><br/>
+												</xsl:when>
+												<xsl:otherwise>
+													<span><xsl:attribute name="property"><xsl:value-of select="local-name(.)"/></xsl:attribute><xsl:value-of select="."/></span><br/>
+												</xsl:otherwise>
+											</xsl:choose>											
+										</td>
+									</tr>
+								</xsl:for-each>
+							</table>
+						</div>
+					</xsl:for-each>
+    				<div class="footer text-center">
+						<p><a href="http://proxml.be">&#169; ProXML 2014</a></p>
+						<a href="http://stardog.com"><img src="http://stardog.com/img/stardog@2x.png" height="100"/></a>
+						<p><a href="http://netkernelbook.org">&#169; Elephant Bird Consulting 2014</a></p>
+						<a href="http://www.1060research.com"><img src="http://www.1060research.com/netkernel/poweredbynetkernel.png"/></a>
 					</div>
-				</xsl:for-each>
+				</div>
+				<!-- Le javascript
+				================================================== -->
+				<!-- Placed at the end of the document so the pages load faster -->
+				<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+				<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
    			</body>
    		</html>
    	</xsl:template>

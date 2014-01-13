@@ -56,17 +56,17 @@ CONSTRUCT {
 		void:entities ?entities.
 }
 WHERE {
-	{SELECT (count(distinct *) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
+	{SELECT (count(*) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
 		WHERE {
 			?a ?b ?c.
 			FILTER (contains(xsd:string(?a),'kbodata'))
 		}
 	}
 	{SELECT (count (distinct ?x) as ?classes)
-  		WHERE {
-  			?x a owl:Class.
-  			?y a ?x.
-  		}
+		WHERE {
+			?y rdf:type ?x.
+			GRAPH <http://data.kbodata.be/vocab/kbo#id> {?x a owl:Class.}
+		}
   	}
   	{SELECT (count(distinct ?a) as ?entities)
   		WHERE {

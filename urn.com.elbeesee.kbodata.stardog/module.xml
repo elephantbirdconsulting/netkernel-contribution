@@ -76,8 +76,8 @@
 			<httpCredentials>
 				<host>localhost</host>
 				<port>5820</port>
-				<username>admin</username>
-				<password>admin</password>
+				<username>anonymous</username>
+				<password>anonymous</password>
 			</httpCredentials>
 		</literal>
 		
