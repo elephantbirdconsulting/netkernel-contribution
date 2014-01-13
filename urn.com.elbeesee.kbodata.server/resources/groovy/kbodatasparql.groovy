@@ -71,5 +71,16 @@ Object vResult = aContext.issueRequest(sparqlrequest);
 
 INKFResponse vResponse = aContext.createResponseFrom(vResult);
 vResponse.setMimeType(vAcceptHeader);
+String vCORSOrigin = null;
+try {
+	vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);
+}
+catch (Exception e){
+	//
+}
+if (vCORSOrigin != null) {
+	// No CORS verification yet, I just allow the origin
+	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+}
 vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

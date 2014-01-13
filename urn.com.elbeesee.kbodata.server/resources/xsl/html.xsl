@@ -81,12 +81,16 @@
 							</table>
 						</div>
 					</xsl:for-each>
-    				<div class="footer text-center">
-						<p><a href="http://proxml.be">&#169; ProXML 2014</a></p>
-						<a href="http://stardog.com"><img src="http://stardog.com/img/stardog@2x.png" height="100"/></a>
-						<p><a href="http://netkernelbook.org">&#169; Elephant Bird Consulting 2014</a></p>
-						<a href="http://www.1060research.com"><img src="http://www.1060research.com/netkernel/poweredbynetkernel.png"/></a>
-					</div>
+					<div class="footer">
+    					<table style="margin-left: auto;margin-right: auto;margin-bottom:50px;margin-top:50px;">
+    						<tr>
+    							<td>&#169; <a href="http://proxml.be">ProXML</a>,<a href="http://netkernelbook.org">Elephant Bird Consulting</a> 2014</td>
+    						</tr>
+    						<tr>
+    							<td><a href="http://www.1060research.com"><img src="http://www.1060research.com/netkernel/poweredbynetkernel.png"/></a><a href="http://stardog.com"><img src="http://stardog.com/img/stardog@2x.png" height="100"/></a></td>
+    						</tr>
+	    				</table>
+    				</div>
 				</div>
 				<!-- Le javascript
 				================================================== -->
