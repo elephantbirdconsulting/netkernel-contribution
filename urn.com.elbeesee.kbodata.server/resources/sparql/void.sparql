@@ -14,6 +14,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX void: <http://rdfs.org/ns/void#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX api: <http://purl.org/linked-data/api/vocab#>
 
 CONSTRUCT {
 	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity;
@@ -28,6 +29,7 @@ CONSTRUCT {
 		void:feature <http://www.w3.org/ns/formats/Turtle>;
 		void:feature <http://www.w3.org/ns/formats/N-Triples>;
 		void:sparqlEndpoint <http://data.kbodata.be/sparql>;
+		api:endpoint <http://data.kbodata.be/reconcile>;
 		void:exampleResource ?organisatie ;
 		void:exampleResource ?site;
 		void:exampleResource ?conceptscheme;
