@@ -44,7 +44,7 @@
    			</head>
    			<body>
    				<div class="container">
-   					<h1>Kruispuntbank der Ondernemingen dataset / Banque-Carrefour des Entreprises dataset</h1>
+   					<h1>Kruispuntbank der Ondernemingen dataset<br/>Banque-Carrefour des Entreprises dataset</h1>
    					<xsl:for-each select="descendant::rdf:Description">
 						<xsl:variable name="label">
 							<xsl:choose>

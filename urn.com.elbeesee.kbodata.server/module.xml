@@ -26,7 +26,11 @@
 				<type>KBOData</type>
 			</connection>
         </literal>
-        
+
+		<fileset>
+			<regex>res:/resources/gif/.*\.gif</regex>
+		</fileset>
+		        
 		<endpoint>
 			<prototype>Limiter</prototype>
 			<grammar>res:/etc/system/
