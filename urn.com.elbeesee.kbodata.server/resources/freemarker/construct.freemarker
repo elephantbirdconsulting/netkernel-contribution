@@ -15,7 +15,9 @@ PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
 CONSTRUCT {
  <http://data.kbodata.be/${owner}/${id}#id> ?p ?v.
+ ?v rdfs:label ?vlabel.
  ?s ?ip <http://data.kbodata.be/${owner}/${id}#id>.
+ ?s rdfs:label ?slabel.
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.rdf> .
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.ttl> .
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.nt> .
@@ -27,5 +29,7 @@ CONSTRUCT {
 }
 WHERE {
  <http://data.kbodata.be/${owner}/${id}#id> ?p ?v.
- OPTIONAL {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>.}
+ OPTIONAL {?v rdfs:label ?vlabel}
+ OPTIONAL {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>.
+ OPTIONAL {?s rdfs:label ?slabel.}}
 }
