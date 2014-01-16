@@ -23,7 +23,7 @@ CONSTRUCT {
 		dcterms:description "Kruispuntbank van Ondernemingen: entries en controlled vocabularies"@nl;
 		dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
 		prov:generatedAtTime ?today;
-		prov:wasGeneratedBy <http://data.kbodata.be/activity/CSV2RDFbyTarqlScript>;
+		prov:wasGeneratedBy <http://data.kbodata.be/activity/CSV2RDFbyTarqlScript#id>;
 		void:dataDump <http://data.kbodata.be/download/kbo.ttl>;
 		void:feature <http://www.w3.org/ns/formats/RDF_XML>;
 		void:feature <http://www.w3.org/ns/formats/Turtle>;
