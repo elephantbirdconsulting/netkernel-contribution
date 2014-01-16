@@ -27,7 +27,7 @@ CONSTRUCT {
 		void:feature <http://www.w3.org/ns/formats/RDF_XML>;
 		void:feature <http://www.w3.org/ns/formats/Turtle>;
 		void:feature <http://www.w3.org/ns/formats/N-Triples>;
-		void:sparqlEndpoint "TBD";
+		void:sparqlEndpoint <http://data.kbodata.be/sparql>;
 		void:exampleResource ?organisatie ;
 		void:exampleResource ?site;
 		void:exampleResource ?conceptscheme;
