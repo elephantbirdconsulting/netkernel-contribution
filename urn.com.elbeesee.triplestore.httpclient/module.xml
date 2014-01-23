@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / triplestore / httpclient</name>
+			<description>elbeesee / triplestore / httpclient</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee triplestore httpclient sparql"
+		public="true"
+		uri="urn:com:elbeesee:triplestore:httpclient:sparql">
+		
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:sparql:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:sparql</identifier>
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="query" desc="query" max="1" min="1"/>
+					<argument name="accept" desc="accept header" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.SPARQLAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:triplestore:httpclient:import</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+	<rootspace 
+		name="elbeesee triplestore httpclient reconcile larq "
+		public="true"
+		uri="urn:com:elbeesee:triplestore:httpclient:reconcile:larq">
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:reconcile:larq:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:reconcile</identifier>
+					<!-- database access arguments -->
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+					<!-- reconcile specific arguments -->
+					<argument name="search" desc="search" max="1" min="1"/>
+					<argument name="baseurl" desc="baseurl" max="1" min="1"/>
+					<argument name="limit" desc="limit" max="1" min="0"/>
+					<argument name="type" desc="type" max="1" min="0"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.ReconcileLARQAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:triplestore:httpclient:import</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee triplestore httpclient import"
+		public="false"
+		uri="urn:com:elbeesee:triplestore:httpclient:import">
+		
+		<fileset>
+			<regex>res:/resources/freemarker/.*</regex>
+		</fileset>
+
+		<fileset>
+			<regex>res:/resources/xsl/.*</regex>
+		</fileset>
+
+		<import>
+			<!-- http:// scheme -->
+			<uri>urn:org:netkernel:client:http</uri>
+		</import>
+		
+		<import>
+			<!-- active:freemarker -->
+			<uri>urn:org:netkernel:lang:freemarker</uri>
+		</import>
+		
+		<import>
+			<!-- active:xsltc -->
+			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+	</rootspace>
+</module>

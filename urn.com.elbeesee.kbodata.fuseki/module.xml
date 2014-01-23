@@ -2,12 +2,12 @@
 <module version="2.0">
 	<meta>
 		<identity>
-			<uri>urn:com:elbeesee:kbodata:stardog</uri>
+			<uri>urn:com:elbeesee:kbodata:fuseki</uri>
 			<version>1.0.0</version>
 		</identity>
 		<info>
-			<name>elbeesee / kbodata / stardog</name>
-			<description>elbeesee / kbodata / stardog</description>
+			<name>elbeesee / kbodata / fuseki</name>
+			<description>elbeesee / kbodata / fuseki</description>
 		</info>
 	</meta>
 
@@ -16,9 +16,9 @@
 	</system>
 
 	<rootspace 
-		name="elbeesee kbodata stardog" 
+		name="elbeesee kbodata fuseki" 
 		public="true"
-		uri="urn:com:elbeesee:kbodata:stardog">		
+		uri="urn:com:elbeesee:kbodata:fuseki">		
 		
 		<literal type="string" uri="kbodata:database">kbo</literal>
 		
@@ -31,7 +31,7 @@
 		<literal type="hds" uri="kbodata:credentials">
 			<httpCredentials>
 				<host>localhost</host>
-				<port>5820</port>
+				<port>3030</port>
 				<username>anonymous</username>
 				<password>anonymous</password>
 			</httpCredentials>

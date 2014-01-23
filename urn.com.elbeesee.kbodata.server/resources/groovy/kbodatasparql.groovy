@@ -2,7 +2,7 @@
  *
  * Elephant Bird Consulting - KBO data.
  *
- * @author Tom Geudens. 2014/01/10.
+ * @author Tom Geudens. 2014/01/22.
  *
  */
 
@@ -60,10 +60,16 @@ if (vAcceptHeader == null) {
 	}
 }
 
-INKFRequest sparqlrequest = aContext.createRequest("active:kbodatastardogsparql");
+INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
+sparqlrequest.addArgument("database", "kbodata:database");
 if (vQuery != null) {
 	sparqlrequest.addArgumentByValue("query", vQuery);
 }
+else {
+	sparqlrequest.addArgument("query", "kbodata:query");
+}
+sparqlrequest.addArgument("expiry", "kbodata:expiry");
+sparqlrequest.addArgument("credentials", "kbodata:credentials");
 sparqlrequest.addArgumentByValue("accept", vAcceptHeader);
 Object vResult = aContext.issueRequest(sparqlrequest);
 //

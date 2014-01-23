@@ -2,7 +2,7 @@
  *
  * Elephant Bird Consulting - KBO data.
  *
- * @author Tom Geudens. 2014/01/06.
+ * @author Tom Geudens. 2014/01/22.
  *
  */
 
@@ -56,8 +56,43 @@ else {
 			buildreconcilequery.setRepresentationClass(String.class);
 			vReconcileQuery = new JSONObject((String)aContext.issueRequest(buildreconcilequery));
 		}
-		INKFRequest reconcilerequest = aContext.createRequest("active:kbodatastardogreconcile");
-		reconcilerequest.addArgumentByValue("reconcilequery", vReconcileQuery);
+		
+		String vSearch = null;
+		try {
+			vSearch = vReconcileQuery.getString("query");
+		}
+		catch (JSONException e) {
+			throw new NKFException("reconcilequery does not contain a valid - query - attribute");
+		}
+		
+		Long vLimit = null;
+		try {
+			vLimit = vReconcileQuery.getLong("limit");
+		}
+		catch (JSONException e) {
+			// not a problem, limit is not mandatory
+		}
+		
+		String vType = null;
+		try {
+			vType = vReconcileQuery.getString("type");
+		}
+		catch (JSONException e) {
+			// not a problem, type is not mandatory
+		}
+
+		INKFRequest reconcilerequest = aContext.createRequest("active:reconcile");
+		reconcilerequest.addArgument("database", "kbodata:database");
+		reconcilerequest.addArgument("expiry", "kbodata:expiry");
+		reconcilerequest.addArgument("credentials", "kbodata:credentials");
+		reconcilerequest.addArgumentByValue("search", vSearch);
+		reconcilerequest.addArgument("baseurl", "kbodata:baseurl");
+		if (vLimit != null) {
+			reconcilerequest.addArgumentByValue("limit", vLimit);
+		}
+		if (vType != null) {
+			reconcilerequest.addArgumentByValue("type", vType);
+		}				
 		reconcilerequest.setRepresentationClass(String.class);
 		vResult.append(aContext.issueRequest(reconcilerequest));
 	}
@@ -82,11 +117,45 @@ else {
 			catch (JSONException e) {
 				throw new NKFException("resource - httpRequest:/param/queries - is not valid");
 			}
-
-			INKFRequest reconcilerequest = aContext.createRequest("active:kbodatastardogreconcile");
-			reconcilerequest.addArgumentByValue("reconcilequery", vReconcileQuery);
-			reconcilerequest.setRepresentationClass(String.class);
 			
+			String vSearch = null;
+			try {
+				vSearch = vReconcileQuery.getString("query");
+			}
+			catch (JSONException e) {
+				throw new NKFException("reconcilequery does not contain a valid - query - attribute");
+			}
+			
+			Long vLimit = null;
+			try {
+				vLimit = vReconcileQuery.getLong("limit");
+			}
+			catch (JSONException e) {
+				// not a problem, limit is not mandatory
+			}
+			
+			String vType = null;
+			try {
+				vType = vReconcileQuery.getString("type");
+			}
+			catch (JSONException e) {
+				// not a problem, type is not mandatory
+			}
+	
+			INKFRequest reconcilerequest = aContext.createRequest("active:reconcile");
+			reconcilerequest.addArgument("database", "kbodata:database");
+			reconcilerequest.addArgument("expiry", "kbodata:expiry");
+			reconcilerequest.addArgument("credentials", "kbodata:credentials");
+			reconcilerequest.addArgumentByValue("search", vSearch);
+			reconcilerequest.addArgument("baseurl", "kbodata:baseurl");
+			if (vLimit != null) {
+				reconcilerequest.addArgumentByValue("limit", vLimit);
+			}
+			if (vType != null) {
+				reconcilerequest.addArgumentByValue("type", vType);
+			}
+			reconcilerequest.setRepresentationClass(String.class);
+	
 			INKFAsyncRequestHandle vHandle = aContext.issueAsyncRequest(reconcilerequest);
 			vResponseMap.put(vKey,vHandle);
 		}

@@ -80,6 +80,9 @@ else {
 		else if (vAcceptHeader.startsWith("text/html")) {
 			aExtension = "html";
 		}
+		else if (vAcceptHeader.startsWith("application/ld-json")) {
+			aExtension = "jsonld"
+		}
 		else {
 			aExtension = "rdf";
 		}
@@ -98,10 +101,13 @@ freemarkerrequest.addArgumentByValue("extension", aExtension);
 freemarkerrequest.setRepresentationClass(String.class);
 String vQuery = (String)aContext.issueRequest(freemarkerrequest);
 
-INKFRequest stardogrequest = aContext.createRequest("active:kbodatastardogsparql");
-stardogrequest.addArgumentByValue("query", vQuery);
-stardogrequest.addArgumentByValue("accept", "application/rdf+xml");
-Object vSparqlResult = aContext.issueRequest(stardogrequest);
+INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
+sparqlrequest.addArgument("database", "kbodata:database");
+sparqlrequest.addArgument("expiry", "kbodata:expiry");
+sparqlrequest.addArgument("credentials", "kbodata:credentials");
+sparqlrequest.addArgumentByValue("query", vQuery);
+sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+Object vSparqlResult = aContext.issueRequest(sparqlrequest);
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);
@@ -122,10 +128,16 @@ else if (aExtension.equals("nt")) {
 	jenaserializerequest = aContext.createRequest("active:jRDFSerializeN-TRIPLE");
 	vMimetype = "text/plain";
 }
+else if (aExtension.equals("jsonld")) {
+	jenaserializerequest = aContext.createRequest("active:jRDFSerializeJSONLD");
+	vMimetype = "application/ld+json";
+}
 else {
 	jenaserializerequest = aContext.createRequest("active:jRDFSerializeXML");
 	vMimetype = "application/rdf+xml";
 }
+
+
 jenaserializerequest.addArgumentByValue("operand",vJenaParseResult);
 jenaserializerequest.setRepresentationClass(IReadableBinaryStreamRepresentation);
 vRBS = (IReadableBinaryStreamRepresentation)aContext.issueRequest(jenaserializerequest);
