@@ -34,7 +34,7 @@ CONSTRUCT {
 		void:exampleResource ?site;
 		void:exampleResource ?conceptscheme;
 		void:exampleResource ?concept;
-		void:uriRegexPattern "^http://data\\.kbodata\\.be/(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)/(.*)#id$";
+		void:uriRegexPattern "^http://data\\.kbodata\\.be/(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise|activity|softwareagent)/(.*)#id$";
 		void:vocabulary <http://purl.org/dc/terms/>;
 		void:vocabulary <http://xmlns.com/foaf/0.1/>;
 		void:vocabulary <http://data.kbodata.be/def#>;
