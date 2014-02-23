@@ -1,0 +1,126 @@
+
+/* resource.css */
+
+.properties,
+.links.outbound,
+.links.inbound
+{
+    width: 100%;
+    overflow: hidden;
+    padding: 24px 0;
+}
+
+.links.outbound
+{
+    border-top: 2px solid #f0f0f0;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 32px;
+}
+
+#content .predicate {
+    background-color: #f0f0f0;
+    border-top: 2px solid #aa332b;
+    margin: 10px 0 10px 0;
+    width: 48%;
+    display: block;
+    vertical-align: top;
+    float: left;
+}
+
+#content .predicate.empty {
+    display: none;
+}
+
+#content .predicate:nth-child(odd) {
+    margin-right: 2%;
+    clear: both;
+}
+
+#content .predicate:nth-child(even) {
+    margin-left: 2%;
+}
+
+#content .predicate .label {
+    background-color: #aa322b;
+    color: #fff;
+    display: inline-block;
+    width: 32%;
+    text-align: right;
+    line-height: 20px;
+    margin: 0;
+    padding: 9px 10px 11px 5px;
+    text-transform: capitalize;
+    vertical-align: top;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+#content .predicate .objects {
+    width: 66%;
+    display: inline-block;
+    overflow: auto;
+    max-height: 400px;
+}
+
+#content .predicate .objects > * {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    margin: 2px 5px;
+    padding: 8px 5px 7px 5px;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+}
+
+#content .predicate .objects > .last {
+    border-bottom: none;
+}
+
+#content .predicate .objects > a {
+    color: #aa322b;
+}
+
+#content .predicate .objects > [title] {
+   white-space: nowrap; 
+}
+
+
+#content .predicate .objects a:hover {
+    text-decoration: underline;
+}
+
+#content .predicate .objects > [title]:hover:after{
+    content: attr(title);
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #aa322b;
+    padding: 8px 16px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border-top: 1px solid #aa332b;
+}
+
+.links.inbound .label:before {
+    content: "via '"; 
+    text-transform: lowercase;
+}
+
+.links.inbound .label:after {
+    content: "' from"; 
+    text-transform: lowercase;
+}
+
+#content .map {
+    background-color: #f0f0f0;
+    border-top: 1px solid #aa332b;
+}
+
+#content .map iframe {
+    height: 300px;
+    width: 100%;
+}
+

@@ -148,12 +148,10 @@ vRBS = (IReadableBinaryStreamRepresentation)aContext.issueRequest(jenaserializer
 INKFResponse vResponse = null;
 if (aExtension.equals("html")) {
 	vMimetype = "text/html";
-
-	INKFRequest xsltrequest = aContext.createRequest("active:xslt");
+	
+	INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
 	xsltrequest.addArgumentByValue("operand", vRBS);
-	xsltrequest.addArgument("operator", "res:/resources/xsl/html.xsl");
-	xsltrequest.addArgumentByValue("owner", aOwner);
-	xsltrequest.addArgumentByValue("id", aID);
+	xsltrequest.addArgument("operator", "res:/resources/xsl/kbo.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	
 	vResponse = aContext.createResponseFrom(vHTML);

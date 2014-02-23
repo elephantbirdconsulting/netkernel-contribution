@@ -26,7 +26,32 @@
 				<type>KBOData</type>
 			</connection>
         </literal>
+        
+        <fileset>
+        	<regex>res:/css/(.*)</regex>
+        	<rewrite>res:/resources/ux/css/$1</rewrite>
+        </fileset>
 
+        <fileset>
+        	<regex>res:/lib/(.*)</regex>
+        	<rewrite>res:/resources/ux/lib/$1</rewrite>
+        </fileset>
+        
+        <fileset>
+        	<regex>res:/fonts/(.*)</regex>
+        	<rewrite>res:/resources/ux/fonts/$1</rewrite>
+        </fileset>
+
+        <fileset>
+        	<regex>res:/js/(.*)</regex>
+        	<rewrite>res:/resources/ux/js/$1</rewrite>
+        </fileset>
+        
+        <fileset>
+        	<regex>res:/img/(.*)</regex>
+        	<rewrite>res:/resources/ux/img/$1</rewrite>
+        </fileset>
+        
 		<fileset>
 			<regex>res:/resources/gif/.*\.gif</regex>
 		</fileset>
@@ -398,6 +423,11 @@
 			<!-- active:xslt -->
 			<uri>urn:org:netkernel:xml:core</uri>
 		</import>
+
+		<import>
+			<!-- active:xslt2 -->
+			<uri>urn:org:netkernel:xml:saxon</uri>
+		</import>		
 		
 		<import>
 			<!-- file:/ scheme -->

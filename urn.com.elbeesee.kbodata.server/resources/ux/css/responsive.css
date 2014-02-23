@@ -1,0 +1,58 @@
+
+/* responsive.css */
+
+@media (max-width:1000px) 
+{
+    #header,
+    #content,
+    #footer > div
+    {
+		width: 96%;
+	}
+}	
+
+@media (max-width:875px) 
+{
+    #footer {
+        height: auto;
+    }
+    
+    #footer .copyright,
+    #footer .powered-by
+    {
+        float: none;
+        width: 100%;
+        display: block;
+        text-align: center;
+        height: auto;
+    }
+}    
+
+@media (max-width:600px) 
+{
+    #content .predicate,
+    #content .predicate:nth-child(odd),
+    #content .predicate:nth-child(even)
+    {
+        width: 100%;
+        float: none;
+        margin: 10px 0 10px 0;
+	}
+    
+    #content .predicate .objects {
+        max-height: none;
+    }
+    
+    #footer .copyright > span
+    {
+        display: block;
+        margin: 10px;
+    }
+    
+    #footer .powered-by
+    {
+        border-top: 1px solid #999;
+        margin-top: 10px;
+    }
+    
+}	
