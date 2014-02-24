@@ -46,7 +46,6 @@
         },
         
         injectMap: function() {
-            console.log('bla bla');
             var thoroughfare = $('.predicate .label[href="http://www.w3.org/ns/locn#thoroughfare"]').next('.objects').find('p').first().text();
             var locatorDesignator = $('.predicate .label[href="http://www.w3.org/ns/locn#locatorDesignator"]').next('.objects').find('p').first().text();
             var postCode = $('.predicate .label[href="http://www.w3.org/ns/locn#postCode"]').next('.objects').find('p').first().text();

@@ -199,7 +199,7 @@
 				<div id="content">
 					<div class="export-options">
 						<a href="">HTML</a>
-						<a href="{$docid}.json">JSON</a>
+						<a href="{$docid}.jsonld">JSON-LD</a>
 						<a href="{$docid}.ttl">TURTLE</a>
 						<a href="{$docid}.nt">N-TRIPLES</a>
 						<a href="{$docid}.rdf">XML</a>
