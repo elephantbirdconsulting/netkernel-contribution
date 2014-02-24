@@ -92,22 +92,40 @@ else {
 	}
 }
 //
+INKFRequest pdsexistsrequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
+pdsexistsrequest.setVerb(INKFRequestReadOnly.VERB_EXISTS);
+pdsexistsrequest.setRepresentationClass(Boolean.class);
+Boolean vPDSExists = (Boolean)aContext.issueRequest(pdsexistsrequest);
 
-INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
-freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
-freemarkerrequest.addArgumentByValue("owner", aOwner);
-freemarkerrequest.addArgumentByValue("id", aID);
-freemarkerrequest.addArgumentByValue("extension", aExtension);
-freemarkerrequest.setRepresentationClass(String.class);
-String vQuery = (String)aContext.issueRequest(freemarkerrequest);
+Object vSparqlResult = null;
 
-INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
-sparqlrequest.addArgument("database", "kbodata:database");
-sparqlrequest.addArgument("expiry", "kbodata:expiry");
-sparqlrequest.addArgument("credentials", "kbodata:credentials");
-sparqlrequest.addArgumentByValue("query", vQuery);
-sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
-Object vSparqlResult = aContext.issueRequest(sparqlrequest);
+if (!vPDSExists) {
+	INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
+	freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
+	freemarkerrequest.addArgumentByValue("owner", aOwner);
+	freemarkerrequest.addArgumentByValue("id", aID);
+	freemarkerrequest.addArgumentByValue("extension", aExtension);
+	freemarkerrequest.setRepresentationClass(String.class);
+	String vQuery = (String)aContext.issueRequest(freemarkerrequest);
+	
+	INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
+	sparqlrequest.addArgument("database", "kbodata:database");
+	sparqlrequest.addArgument("expiry", "kbodata:expiry");
+	sparqlrequest.addArgument("credentials", "kbodata:credentials");
+	sparqlrequest.addArgumentByValue("query", vQuery);
+	sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+	vSparqlResult = aContext.issueRequest(sparqlrequest);
+	
+	INKFRequest pdssinkrequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
+	pdssinkrequest.setVerb(INKFRequestReadOnly.VERB_SINK);
+	pdssinkrequest.addPrimaryArgument(vSparqlResult);
+	aContext.issueRequest(pdssinkrequest);
+}
+else {
+	INKFRequest pdssourcerequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
+	pdssourcerequest.setVerb(INKFRequestReadOnly.VERB_SOURCE);
+	vSparqlResult = aContext.issueRequest(pdssourcerequest);
+}
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);

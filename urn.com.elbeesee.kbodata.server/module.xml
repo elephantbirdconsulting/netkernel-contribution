@@ -439,6 +439,22 @@
 			<uri>urn:org:netkernel:tpt:http</uri>
 		</import>
 		
+		<literal type="xml" uri="res:/etc/pdsConfig.xml">
+			<config>
+				<zone>KBOData</zone>
+			</config>
+		</literal>
+		
+		<import>
+			<!-- pds:/ scheme -->
+			<uri>urn:org:netkernel:mod:pds</uri>
+		</import>
+
+		<import>
+			<!-- pds backend -->
+			<uri>urn:org:netkernel:mod:pds:rdbms:local</uri>
+		</import>
+		
 		<import>
 			<!-- kbodata literals -->
 			<uri>urn:com:elbeesee:kbodata:stardog</uri>

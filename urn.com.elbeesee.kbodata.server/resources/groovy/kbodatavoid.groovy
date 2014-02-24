@@ -67,13 +67,32 @@ else {
 }
 //
 
-INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
-sparqlrequest.addArgument("database", "kbodata:database");
-sparqlrequest.addArgument("expiry", "kbodata:expiry");
-sparqlrequest.addArgument("credentials", "kbodata:credentials");
-sparqlrequest.addArgument("query", "res:/resources/sparql/void.sparql");
-sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
-Object vSparqlResult = aContext.issueRequest(sparqlrequest);
+INKFRequest pdsexistsrequest = aContext.createRequest("pds:/kbodata/dataset/kbo");
+pdsexistsrequest.setVerb(INKFRequestReadOnly.VERB_EXISTS);
+pdsexistsrequest.setRepresentationClass(Boolean.class);
+Boolean vPDSExists = (Boolean)aContext.issueRequest(pdsexistsrequest);
+
+Object vSparqlResult = null;
+
+if (!vPDSExists) {
+	INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
+	sparqlrequest.addArgument("database", "kbodata:database");
+	sparqlrequest.addArgument("expiry", "kbodata:expiry");
+	sparqlrequest.addArgument("credentials", "kbodata:credentials");
+	sparqlrequest.addArgument("query", "res:/resources/sparql/void.sparql");
+	sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+	vSparqlResult = aContext.issueRequest(sparqlrequest);
+	
+	INKFRequest pdssinkrequest = aContext.createRequest("pds:/kbodata/dataset/kbo");
+	pdssinkrequest.setVerb(INKFRequestReadOnly.VERB_SINK);
+	pdssinkrequest.addPrimaryArgument(vSparqlResult);
+	aContext.issueRequest(pdssinkrequest);
+}
+else {
+	INKFRequest pdssourcerequest = aContext.createRequest("pds:/kbodata/dataset/kbo");
+	pdssourcerequest.setVerb(INKFRequestReadOnly.VERB_SOURCE);
+	vSparqlResult = aContext.issueRequest(pdssourcerequest);
+}
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);
