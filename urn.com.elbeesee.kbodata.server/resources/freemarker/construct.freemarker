@@ -14,9 +14,11 @@ PREFIX vcard:   <http://www.w3.org/2006/vcard/ns#>
 PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
 CONSTRUCT {
- <http://data.kbodata.be/${owner}/${id}#id> ?p ?v.
+ <http://data.kbodata.be/${owner}/${id}#id> ?vp ?v.
+ <http://data.kbodata.be/${owner}/${id}#id> ?op ?out.
+ ?out rdfs:label ?olabel.
  ?s ?ip <http://data.kbodata.be/${owner}/${id}#id>.
- ?s rdfs:label ?label.
+ ?s rdfs:label ?ilabel.
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.rdf> .
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.ttl> .
  <http://data.kbodata.be/${owner}/${id}#id> rdfs:isDefinedBy <http://data.kbodata.be/${owner}/${id}.jsonld> .
@@ -27,6 +29,11 @@ CONSTRUCT {
  <http://data.kbodata.be/${owner}/${id}.${extension}> dcterms:rights <http://creativecommons.org/publicdomain/zero/1.0/>.
 }
 WHERE {
- <http://data.kbodata.be/${owner}/${id}#id> ?p ?v.
- OPTIONAL {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>. OPTIONAL {?s rdfs:label ?label}}
+ <http://data.kbodata.be/${owner}/${id}#id> ?vp ?v.
+ FILTER (isLiteral(?v))
+ <http://data.kbodata.be/${owner}/${id}#id> ?op ?out.
+ FILTER (isURI(?out))
+ OPTIONAL {?out rdfs:label ?olabel.}
+ OPTIONAL {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>. 
+ OPTIONAL {?s rdfs:label ?ilabel}}
 }
