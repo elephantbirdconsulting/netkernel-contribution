@@ -212,7 +212,7 @@
 						<xsl:choose>
 							<xsl:when test="rdfs:label[@xml:lang]">
 								<xsl:for-each select="rdfs:label[@xml:lang]">
-									<span lang="{@xml:lang}">
+									<span xml:lang="{@xml:lang}">
 										<xsl:value-of select="normalize-space(.)"/>
 									</span>
 								</xsl:for-each>
