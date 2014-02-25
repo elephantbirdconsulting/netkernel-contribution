@@ -282,6 +282,11 @@
 								<xsl:with-param name="key" select="locn:postName[1]"/>
 							</xsl:call-template>
 						</xsl:if>
+						<xsl:if test="locn:fullAddress">
+							<xsl:call-template name="tablerow">
+								<xsl:with-param name="key" select="locn:fullAddress[1]"/>
+							</xsl:call-template>
+						</xsl:if>
 					</div>
 					<div class="links outbound">
 						<xsl:if test="rdf:type">

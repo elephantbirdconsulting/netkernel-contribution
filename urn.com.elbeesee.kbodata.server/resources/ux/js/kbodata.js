@@ -46,12 +46,8 @@
         },
         
         injectMap: function() {
-            var thoroughfare = $('.predicate .label[href="http://www.w3.org/ns/locn#thoroughfare"]').next('.objects').find('p').first().text();
-            var locatorDesignator = $('.predicate .label[href="http://www.w3.org/ns/locn#locatorDesignator"]').next('.objects').find('p').first().text();
-            var postCode = $('.predicate .label[href="http://www.w3.org/ns/locn#postCode"]').next('.objects').find('p').first().text();
-            var postName = $('.predicate .label[href="http://www.w3.org/ns/locn#postName"]').next('.objects').find('p').first().text();
-            if (thoroughfare && locatorDesignator && postCode && postName) {
-                var address = thoroughfare + ' ' + locatorDesignator + ' ' + postCode + ' ' + postName;
+            var address = $('.predicate .label[href="http://www.w3.org/ns/locn#fullAddress"]').next('.objects').find('p').first().text();
+            if (address) {
                 var src = '//maps.google.be/maps?f=q&amp;source=s_q&amp;hl=en&amp;q=' + encodeURIComponent(address) + '&amp;iwloc=A&amp;output=embed';
                 var html = '<div class="map"><iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + src + '"></iframe></div>';
                 $('.properties').first().before(html);
