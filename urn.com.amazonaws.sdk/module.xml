@@ -20,7 +20,13 @@
 		name="amazonaws sdk" 
 		public="true"
 		uri="urn:com:amazonaws:sdk">
-		
+
+        <literal type="xml" uri="res:/etc/system/SimpleDynamicImportHook.xml">
+			<connection>
+				<type>HTTPFulcrum</type>
+			</connection>
+        </literal>
+        		
 		<mapper>
 			<config>
 				<endpoint>
@@ -29,7 +35,7 @@
 					</grammar>
 					<request>
 						<identifier>active:xsltc</identifier>
-						<argument name="operand">https://raw.github.com/aws/aws-sdk-java/master/src/main/resources/etc/regions.xml</argument>
+						<argument name="operand">https://raw.github.com/aws/aws-sdk-java/master/src/main/resources/com/amazonaws/regions/regions.xml</argument>
 						<argument name="operator">res:/resources/xsl/regions.xsl</argument>
 						<argument method="as-string" name="region">[[arg:region]]</argument>
 						<argument method="as-string" name="service">[[arg:service]]</argument>
@@ -109,6 +115,15 @@
 						<notNull/>
 					</assert>
 				</test>
+				<test name="SOURCE regions.dat resource">
+					<request>
+						<identifier>res:/resources/xml/regions.dat</identifier>
+						<verb>SOURCE</verb>	
+					</request>
+					<assert>
+						<exception/>
+					</assert>
+				</test>
 			</testlist>
 		</literal>
 
@@ -121,6 +136,24 @@
 					</request>
 					<assert>
 						<stringEquals>s3-eu-west-1.amazonaws.com</stringEquals>
+					</assert>
+				</test>
+				<test name="SOURCE s4 eu-west-1 resource">
+					<request>
+						<identifier>res:/amazonaws/baseurl/s4-eu-west-1</identifier>
+						<verb>SOURCE</verb>	
+					</request>
+					<assert>
+						<stringEquals>unknown</stringEquals>
+					</assert>
+				</test>
+				<test name="SOURCE blabla resource">
+					<request>
+						<identifier>res:/amazonaws/baseurl/blabla</identifier>
+						<verb>SOURCE</verb>	
+					</request>
+					<assert>
+						<exception/>
 					</assert>
 				</test>
 			</testlist>

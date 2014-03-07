@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:api:rovi</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / api / rovi</name>
+			<description>elbeesee / api / rovi</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+	<rootspace 
+		name="elbeesee api rovi" 
+		public="true"
+		uri="urn:com:elbeesee:api:rovi">
+
+		<overlay>
+			<prototype>layer1.Concurrency.Throttle</prototype>
+			<config>
+				<concurrency>1</concurrency>
+				<queue>50</queue>
+			</config>
+			<space>
+				<accessor>
+					<!-- requires the following resources to be available 
+					  rovi:apikey
+					  rovi:secretkey 
+					  rovi:expiry
+					-->
+					<id>elbeesee:api:rovi:release:accessor</id>
+					<class>com.elbeesee.api.rovi.ReleaseAccessor</class>
+					<grammar>
+						<active>
+							<identifier>active:rovirelease</identifier>
+							<argument name="upcid" desc="upcid" max="1" min="1"/>
+						</active>
+					</grammar>
+				</accessor>
+			</space>
+		</overlay>
+		
+		<import>
+			<uri>urn:com:elbeesee:api:rovi:internal</uri>
+		</import>
+	</rootspace>
+
+	<rootspace 
+		name="elbeesee api rovi internal" 
+		public="false"
+		uri="urn:com:elbeesee:api:rovi:internal">
+
+		<literal type="string" uri="rovi:releaseurl">http://api.rovicorp.com/data/v1/release/info</literal>
+
+		<accessor>
+			<id>elbeesee:api:rovi:md5:accessor</id>
+			<class>com.elbeesee.api.rovi.MD5Accessor</class>
+			<grammar>
+				<active>
+					<identifier>active:rovimd5</identifier>
+					<argument name="apikey" desc="api key" max="1" min="1"/>
+					<argument name="secretkey" desc="secret key" max="1" min="1"/>
+				</active>
+			</grammar>
+		</accessor>
+		
+		<import>
+			<!-- active:md5 -->
+			<uri>urn:org:netkernel:mod:security</uri>
+		</import>
+
+		<import>
+			<!-- active:httpGet -->
+			<uri>urn:org:netkernel:client:http</uri>
+		</import>
+		
+		<import>
+			<!-- throttle -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+</module>
