@@ -20,7 +20,9 @@ CONSTRUCT {
 	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity;
 		rdfs:label "KBO dataset"@nl;
 		dcterms:title "Dataset van de Kruispuntbank van Ondernemingen"@nl;
-		dcterms:description "Kruispuntbank van Ondernemingen: entries en controlled vocabularies"@nl;
+		dcterms:title "to be translated"@fr;
+		dcterms:description "Deze dataset bevat de data van de Belgische ondernemingen, gekoppeld aan gecontoleerde vocabularies zoals nace codes."@nl;
+		dcterms:description "to be translated"@fr;
 		dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/>;
 		prov:generatedAtTime ?today;
 		prov:wasGeneratedBy <http://data.kbodata.be/activity/CSV2RDFbyTarqlScript#id>;
@@ -28,6 +30,7 @@ CONSTRUCT {
 		void:feature <http://www.w3.org/ns/formats/RDF_XML>;
 		void:feature <http://www.w3.org/ns/formats/Turtle>;
 		void:feature <http://www.w3.org/ns/formats/N-Triples>;
+		void:feature <http://www.w3.org/ns/formats/JSON-LD>;
 		void:sparqlEndpoint <http://data.kbodata.be/sparql>;
 		api:endpoint <http://data.kbodata.be/reconcile>;
 		void:exampleResource ?organisatie ;
