@@ -35,13 +35,28 @@
                     $(this).parents('.predicate').addClass('empty');
                 }
             });
-            // hide heading of 
+            // hide heading of empty sections
             $('.properties, .links.outbound, .links.inbound').each(function() {
                 var container = $(this);
                 container.prev('h2').show();
                 if (!$(this).find('.predicate .objects .last').length) {
                     container.prev('h2').hide();
                 } 
+            });
+            // fix margins in case of empty sections
+            $.each(['.properties', '.links.outbound', '.links.inbound'], function(pos, value) {
+                var cls = 'odd';
+                var container = $(value);
+                container.find('.predicate').each(function() {
+                    $(this)
+                        .removeClass('odd')
+                        .removeClass('even')
+                    ;
+                    if (!$(this).is('.empty')) {
+                        $(this).addClass(cls);
+                        cls = (cls === 'odd') ? 'even' : 'odd';
+                   }
+                });
             });
         },
         

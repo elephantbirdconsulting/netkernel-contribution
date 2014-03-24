@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:kbodata:server</uri>
-			<version>1.0.0</version>
+			<version>1.1.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / kbodata / server</name>
@@ -105,6 +105,24 @@
 							</grammar>
 							<request>
 								<identifier>active:kbodatareconcile</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>fragment</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatastardogfragmentrestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatafragment</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
@@ -374,6 +392,25 @@
 				</accessor>
 			</space>
 		</overlay>
+		
+		<overlay>
+			<prototype>layer1.Concurrency.Throttle</prototype>
+			<config>
+				<concurrency>4</concurrency>
+				<queue>50</queue>
+			</config>
+			<space>
+				<accessor>
+					<grammar>
+						<active>
+							<identifier>active:kbodatafragment</identifier>			
+						</active>
+					</grammar>
+					<prototype>GroovyPrototype</prototype>
+					<script>res:/resources/groovy/kbodatafragment.groovy</script>
+				</accessor>
+			</space>
+		</overlay>
 
 		<fileset>
 			<regex>res:/resources/groovy/.*</regex>
@@ -464,6 +501,11 @@
 			<!-- active:sparql -->
 			<uri>urn:com:elbeesee:triplestore:httpclient:sparql</uri>
 			<version-min>1.0.0</version-min>
+		</import>
+		<import>
+			<!-- active:fragment -->
+			<uri>urn:com:elbeesee:triplestore:httpclient:fragment</uri>
+			<version-min>1.1.0</version-min>
 		</import>
 		<import>
 			<!-- active:reconcile -->

@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
-			<version>1.0.0</version>
+			<version>1.1.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / triplestore / httpclient</name>
@@ -36,12 +36,60 @@
 			<class>com.elbeesee.triplestore.httpclient.SPARQLAccessor</class>
 		</accessor>
 		
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:sparqlasync:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:sparqlasync</identifier>
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="query" desc="query" max="1" min="1"/>
+					<argument name="accept" desc="accept header" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.SPARQLAsyncAccessor</class>
+		</accessor>
+		
 		<import>
-			<uri>urn:com:elbeesee:triplestore:httpclient:import</uri>
+			<uri>urn:com:elbeesee:triplestore:httpclient:internal</uri>
 			<private/>
 		</import>
 	</rootspace>
-
+	
+	<rootspace
+		name="elbeesee triplestore httpclient fragment "
+		public="true"
+		uri="urn:com:elbeesee:triplestore:httpclient:fragment">
+		
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:fragment:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:fragment</identifier>
+					<!-- database access arguments -->
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+					<argument name="accept" desc="accept header" max="1" min="1"/>
+					<!-- fragment specific arguments -->
+					<argument name="subject" desc="subject" max="1" min="0"/>
+					<argument name="predicate" desc="predicate" max="1" min="0"/>
+					<argument name="object" desc="object" max="1" min="0"/>
+					<argument name="subject" desc="subject" max="1" min="0"/>
+					<argument name="limit" desc="limit" max="1" min="0"/>
+					<argument name="offset" desc="offset" max="1" min="0"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.FragmentAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:triplestore:httpclient:internal</uri>
+			<private/>
+		</import>		
+	</rootspace>
+	
 	<rootspace 
 		name="elbeesee triplestore httpclient reconcile larq "
 		public="true"
@@ -66,16 +114,16 @@
 		</accessor>
 		
 		<import>
-			<uri>urn:com:elbeesee:triplestore:httpclient:import</uri>
+			<uri>urn:com:elbeesee:triplestore:httpclient:internal</uri>
 			<private/>
 		</import>
 	</rootspace>
 
 
 	<rootspace 
-		name="elbeesee triplestore httpclient import"
+		name="elbeesee triplestore httpclient internal"
 		public="false"
-		uri="urn:com:elbeesee:triplestore:httpclient:import">
+		uri="urn:com:elbeesee:triplestore:httpclient:internal">
 		
 		<fileset>
 			<regex>res:/resources/freemarker/.*</regex>
@@ -85,6 +133,10 @@
 			<regex>res:/resources/xsl/.*</regex>
 		</fileset>
 
+		<import>
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+		
 		<import>
 			<!-- http:// scheme -->
 			<uri>urn:org:netkernel:client:http</uri>
@@ -98,6 +150,11 @@
 		<import>
 			<!-- active:xsltc -->
 			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+		
+		<import>
+			<!-- active:post -->
+			<uri>urn:com:elbeesee:asynchttpclient</uri>
 		</import>
 	</rootspace>
 </module>

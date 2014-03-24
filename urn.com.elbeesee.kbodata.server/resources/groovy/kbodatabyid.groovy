@@ -92,40 +92,22 @@ else {
 	}
 }
 //
-INKFRequest pdsexistsrequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
-pdsexistsrequest.setVerb(INKFRequestReadOnly.VERB_EXISTS);
-pdsexistsrequest.setRepresentationClass(Boolean.class);
-Boolean vPDSExists = (Boolean)aContext.issueRequest(pdsexistsrequest);
 
-Object vSparqlResult = null;
-
-if (!vPDSExists) {
-	INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
-	freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
-	freemarkerrequest.addArgumentByValue("owner", aOwner);
-	freemarkerrequest.addArgumentByValue("id", aID);
-	freemarkerrequest.addArgumentByValue("extension", aExtension);
-	freemarkerrequest.setRepresentationClass(String.class);
-	String vQuery = (String)aContext.issueRequest(freemarkerrequest);
+INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
+freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
+freemarkerrequest.addArgumentByValue("owner", aOwner);
+freemarkerrequest.addArgumentByValue("id", aID);
+freemarkerrequest.addArgumentByValue("extension", aExtension);
+freemarkerrequest.setRepresentationClass(String.class);
+String vQuery = (String)aContext.issueRequest(freemarkerrequest);
 	
-	INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
-	sparqlrequest.addArgument("database", "kbodata:database");
-	sparqlrequest.addArgument("expiry", "kbodata:expiry");
-	sparqlrequest.addArgument("credentials", "kbodata:credentials");
-	sparqlrequest.addArgumentByValue("query", vQuery);
-	sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
-	vSparqlResult = aContext.issueRequest(sparqlrequest);
-	
-	INKFRequest pdssinkrequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
-	pdssinkrequest.setVerb(INKFRequestReadOnly.VERB_SINK);
-	pdssinkrequest.addPrimaryArgument(vSparqlResult);
-	aContext.issueRequest(pdssinkrequest);
-}
-else {
-	INKFRequest pdssourcerequest = aContext.createRequest("pds:/kbodata/" + aOwner + '/' + aID);
-	pdssourcerequest.setVerb(INKFRequestReadOnly.VERB_SOURCE);
-	vSparqlResult = aContext.issueRequest(pdssourcerequest);
-}
+INKFRequest sparqlrequest = aContext.createRequest("active:sparqlasync");
+sparqlrequest.addArgument("database", "kbodata:database");
+sparqlrequest.addArgument("expiry", "kbodata:expiry");
+sparqlrequest.addArgument("credentials", "kbodata:credentials");
+sparqlrequest.addArgumentByValue("query", vQuery);
+sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+Object vSparqlResult = aContext.issueRequest(sparqlrequest);
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);

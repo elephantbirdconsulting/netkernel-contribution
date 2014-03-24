@@ -33,8 +33,8 @@ import org.netkernel.layer0.representation.impl.HDSBuilder;
  * 
  */
 
-public class SPARQLAccessor extends StandardAccessorImpl {
-	public SPARQLAccessor() {
+public class SPARQLAsyncAccessor extends StandardAccessorImpl {
+	public SPARQLAsyncAccessor() {
 		this.declareThreadSafe();
 		this.declareArgument(new SourcedArgumentMetaImpl("database",null,null,new Class[] {String.class}));
 		this.declareArgument(new SourcedArgumentMetaImpl("query",null,null,new Class[] {String.class}));
@@ -117,40 +117,18 @@ public class SPARQLAccessor extends StandardAccessorImpl {
 	    HDSBuilder vBody = new HDSBuilder();
         vBody.pushNode("query", aQuery);
         
-        HDSBuilder vConfig = new HDSBuilder();
-        vConfig.pushNode("config");
-        vConfig.addNode("expectContinue", false);
-        vConfig.addNode("followRedirects", false);
-        vConfig.popNode();
-        
         String vHost = (String)aCredentials.getFirstValue("/httpCredentials/host");
         String vPort = (String)aCredentials.getFirstValue("/httpCredentials/port");
         //
         
-        // setting up the session
-        INKFRequest staterequest = aContext.createRequest("active:httpState");
-        staterequest.addArgumentByValue("credentials", aCredentials);
-        staterequest.setVerb(INKFRequestReadOnly.VERB_NEW);
-        staterequest.setHeader("exclude-dependencies",true);
-        String vId = (String)aContext.issueRequest(staterequest);
-        //
-        
         // triplestore request
-		INKFRequest triplestorerequest = aContext.createRequest("active:httpPost");
-		triplestorerequest.addArgument("url", "http://" + vHost + ":" + vPort + "/" + aDatabase + "/query");
+		INKFRequest triplestorerequest = aContext.createRequest("active:post");
+		triplestorerequest.addArgumentByValue("url", "http://" + vHost + ":" + vPort + "/" + aDatabase + "/query");
 		triplestorerequest.addArgumentByValue("headers",vHeaders.getRoot());
-		triplestorerequest.addArgument("state", vId);
 		triplestorerequest.addArgumentByValue("nvp",vBody.getRoot());
-		triplestorerequest.addArgumentByValue("config", vConfig.getRoot());
+		triplestorerequest.addArgumentByValue("credentials",aCredentials);
         triplestorerequest.setHeader("exclude-dependencies",true);
     	Object vTripleStoreResult = aContext.issueRequest(triplestorerequest);        
-        //
-        
-        // tearing down the session
-		INKFRequest removestaterequest = aContext.createRequest(vId);
-		removestaterequest.setVerb(INKFRequestReadOnly.VERB_DELETE);
-		removestaterequest.setHeader("exclude-dependencies",true);
-		aContext.issueRequest(removestaterequest);
         //
         
 		// response

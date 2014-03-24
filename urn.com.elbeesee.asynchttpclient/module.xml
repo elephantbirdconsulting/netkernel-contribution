@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:asynchttpclient</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / async httpclient</name>
+			<description>elbeesee / async httpclient</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+	<rootspace 
+		name="elbeesee async httpclient"
+		public="true"
+		uri="urn:com:elbeesee:asynchttpclient">
+
+		<accessor>
+			<id>elbeesee:asynchttpclient:post:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:post</identifier>
+					<argument name="url" desc="url" max="1" min="1"/>
+					<argument name="credentials" desc="credentials" max="1" min="0"/>
+					<argument name="headers" desc="headers" max="1" min="0"/>
+					<argument name="nvp" desc="nvp" max="1" min="0"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.asynchttpclient.PostAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:asynchttpclient:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee async httpclient internal"
+		public="false"
+		uri="urn:com:elbeesee:asynchttpclient:internal">
+
+		<import>
+			<!-- data: scheme -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+</module>

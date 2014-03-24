@@ -40,6 +40,18 @@
     margin-left: 2%;
 }
 
+#content .predicate.odd {
+    margin-left: 0 !important;
+    margin-right: 2% !important;
+    clear: both !important;
+}
+
+#content .predicate.even {
+    margin-left: 2% !important;
+    margin-right: 0 !important;
+    clear: none !important;
+}
+
 #content .predicate .label {
     background-color: #aa322b;
     color: #fff;

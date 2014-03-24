@@ -1,0 +1,26 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX void: <http://rdfs.org/ns/void#>
+
+CONSTRUCT { 
+ ${subject} ${predicate} ${object} .
+ ?fragmentnode void:triples ?triples .
+}
+WHERE { 
+ {SELECT ${subject} ${predicate} ${object} 
+  WHERE {
+  ${subject} ${predicate} ${object} .
+  }
+  OFFSET ${offset}
+  LIMIT ${limit}
+ }
+ {SELECT (count(*) as ?triples)
+		WHERE {
+			${subject} ${predicate} ${object} .
+		}
+ }
+ { 
+ 	BIND(UUID() as ?fragmentnode)
+ }
+}
