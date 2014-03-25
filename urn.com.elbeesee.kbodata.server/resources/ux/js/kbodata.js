@@ -67,6 +67,14 @@
                 var html = '<div class="map"><iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + src + '"></iframe></div>';
                 $('.properties').first().before(html);
             }
+            else {
+              address = $('.predicate .label[href="http://www.w3.org/ns/locn#address"]').next('.objects').find('a').first().text();
+              if (address) {
+                var src = '//maps.google.be/maps?f=q&amp;source=s_q&amp;hl=en&amp;q=' + encodeURIComponent(address) + '&amp;iwloc=A&amp;output=embed';
+                var html = '<div class="map"><iframe class="map" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + src + '"></iframe></div>';
+                $('.properties').first().before(html);
+              }
+            }
         },
         
         injectTitles: function() {
