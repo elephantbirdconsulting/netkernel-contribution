@@ -367,7 +367,7 @@
 										<xsl:value-of select="current-grouping-key()"/>
 									</a>
 									<div class="objects">
-										<xsl:variable name="list" as="node()+">
+										<xsl:variable name="list" as="node()*">
 											<xsl:for-each select="current-group()">
 												<xsl:for-each select="preceding-sibling::rdfs:label">
 												  <xsl:copy>
