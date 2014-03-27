@@ -29,11 +29,14 @@ CONSTRUCT {
  <http://data.kbodata.be/${owner}/${id}.${extension}> dcterms:rights <http://creativecommons.org/publicdomain/zero/1.0/>.
 }
 WHERE {
- <http://data.kbodata.be/${owner}/${id}#id> ?vp ?v.
- FILTER (isLiteral(?v))
- <http://data.kbodata.be/${owner}/${id}#id> ?op ?out.
- FILTER (isURI(?out))
- OPTIONAL {?out rdfs:label ?olabel.}
- OPTIONAL {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>. 
- OPTIONAL {?s rdfs:label ?ilabel}}
+ {<http://data.kbodata.be/${owner}/${id}#id> ?vp ?v.
+  FILTER (isLiteral(?v))
+  <http://data.kbodata.be/${owner}/${id}#id> ?op ?out.
+  FILTER (isURI(?out))
+  OPTIONAL {?out rdfs:label ?olabel.}
+ }
+ UNION
+ {?s ?ip <http://data.kbodata.be/${owner}/${id}#id>.
+  OPTIONAL {?s rdfs:label ?ilabel}
+ }
 }

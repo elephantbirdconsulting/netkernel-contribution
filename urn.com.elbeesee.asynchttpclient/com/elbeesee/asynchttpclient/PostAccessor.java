@@ -23,7 +23,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -36,7 +35,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class PostAccessor extends StandardAccessorImpl {
 	private static CloseableHttpAsyncClient mHttpclient;
-	private static RequestConfig mRequestConfig;
 	
 	public PostAccessor() {
 		this.declareThreadSafe();
@@ -49,14 +47,6 @@ public class PostAccessor extends StandardAccessorImpl {
 	public void postCommission(INKFRequestContext aContext) throws Exception {
 		mHttpclient = HttpAsyncClients.createDefault();
 		mHttpclient.start();
-		
-		mRequestConfig = RequestConfig.custom()
-				.setSocketTimeout(10000)
-				.setConnectTimeout(10000)
-				.setConnectionRequestTimeout(10000)
-				.setExpectContinueEnabled(false)
-				.setRedirectsEnabled(true)
-				.build();
 	}
 	
 	public void preDecommission(INKFRequestContext aContext) throws Exception {
@@ -119,7 +109,6 @@ public class PostAccessor extends StandardAccessorImpl {
 		// credentials
 		IHDSNode aCredentials = null;
 		HttpClientContext httppostcontext = HttpClientContext.create();
-		httppostcontext.setRequestConfig(mRequestConfig);
 		if (aContext.getThisRequest().argumentExists("credentials")) {
 			try {
 				aCredentials = aContext.source("arg:credentials", IHDSNode.class);

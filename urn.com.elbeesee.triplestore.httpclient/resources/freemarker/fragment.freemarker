@@ -8,7 +8,7 @@ CONSTRUCT {
  ?fragmentnode void:triples ?triples .
 }
 WHERE { 
- {SELECT ${subject} ${predicate} ${object} 
+ {SELECT *
   WHERE {
   ${subject} ${predicate} ${object} .
   }
