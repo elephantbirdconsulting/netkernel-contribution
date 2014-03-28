@@ -12,7 +12,6 @@
 	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt"
 	version="2.0">
 	<xsl:output indent="yes" method="xhtml"/>
-	<xsl:variable name="list"/>
 	<xsl:key name="label" match="rdf:Description" use="@rdf:about"/>
 	<xsl:function name="pt:q2uri">
 		<xsl:param name="q"/>
@@ -109,10 +108,9 @@
 				<xsl:value-of select="local-name($key[1])"/>
 			</a>
 			<div class="objects">
-				<xsl:for-each select="$key">
+				<!--<xsl:for-each select="$key">
 					<xsl:for-each
 						select="//rdf:Description[@rdf:about = current()/@rdf:resource]/rdfs:label">
-
 						<a href="{../@rdf:about}">
 							<xsl:if test="@xml:lang">
 								<xsl:attribute name="xml:lang">
@@ -121,8 +119,19 @@
 							</xsl:if>
 							<xsl:value-of select="normalize-space(.)"/>
 						</a>
-
 					</xsl:for-each>
+				</xsl:for-each>-->
+				<xsl:for-each
+					select="//rdf:Description[@rdf:about = $key/@rdf:resource]/rdfs:label">
+					<xsl:sort select="."/>
+					<a href="{../@rdf:about}">
+						<xsl:if test="@xml:lang">
+							<xsl:attribute name="xml:lang">
+								<xsl:value-of select="@xml:lang"/>
+							</xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="normalize-space(.)"/>
+					</a>
 				</xsl:for-each>
 			</div>
 		</div>
@@ -169,7 +178,15 @@
 		<html>
 			<head>
 				<title>
-					<xsl:value-of select="concat('KBO:', org:identifier)"/>
+					<xsl:choose>
+						<xsl:when test="org:identifier">
+							<xsl:value-of select="concat('KBO:', org:identifier)"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="concat('KBO:', rdfs:label)"/>
+						</xsl:otherwise>
+					</xsl:choose>
+					
 				</title>
 				<meta name="viewport"
 					content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
@@ -361,7 +378,7 @@
 							<xsl:for-each-group
 								select="/descendant::rdf:Description[not(rdf:type)]/*[@rdf:resource and namespace-uri() != 'http://purl.org/dc/terms/']"
 								group-by="node-name(.)">
-								<xsl:sort select="current-grouping-key()"/>
+								<!--<xsl:sort select="current-grouping-key()"/>-->
 								<div class="predicate">
 									<a class="label" href="{concat(namespace-uri(.),local-name(.))}">
 										<xsl:value-of select="current-grouping-key()"/>
