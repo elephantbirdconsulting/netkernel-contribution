@@ -110,7 +110,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>fragment</simple>
+									<simple>fragments</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>

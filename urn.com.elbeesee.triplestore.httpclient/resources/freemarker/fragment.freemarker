@@ -16,7 +16,6 @@ CONSTRUCT {
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/N-Triples> .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/JSON-LD> .
  <${url}${query}> void:vocabulary <http://purl.org/dc/terms/> .
- <${url}${query}> void:vocabulary <http://data.kbodata.be/def#> .
  <${url}${query}> void:vocabulary <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
  <${url}${query}> void:vocabulary <http://rdfs.org/ns/void#> .
  <${url}${query}> void:vocabulary <http://www.w3.org/ns/hydra/core#> .

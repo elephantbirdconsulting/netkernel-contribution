@@ -18,7 +18,7 @@ PREFIX api: <http://purl.org/linked-data/api/vocab#>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 
 CONSTRUCT {
-	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity, hydra:Collection;;
+	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity, hydra:Collection;
 		rdfs:label "KBO dataset"@nl;
 		dcterms:title "Dataset van de Kruispuntbank van Ondernemingen"@nl;
 		dcterms:title "to be translated"@fr;
@@ -62,9 +62,9 @@ CONSTRUCT {
 		void:classes ?classes;
 		void:properties ?properties;
 		void:entities ?entities;
-		void:uriLookupEndpoint "http://data.kbodata.be/fragment{?subject,predicate,object,offset,limit}";
+		void:uriLookupEndpoint "http://data.kbodata.be/fragments{?subject,predicate,object,offset,limit}";
 		hydra:search ?tripplePattern .
- 	?tripplePattern hydra:template "http://data.kbodata.be/fragment{?subject,predicate,object,offset,limit}" .
+ 	?tripplePattern hydra:template "http://data.kbodata.be/fragments{?subject,predicate,object,offset,limit}" .
  	?tripplePattern hydra:mapping ?trippleSubject,?tripplePredicate,?trippleObject .
  	?trippleSubject hydra:variable "subject" .
  	?trippleSubject hydra:property rdf:subject .
