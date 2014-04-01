@@ -482,6 +482,8 @@
 			</config>
 		</literal>
 		
+		<literal type="string" uri="kbodata:dataset">http://data.kbodata.be/dataset/kbo#id</literal>
+		
 		<import>
 			<!-- pds:/ scheme -->
 			<uri>urn:org:netkernel:mod:pds</uri>

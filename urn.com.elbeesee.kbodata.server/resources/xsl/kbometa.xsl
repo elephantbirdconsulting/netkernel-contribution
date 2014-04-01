@@ -122,7 +122,7 @@
 						</xsl:for-each>
 					</div>
 					<div class="links outbound">
-						<xsl:for-each-group select="*[@rdf:resource]" group-by="local-name(.)">
+						<xsl:for-each-group select="*[@rdf:resource][not(contains(@rdf:resource,'uuid'))]" group-by="local-name(.)">
 							<xsl:sort select="local-name(.)"/>
 							<div class="predicate">
 								<a class="label" href="{pt:q2uri(.[1])}">

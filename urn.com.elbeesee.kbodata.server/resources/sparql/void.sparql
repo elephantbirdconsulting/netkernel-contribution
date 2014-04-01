@@ -15,9 +15,10 @@ PREFIX void: <http://rdfs.org/ns/void#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX api: <http://purl.org/linked-data/api/vocab#>
+PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 
 CONSTRUCT {
-	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity;
+	<http://data.kbodata.be/dataset/kbo#id> a void:Dataset, prov:Entity, hydra:Collection;;
 		rdfs:label "KBO dataset"@nl;
 		dcterms:title "Dataset van de Kruispuntbank van Ondernemingen"@nl;
 		dcterms:title "to be translated"@fr;
@@ -37,7 +38,7 @@ CONSTRUCT {
 		void:exampleResource ?site;
 		void:exampleResource ?conceptscheme;
 		void:exampleResource ?concept;
-		void:uriRegexPattern "^http://data\\.kbodata\\.be/(activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise|activity|softwareagent)/(.*)#id$";
+		void:uriRegexPattern "^http://data\\.kbodata\\.be/(activity|activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise|activity|softwareagent)/(.*)#id$";
 		void:vocabulary <http://purl.org/dc/terms/>;
 		void:vocabulary <http://xmlns.com/foaf/0.1/>;
 		void:vocabulary <http://data.kbodata.be/def#>;
@@ -53,12 +54,24 @@ CONSTRUCT {
 		void:vocabulary <http://www.w3.org/2006/vcard/ns#>;
 		void:vocabulary <http://rdfs.org/ns/void#>;
 		void:vocabulary <http://www.w3.org/2001/XMLSchema#>;
+		void:vocabulary <http://www.w3.org/ns/hydra/core#>;
 		void:triples ?triples;
+		hydra:totalItems ?triples;
 		void:distinctSubjects ?subjects;
 		void:distinctObjects ?objects;
 		void:classes ?classes;
 		void:properties ?properties;
-		void:entities ?entities.
+		void:entities ?entities;
+		void:uriLookupEndpoint "http://data.kbodata.be/fragment{?subject,predicate,object,offset,limit}";
+		hydra:search ?tripplePattern .
+ 	?tripplePattern hydra:template "http://data.kbodata.be/fragment{?subject,predicate,object,offset,limit}" .
+ 	?tripplePattern hydra:mapping ?trippleSubject,?tripplePredicate,?trippleObject .
+ 	?trippleSubject hydra:variable "subject" .
+ 	?trippleSubject hydra:property rdf:subject .
+ 	?tripplePredicate hydra:variable "predicate" .
+ 	?tripplePredicate hydra:property rdf:predicate .
+ 	?trippleObject hydra:variable "object" .
+ 	?trippleObject hydra:property rdf:object .
 }
 WHERE {
 	{SELECT (count(*) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
@@ -103,5 +116,11 @@ WHERE {
 		}
 		LIMIT 2
 	}
+	{	 
 	BIND (now() as ?today)
+ 	BIND (UUID() as ?tripplePattern)
+ 	BIND (UUID() as ?trippleSubject)
+ 	BIND (UUID() as ?tripplePredicate)
+ 	BIND (UUID() as ?trippleObject)
+ 	}
 }

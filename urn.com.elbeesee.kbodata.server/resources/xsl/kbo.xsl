@@ -183,7 +183,7 @@
 							<xsl:value-of select="concat('KBO:', org:identifier)"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="concat('KBO:', rdfs:label)"/>
+							<xsl:value-of select="concat('KBO:', rdfs:label[1])"/>
 						</xsl:otherwise>
 					</xsl:choose>
 					

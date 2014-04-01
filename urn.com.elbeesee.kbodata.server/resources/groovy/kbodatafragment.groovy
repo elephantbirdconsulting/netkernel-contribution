@@ -34,6 +34,7 @@ String vPredicate = aContext.source("httpRequest:/param/predicate", String.class
 String vObject = aContext.source("httpRequest:/param/object", String.class);
 String vLimit = aContext.source("httpRequest:/param/limit", String.class);
 String vOffset = aContext.source("httpRequest:/param/offset", String.class);
+String vURL = aContext.source("httpRequest:/url", String.class);
 
 String aExtension = null;
 try {
@@ -79,6 +80,10 @@ if (vLimit != null) {
 if (vOffset != null) {
 	fragmentrequest.addArgumentByValue("offset", vOffset);
 }
+if (vURL != null) {
+	fragmentrequest.addArgumentByValue("url", vURL);
+}
+fragmentrequest.addArgument("dataset", "kbodata:dataset");
 fragmentrequest.addArgument("expiry", "kbodata:expiry");
 fragmentrequest.addArgument("credentials", "kbodata:credentials");
 fragmentrequest.addArgumentByValue("accept", "application/rdf+xml");
@@ -124,6 +129,7 @@ if (aExtension.equals("html")) {
 	
 	INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
 	xsltrequest.addArgumentByValue("operand", vRBS);
+	xsltrequest.addArgumentByValue("url", vURL);
 	xsltrequest.addArgument("operator", "res:/resources/xsl/kbofragment.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	

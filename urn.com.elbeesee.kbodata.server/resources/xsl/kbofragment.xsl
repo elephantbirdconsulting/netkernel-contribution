@@ -12,6 +12,7 @@
 	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt"
 	version="2.0">
 	<xsl:output indent="yes" method="xhtml"/>
+	<xsl:param name="url" nk:class="java.lang.String" />
 	
 	<xsl:template match="/">
 		<html>
@@ -34,6 +35,32 @@
 							<span>KBO DATA</span>
 						</a>
 					</div>
+				</div>
+				<div id="content">
+					<xsl:for-each select="rdf:RDF/rdf:Description[not(contains(@rdf:about,'uuid'))][not(contains(@rdf:about,$url))]">
+						<xsl:variable name="subject">
+							&lt;<xsl:value-of select="@rdf:about"/>&gt;
+						</xsl:variable>
+						<xsl:for-each select="*">
+							<xsl:variable name="predicate">
+								&lt;<xsl:value-of select="concat(namespace-uri(),local-name())"/>&gt;
+							</xsl:variable>
+							<xsl:variable name="object">
+								<xsl:if test="@rdf:resource">
+									&lt;<xsl:value-of select="@rdf:resource"/>&gt;
+								</xsl:if>
+								<xsl:if test="not(@rdf:resource)">
+									"<xsl:value-of select="."/>"
+								</xsl:if>
+							</xsl:variable>
+							<xsl:variable name="language">
+								<xsl:if test="@xml:lang">
+									<xsl:value-of select="concat('@',@xml:lang)"/>
+								</xsl:if>
+							</xsl:variable>
+							<div><xsl:value-of select="$subject"/> - <xsl:value-of select="$predicate"/> - <xsl:value-of select="$object"/><xsl:value-of select="$language"/></div>
+						</xsl:for-each>
+					</xsl:for-each>
 				</div>
 				<div id="footer">
 					<div>
