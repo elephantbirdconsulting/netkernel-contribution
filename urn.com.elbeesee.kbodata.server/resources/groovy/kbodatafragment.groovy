@@ -35,6 +35,7 @@ String vObject = aContext.source("httpRequest:/param/object", String.class);
 String vLimit = aContext.source("httpRequest:/param/limit", String.class);
 String vOffset = aContext.source("httpRequest:/param/offset", String.class);
 String vURL = aContext.source("httpRequest:/url", String.class);
+String vQuery = aContext.source("httpRequest:/query", String.class);
 
 String aExtension = null;
 try {
@@ -82,6 +83,9 @@ if (vOffset != null) {
 }
 if (vURL != null) {
 	fragmentrequest.addArgumentByValue("url", vURL);
+}
+if (vQuery != null) {
+	fragmentrequest.addArgumentByValue("query", vQuery);
 }
 fragmentrequest.addArgument("dataset", "kbodata:dataset");
 fragmentrequest.addArgument("expiry", "kbodata:expiry");

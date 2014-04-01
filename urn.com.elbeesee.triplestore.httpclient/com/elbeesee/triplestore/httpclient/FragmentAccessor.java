@@ -10,8 +10,6 @@ package com.elbeesee.triplestore.httpclient;
 /**
  * Accessor Imports.
  */
-import java.net.URLEncoder;
-
 import org.netkernel.layer0.nkf.*;
 import org.netkernel.layer0.meta.impl.SourcedArgumentMetaImpl;
 import org.netkernel.module.standard.endpoint.StandardAccessorImpl;
@@ -119,6 +117,21 @@ public class FragmentAccessor extends StandardAccessorImpl {
 		}
 		if (aURL.equals("")) {
 			aURL = "http://localhost/fragment";
+		}
+		//
+		
+		// query
+		String aQuery = null;
+		if (aContext.getThisRequest().argumentExists("query")) {
+			try {
+				aQuery = aContext.source("arg:query", String.class);
+			}
+			catch (Exception e) {
+				throw new Exception("the request does not have a valid - query - argument");				
+			}
+		}
+		else {
+			aQuery = "";
 		}
 		//
 		
@@ -239,7 +252,7 @@ public class FragmentAccessor extends StandardAccessorImpl {
 		INKFRequest buildfragment = aContext.createRequest("active:freemarker");
 		buildfragment.addArgument("operator", "res:/resources/freemarker/fragment.freemarker");
 		buildfragment.addArgumentByValue("dataset", aDataset);
-		buildfragment.addArgumentByValue("query", "?subject=" + URLEncoder.encode(aSubject, "UTF-8") + "&predicate=" + URLEncoder.encode(aPredicate, "UTF-8") + "&object=" + URLEncoder.encode(aObject, "UTF-8") + "&offset=" + aOffset.toString() + "&limit=" + aLimit.toString());
+		buildfragment.addArgumentByValue("query", (aQuery.equals("")) ? "" : "?" + aQuery);
 		buildfragment.addArgumentByValue("url", aURL);
 		buildfragment.addArgumentByValue("subject", aSubject);
 		buildfragment.addArgumentByValue("predicate", aPredicate);
@@ -250,9 +263,10 @@ public class FragmentAccessor extends StandardAccessorImpl {
 		if (vPrevious < 0L) {
 			vPrevious = 0L;
 		}
-		buildfragment.addArgumentByValue("previous", aURL + "?subject=" + URLEncoder.encode(aSubject, "UTF-8") + "&predicate=" + URLEncoder.encode(aPredicate, "UTF-8") + "&object=" + URLEncoder.encode(aObject, "UTF-8") + "&offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
 		Long vNext = aOffset + aLimit;
-		buildfragment.addArgumentByValue("next", aURL + "?subject=" + URLEncoder.encode(aSubject, "UTF-8") + "&predicate=" + URLEncoder.encode(aPredicate, "UTF-8") + "&object=" + URLEncoder.encode(aObject, "UTF-8") + "&offset=" + vNext.toString() + "&limit=" + aLimit.toString());
+		String vQueryWithoutPosition = ("?" + aQuery).replaceAll("(?<=[?&;])offset=.*?($|[&;])", "").replaceAll("(?<=[?&;])limit=.*?($|[&;])", "").replaceAll("&$","");
+		buildfragment.addArgumentByValue("previous", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
+		buildfragment.addArgumentByValue("next", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vNext.toString() + "&limit=" + aLimit.toString());
 		buildfragment.setRepresentationClass(String.class);
 		String vFragment = (String)aContext.issueRequest(buildfragment);
 		

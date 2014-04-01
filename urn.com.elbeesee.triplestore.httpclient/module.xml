@@ -73,6 +73,7 @@
 					<argument name="credentials" desc="http credentials" max="1" min="1"/>
 					<argument name="accept" desc="accept header" max="1" min="1"/>
 					<!-- fragment specific arguments -->
+					<argument name="query" desc="query" max="1" min="0"/>
 					<argument name="dataset" desc="dataset" max="1" min="0"/>
 					<argument name="url" desc="url" max="1" min="0"/>
 					<argument name="subject" desc="subject" max="1" min="0"/>
