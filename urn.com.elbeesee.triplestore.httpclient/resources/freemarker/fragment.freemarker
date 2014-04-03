@@ -20,6 +20,15 @@ CONSTRUCT {
  <${url}${query}> void:vocabulary <http://rdfs.org/ns/void#> .
  <${url}${query}> void:vocabulary <http://www.w3.org/ns/hydra/core#> .
  <${dataset}> void:subset <${url}${query}> .
+ <${dataset}> hydra:search ?tripplePattern .
+ ?tripplePattern hydra:template "${url}{?subject,predicate,object,offset,limit}" .
+ ?tripplePattern hydra:mapping ?trippleSubject,?tripplePredicate,?trippleObject .
+ ?trippleSubject hydra:variable "subject" .
+ ?trippleSubject hydra:property rdf:subject .
+ ?tripplePredicate hydra:variable "predicate" .
+ ?tripplePredicate hydra:property rdf:predicate .
+ ?trippleObject hydra:variable "object" .
+ ?trippleObject hydra:property rdf:object . 
  ${subject} ${predicate} ${object} .
 }
 WHERE { 

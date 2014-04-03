@@ -254,3 +254,17 @@ h2, h3
     width: 160px;
     height: 48px;
 }
+
+ul.triples {
+	margin: .3em 0 1em 20px;
+	list-style: none;
+	font-size: .95em;
+	line-height: 1.5;
+	font-family: monospace;
+}
+ul.triples a {
+	color: inherit;
+}
+ul.triples a:nth-child(2) {
+	margin: 0 1em;
+}

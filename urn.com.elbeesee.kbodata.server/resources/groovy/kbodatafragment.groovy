@@ -134,6 +134,7 @@ if (aExtension.equals("html")) {
 	INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
 	xsltrequest.addArgumentByValue("operand", vRBS);
 	xsltrequest.addArgumentByValue("url", vURL);
+	xsltrequest.addArgument("dataset", "kbodata:dataset");
 	xsltrequest.addArgument("operator", "res:/resources/xsl/kbofragment.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	

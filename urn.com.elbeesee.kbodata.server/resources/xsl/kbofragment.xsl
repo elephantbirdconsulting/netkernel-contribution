@@ -13,6 +13,7 @@
 	version="2.0">
 	<xsl:output indent="yes" method="xhtml"/>
 	<xsl:param name="url" nk:class="java.lang.String" />
+	<xsl:param name="dataset" nk:class="java.lang.String" />
 	
 	<xsl:template match="/">
 		<html>
@@ -37,9 +38,20 @@
 					</div>
 				</div>
 				<div id="content">
-					<xsl:for-each select="rdf:RDF/rdf:Description[not(contains(@rdf:about,'uuid'))][not(contains(@rdf:about,$url))]">
+					<div class="export-options">
+						<a href="http://creativecommons.org/publicdomain/zero/1.0/">
+							<img src="/img/cc-zero-80x15.png"
+								alt="License: CC Public DOmain Zero 1.0"/>
+						</a>
+					</div>
+					<h1>KBO fragment server</h1>
+					<ul class="triples">
+					<xsl:for-each select="rdf:RDF/rdf:Description[not(contains(@rdf:about,'uuid'))][not(contains(@rdf:about,$url))][not(contains(@rdf:about,$dataset))]">
 						<xsl:variable name="subject">
 							&lt;<xsl:value-of select="@rdf:about"/>&gt;
+						</xsl:variable>
+						<xsl:variable name="subjectprint">
+							<xsl:value-of select="local-name(@rdf:about)"/>
 						</xsl:variable>
 						<xsl:for-each select="*">
 							<xsl:variable name="predicate">
@@ -58,9 +70,35 @@
 									<xsl:value-of select="concat('@',@xml:lang)"/>
 								</xsl:if>
 							</xsl:variable>
-							<div><xsl:value-of select="$subject"/> - <xsl:value-of select="$predicate"/> - <xsl:value-of select="$object"/><xsl:value-of select="$language"/></div>
+							<xsl:variable name="subjectencode">
+								<xsl:value-of select="encode-for-uri(normalize-space($subject))"/>
+							</xsl:variable>
+							<xsl:variable name="predicateencode">
+								<xsl:value-of select="encode-for-uri(normalize-space($predicate))"/>
+							</xsl:variable>
+							<xsl:variable name="objectencode">
+								<xsl:value-of select="encode-for-uri(normalize-space(concat($object,$language)))"/>
+							</xsl:variable>
+							
+							<li>
+							<a class="label" href="{$url}?subject={$subjectencode}">
+								<xsl:value-of select="substring-before(substring-after($subject,'#'),'&gt;')"/>
+							</a> 
+							<a class="label" href="{$url}?predicate={$predicateencode}">
+								<xsl:value-of select="substring-before(substring-after($predicate,'#'),'&gt;')"/>
+							</a> 
+							<a href="{$url}?object={$objectencode}">
+								<xsl:if test="starts-with($object,'&lt;')">
+									<xsl:value-of select="substring-before(substring-after($object,'#'),'&gt;')"/>
+								</xsl:if>
+								<xsl:if test="not(starts-with($object,'&lt;'))">
+									<xsl:value-of select="$object"/><xsl:value-of select="$language"/>
+								</xsl:if>
+							</a>
+							</li>
 						</xsl:for-each>
 					</xsl:for-each>
+					</ul>
 				</div>
 				<div id="footer">
 					<div>
