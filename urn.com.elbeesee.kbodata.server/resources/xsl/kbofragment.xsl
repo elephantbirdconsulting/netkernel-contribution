@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:kbo="http://data.kbodata.be/def#"
-	xmlns:locn="http://www.w3.org/ns/locn#" xmlns:org="http://www.w3.org/ns/org#"
-	xmlns:oslo="http://purl.org/oslo/ns/localgov#" xmlns:owl="http://www.w3.org/2002/07/owl#"
+<xsl:stylesheet 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+	xmlns:kbo="http://data.kbodata.be/def#"
+	xmlns:locn="http://www.w3.org/ns/locn#" 
+	xmlns:org="http://www.w3.org/ns/org#"
+	xmlns:oslo="http://purl.org/oslo/ns/localgov#" 
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:rov="http://www.w3.org/ns/regorg#"
-	xmlns:schema="http://schema.org/" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-	xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:void="http://rdfs.org/ns/void#"
-	xmlns:prov="http://www.w3.org/ns/prov#" xmlns:nk="http://1060.org"
-	xmlns:pt="http://www.proxml.be/xpath/functions/" xmlns:dcterms="http://purl.org/dc/terms/"
-	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:rov="http://www.w3.org/ns/regorg#"
+	xmlns:schema="http://schema.org/" 
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:vcard="http://www.w3.org/2006/vcard/ns#" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:void="http://rdfs.org/ns/void#"
+	xmlns:prov="http://www.w3.org/ns/prov#" 
+	xmlns:nk="http://1060.org"
+	xmlns:pt="http://www.proxml.be/xpath/functions/" 
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:hydra="http://www.w3.org/ns/hydra/core#"
+	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt hydra"
 	version="2.0">
 	<xsl:output indent="yes" method="xhtml"/>
 	<xsl:param name="url" nk:class="java.lang.String" />
@@ -44,7 +55,29 @@
 								alt="License: CC Public DOmain Zero 1.0"/>
 						</a>
 					</div>
-					<h1>KBO fragment server</h1>
+					<h1><span>KBO fragment server</span></h1>
+					<div id="fragment-nav">
+						<xsl:variable name="previous">
+							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:previousPage"/>
+						</xsl:variable>
+						<xsl:variable name="next">
+							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:nextPage"/>
+						</xsl:variable>
+						<a href="{$previous}">PREVIOUS</a>
+						<a href="{$next}">NEXT</a>
+					</div>
+					
+					<div class="properties">
+						<div class="predicate">
+							<a class="label" href="http://www.w3.org/ns/hydra/core#totalItems">totalItems</a>
+							<div class="objects">
+								<p>
+									<xsl:value-of select="normalize-space(rdf:RDF/rdf:Description/hydra:totalItems)"/>
+								</p>
+							</div>
+						</div>					
+					</div>
+					
 					<ul class="triples">
 					<xsl:for-each select="rdf:RDF/rdf:Description[not(contains(@rdf:about,'uuid'))][not(contains(@rdf:about,$url))][not(contains(@rdf:about,$dataset))]">
 						<xsl:variable name="subject">

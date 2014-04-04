@@ -32,9 +32,9 @@ CONSTRUCT {
  ${subject} ${predicate} ${object} .
 }
 WHERE { 
- {SELECT *
+ OPTIONAL {SELECT *
   WHERE {
-  ${subject} ${predicate} ${object} .
+  	${subject} ${predicate} ${object} .
   }
   OFFSET ${offset}
   LIMIT ${limit}

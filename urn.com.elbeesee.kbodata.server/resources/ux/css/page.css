@@ -268,3 +268,28 @@ ul.triples a {
 ul.triples a:nth-child(2) {
 	margin: 0 1em;
 }
+
+#fragment-nav
+{
+    position: fixed;
+    left: 0;
+    top: 50%;
+    background-color: #555;
+    display: inline-block;
+    padding: 0 8px 0 8px;
+    margin-top: -100px;
+}
+
+#fragment-nav a
+{
+	font-family: "Lato Hairline", "Helvetica Neue", "Helvetica", sans-serif;
+    display: block;
+    padding: 0 5px;
+    color: #f0f0f0;
+    line-height: 2em;
+    vertical-align: middle;
+}
+
+#fragment-nav a:hover {
+    color: #fff;
+}
