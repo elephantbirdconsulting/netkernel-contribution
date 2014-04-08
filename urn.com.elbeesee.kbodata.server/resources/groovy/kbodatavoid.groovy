@@ -67,7 +67,7 @@ else {
 }
 //
 
-INKFRequest sparqlrequest = aContext.createRequest("active:sparqlasync");
+INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
 sparqlrequest.addArgument("database", "kbodata:database");
 sparqlrequest.addArgument("expiry", "kbodata:expiry");
 sparqlrequest.addArgument("credentials", "kbodata:credentials");

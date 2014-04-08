@@ -176,7 +176,7 @@ public class ReconcileLARQAccessor extends StandardAccessorImpl {
 		reconcilequery.setRepresentationClass(String.class);
 		vQuery = (String)aContext.issueRequest(reconcilequery);			
 
-		INKFRequest sparqlrequest = aContext.createRequest("active:sparqlasync");
+		INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
 		sparqlrequest.addArgumentByValue("database", aDatabase);
 		sparqlrequest.addArgumentByValue("query",vQuery);
 		sparqlrequest.addArgumentByValue("accept", "application/sparql-results+xml");

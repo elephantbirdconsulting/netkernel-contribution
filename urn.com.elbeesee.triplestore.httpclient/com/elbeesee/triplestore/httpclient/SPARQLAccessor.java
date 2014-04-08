@@ -136,7 +136,7 @@ public class SPARQLAccessor extends StandardAccessorImpl {
         //
         
         // triplestore request
-		INKFRequest triplestorerequest = aContext.createRequest("active:httpPost");
+		INKFRequest triplestorerequest = aContext.createRequest("active:httpAsyncPost");
 		triplestorerequest.addArgument("url", "http://" + vHost + ":" + vPort + "/" + aDatabase + "/query");
 		triplestorerequest.addArgumentByValue("headers",vHeaders.getRoot());
 		triplestorerequest.addArgument("state", vId);

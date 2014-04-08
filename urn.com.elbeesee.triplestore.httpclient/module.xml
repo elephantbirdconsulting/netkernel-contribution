@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / triplestore / httpclient</name>
@@ -34,21 +34,6 @@
 				</active>
 			</grammar>
 			<class>com.elbeesee.triplestore.httpclient.SPARQLAccessor</class>
-		</accessor>
-		
-		<accessor>
-			<id>elbeesee:triplestore:httpclient:sparqlasync:accessor</id>
-			<grammar>
-				<active>
-					<identifier>active:sparqlasync</identifier>
-					<argument name="database" desc="database name" max="1" min="1"/>
-					<argument name="query" desc="query" max="1" min="1"/>
-					<argument name="accept" desc="accept header" max="1" min="1"/>
-					<argument name="expiry" desc="expiry" max="1" min="1"/>
-					<argument name="credentials" desc="http credentials" max="1" min="1"/>
-				</active>
-			</grammar>
-			<class>com.elbeesee.triplestore.httpclient.SPARQLAsyncAccessor</class>
 		</accessor>
 		
 		<import>
@@ -153,11 +138,6 @@
 		<import>
 			<!-- active:xsltc -->
 			<uri>urn:org:netkernel:xml:core</uri>
-		</import>
-		
-		<import>
-			<!-- active:post -->
-			<uri>urn:com:elbeesee:asynchttpclient</uri>
 		</import>
 	</rootspace>
 </module>

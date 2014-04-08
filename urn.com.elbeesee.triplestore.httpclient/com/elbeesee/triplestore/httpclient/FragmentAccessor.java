@@ -270,7 +270,7 @@ public class FragmentAccessor extends StandardAccessorImpl {
 		buildfragment.setRepresentationClass(String.class);
 		String vFragment = (String)aContext.issueRequest(buildfragment);
 		
-		INKFRequest sparqlrequest = aContext.createRequest("active:sparqlasync");
+		INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
 		sparqlrequest.addArgumentByValue("database", aDatabase);
 		sparqlrequest.addArgumentByValue("query", vFragment);
 		sparqlrequest.addArgumentByValue("accept", aAccept);

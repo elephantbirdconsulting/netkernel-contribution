@@ -13,6 +13,11 @@ import org.netkernel.layer0.nkf.*;
 import org.netkernel.layer0.representation.*
 import org.netkernel.layer0.representation.impl.*;
 
+
+/**
+ * Processing Imports.
+ */
+
 /**
  *
  * KBO data by id Accessor.
@@ -101,7 +106,7 @@ freemarkerrequest.addArgumentByValue("extension", aExtension);
 freemarkerrequest.setRepresentationClass(String.class);
 String vQuery = (String)aContext.issueRequest(freemarkerrequest);
 	
-INKFRequest sparqlrequest = aContext.createRequest("active:sparqlasync");
+INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
 sparqlrequest.addArgument("database", "kbodata:database");
 sparqlrequest.addArgument("expiry", "kbodata:expiry");
 sparqlrequest.addArgument("credentials", "kbodata:credentials");
@@ -112,6 +117,11 @@ Object vSparqlResult = aContext.issueRequest(sparqlrequest);
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);
 Object vJenaParseResult = aContext.issueRequest(jenaparserequest);
+
+INKFRequest modelemptyrequest = aContext.createRequest("active:jRDFModelIsEmpty");
+modelemptyrequest.addArgumentByValue("operand", vJenaParseResult);
+modelemptyrequest.setRepresentationClass(Boolean.class);
+Boolean vIsModelEmpty = (Boolean)aContext.issueRequest(modelemptyrequest);
 
 IReadableBinaryStreamRepresentation vRBS = null;
 String vMimetype = null;
@@ -142,8 +152,6 @@ jenaserializerequest.addArgumentByValue("operand",vJenaParseResult);
 jenaserializerequest.setRepresentationClass(IReadableBinaryStreamRepresentation);
 vRBS = (IReadableBinaryStreamRepresentation)aContext.issueRequest(jenaserializerequest);
 
-
-
 // response
 INKFResponse vResponse = null;
 if (aExtension.equals("html")) {
@@ -170,6 +178,9 @@ catch (Exception e){
 if (vCORSOrigin != null) {
 	// No CORS verification yet, I just allow the origin
 	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+}
+if (vIsModelEmpty) {
+	vResponse.setHeader("httpResponse:/code",404);
 }
 vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //
