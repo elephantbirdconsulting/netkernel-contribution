@@ -1,0 +1,33 @@
+
+/* print.css */
+
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+    
+    #footer {
+        background-color: transparent;
+        position: relative;
+        color: #000;
+    }
+    
+    #content .predicate,
+    #content .predicate.odd,
+    #content .predicate.even
+    {
+        margin: 10px 0 !important;
+        width: 100%;
+        float: none;
+    }
+    
+    #lang-nav,
+    #content .map 
+    {
+        display: none;
+    }
+
+}

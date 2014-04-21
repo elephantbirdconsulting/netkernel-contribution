@@ -1,0 +1,4 @@
+# one entry per line => {uri}{space}{label}
+http://data.kbodata.be/organisation/2_146_815_480#id Zuiderpoort Office Park
+http://data.kbodata.be/address/0314_595_348#id Vooruitgangsstraat 50
+http://data.kbodata.be/juridicalsituation/000#id Normal status

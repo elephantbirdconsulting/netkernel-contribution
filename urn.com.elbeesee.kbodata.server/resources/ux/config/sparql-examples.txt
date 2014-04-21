@@ -1,0 +1,35 @@
+# Use 2 hash characters to mark the beginning of a query.
+# The double-hashed line is used as query label
+
+
+## Active registered organizations
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX oslo: <http://purl.org/oslo/ns/localgov#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?org ?label WHERE {
+    ?org 
+        a rov:RegisteredOrganization ;
+        oslo:companyStatus <http://data.kbodata.be/status/AC#id> ;
+        skos:prefLabel ?label .
+}
+LIMIT 10
+
+
+## Organizations at the Zuiderpoort Office Park
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rov: <http://www.w3.org/ns/regorg#>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX oslo: <http://purl.org/oslo/ns/localgov#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?org ?label WHERE {
+    ?org 
+        a rov:RegisteredOrganization ;
+        org:hasSite <http://data.kbodata.be/organisation/2_146_815_480#id> ;
+        skos:prefLabel ?label .
+    ?test skos:foo "bar", "baz" .
+        
+}
+LIMIT 10

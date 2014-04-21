@@ -1,0 +1,105 @@
+
+/* explorer.css */
+
+#explorer {
+    margin: 16px 0;
+}
+
+#explorer .api {
+    border-top: 1px solid #AA332B;
+    margin: 8px 0 16px 0;
+}
+
+#explorer h4 {
+	font-family: "Lato Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 8px 8px 10px 8px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#explorer .api.active h4,
+#explorer h4:hover
+{
+    background-color: #f0f0f0;
+    color: #AA332B;
+}
+
+#explorer .api .form-area {
+    background-color: #f0f0f0;
+}
+
+#explorer .api form {
+    display: none;
+    overflow: hidden;
+}
+
+#explorer .api.active form {
+    display: block;
+    padding: 16px;
+}
+
+form input,
+form select,
+form textarea
+{
+    
+    width: 70%;
+    padding: 8px 10px;
+    font-size: 14px;
+    line-height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    vertical-align: top;
+}
+
+form select.samples {
+    width: 25%;
+}
+
+form textarea {
+    min-height: 250px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    line-height: 14px;
+}
+
+form select {
+    height: 38px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus
+{
+    border: 2px solid #999;
+}
+
+form .buttons {
+    margin: 10px 0;
+    text-align: left;
+}
+
+form button {
+    display: inline-block;
+    margin-right: 7px;
+    border: 1px solid #666;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+form button:hover,
+form button:focus {
+    background-color: #f0f0f0;
+}
+
+form .buttons .status {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 6px 12px;
+    font-size: 14px;
+}

@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>KBO Linked Data Technical info</title>
+        <style type="text/css">
+            @import url(/css/page.css);
+            @import url(/css/documentation.css);
+            @import url(/css/explorer.css);
+            @import url(/css/responsive.css);
+            @import url(/css/print.css);
+   	    </style>
+        <link rel="shortcut icon" href="/img/favicon.png"/>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href=""><span>KBO DATA</span></a>
+            </div>
+        </div>
+        <div id="content">
+            <h1>KBO Linked Data Technical info</h1>
+
+            <h2>URL's used</h2>
+
+            <h3>for individuals</h3>
+
+            <p>The used URL's are composed according to following pattern:</p>
+
+            <pre><code>   http://data.kbodata.be/{concept}/{identifier}#id
+            </code></pre>
+
+            <ul>
+            <li>concept: the type of entity e.g organisation, address, ...</li>
+            <li>identifier: the kbo identifier where '.' have been replaced by '_'.</li>
+            </ul>
+
+
+            <p> Examples:</p>
+
+            <pre><code>   http://data.kbodata.be/organisation/0308_357_159#id
+   http://data.kbodata.be/address/2_189_876_354#id
+            </code></pre>
+
+            <p>The full pattern of all entities in the database:
+            ^http://data.kbodata.be/(activity|activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise|activity|softwareagent)/(.*)#id$</p>
+
+            <h3>for classes and properties</h3>
+
+            <p>We use, except for one, classes and properties from well-know vocabularies.
+            These vocabularies are:</p>
+
+            <ul>
+            <li>schema</li>
+            <li>org</li>
+            <li>rov</li>
+            <li>oslo</li>
+            <li>rdfs</li>
+            <li>rdf</li>
+            <li>vcard</li>
+            <li>skos</li>
+            <li>owl</li>
+            <li>void</li>
+            <li>dcterms</li>
+            <li>foaf</li>
+            <li>kbo</li>
+            <li>locn</li>
+            <li>xsd</li>
+            </ul>
+
+
+            <p>We added one property being <strong>orgMainActivity</strong> with identifier http://data.kbodata.be/def#orgMainActivity.
+            As you might expect the definition can be found at this <a href="http://data.kbodata.be/def#orgMainActivity">address</a>.</p>
+
+            <h2>conneg (content negotiation)</h2>
+
+            <p>The linked data server supports content negotiation for following formats:</p>
+
+            <ul>
+            <li>html</li>
+            <li>rdf/xml (default)</li>
+            <li>turtle</li>
+            <li>ntriples</li>
+            <li>jsonld</li>
+            </ul>
+
+
+            <p>Use when doing a HTTP GET as header:</p>
+
+            <table>
+            <thead>
+            <tr>
+            <th> Accept </th>
+            <th> for a response format as</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>  </td>
+            <td> rdf  </td>
+            </tr>
+            <tr>
+            <td> */* </td>
+            <td> rdf  </td>
+            </tr>
+            <tr>
+            <td>text/html  </td>
+            <td> html </td>
+            </tr>
+            <tr>
+            <td>application/rdf+xml</td>
+            <td>   rdf</td>
+            </tr>
+            <tr>
+            <td>text/turtle </td>
+            <td>  turtle </td>
+            </tr>
+            <tr>
+            <td>text/plain</td>
+            <td>    ntriples</td>
+            </tr>
+            <tr>
+            <td>application/ld+json</td>
+            <td> json-ld</td>
+            </tr>
+            </tbody>
+            </table>
+
+
+            <h3>representation URL’s</h3>
+
+            <p>The respective representations of the document describing an entity are directly retrievable by using following extensions:</p>
+
+            <table>
+            <thead>
+            <tr>
+            <th> Extension </th>
+            <th> for a response format in</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td> .html </td>
+            <td> html  </td>
+            </tr>
+            <tr>
+            <td> .rdf </td>
+            <td> rdf  </td>
+            </tr>
+            <tr>
+            <td> .ttl  </td>
+            <td> turtle </td>
+            </tr>
+            <tr>
+            <td>.nt</td>
+            <td>   ntriples</td>
+            </tr>
+            <tr>
+            <td>.jsonld </td>
+            <td> json-ld</td>
+            </tr>
+            </tbody>
+            </table>
+
+
+            <h2>CORS</h2>
+
+            <p>This server has <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a> support.
+            When one adds a Origin header to a HTTP GET request, the response will contain a Access-Control-Allow-Origin.</p>
+
+            <h2>VOID description</h2>
+
+            <p>A description of the dataset according to the Vocabulary of Interlinked Datasets <a href="http://www.w3.org/TR/void/">VoID</a> with minimal provenance information <a href="http://www.w3.org/TR/prov-o/">PROV</a> data can be found at: <a href="http://data.kbodata.be/dataset/kbo#id">KBO dataset</a></p>
+
+            <h2>Reconciliation server</h2>
+
+            <p>The Reconciliation API is a simple web service supporting the interlinking of other datasets to the KBO dataset. This API accepts a simple string e.g. label as input and returns a list of potential matching identifiers in ranked order.</p>
+
+            <p>This API implements almost completely the OpenRefine Reconciliation API of which you can find the information at: <a href="http://data.ordnancesurvey.co.uk/docs/reconciliation">Ordnance Survey</a> en <a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-Api">OpenRefine</a>.</p>
+
+            <p>With as result that this API can be used directly from within <a href="https://github.com/OpenRefine/OpenRefine">OpenRefine</a>/ <a href="http://code.zemanta.com/sparkica/">LODRefine</a>.</p>
+
+            <p>Not implemented yet queries using:
+            * a union of types
+            * properties</p>
+
+            <p>This API can be found at : <a href="http://data.kbodata.be/reconcile">KBOdata reconcilitiation API</a>.</p>
+
+            <h2>Data dumps</h2>
+
+            <p>A data dump in turtle can be found at <a href="http://data.kbodata.be/download/kbo.ttl">turtle download</a></p>
+
+            <h2>SPARQL endpoint</h2>
+
+            <p>A Sparql endpoint is available at <a href="http://data.kbodata.be/sparql">KBOdata sparql endpoint</a>.</p>
+        </div>
+        <div id="footer">
+            <div>
+                <span class="copyright">
+                    <span>&copy; 2014</span>
+                    <a class="proxml" href="http://www.proxml.be"><span>ProXML</span></a>
+                    <a class="elephantbird" href="http://netkernelbook.org"><span>Elephant Bird Consulting</span></a>
+                </span>
+                <span class="powered-by">
+                    <a class="netkernel" href="http://www.1060research.com"><span>NetKernel</span></a>
+                    <a class="stardog" href="http://stardog.com"><span>Stardog</span></a>
+                </span>
+            </div>
+        </div>
+        <script type="text/javascript" src="/lib/jquery/jquery-1.11.0.min.js"></script>      
+        <script type="text/javascript" src="/js/kbodata-documentation.js"></script>      
+    </body>
+</html>

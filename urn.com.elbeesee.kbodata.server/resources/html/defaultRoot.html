@@ -1,40 +1,162 @@
+<!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8"/>
-		<title>Kruispuntbank der Ondernemingen vocabularium / Banque-Carrefour des Entreprises vocabulaire</title>
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   			    
-	    <!-- Le styles -->
-   	    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
-   	    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
-   	    <style type="text/css">
-		    body {
-				padding-top: 20px;
-			}
-		</style>
-   	</head>
-   	<body>
-   		<div class="container">
-   			<h1>Kruispuntbank der Ondernemingen<br/>Banque-Carrefour des Entreprises</h1>
-   			<h3>Datasets</h3>
-			<div>
-				<a href="dataset/kbo"><img src="resources/gif/logo_KBO_BCE.gif" alt="KBO BCE"/></a>
-			</div>  			
-			<div class="footer">
-				<table style="margin-left: auto;margin-right: auto;margin-bottom:50px;margin-top:50px;">
-    				<tr>
-    					<td>&#169; <a href="http://proxml.be">ProXML</a>,<a href="http://netkernelbook.org">Elephant Bird Consulting</a> 2014</td>
-    				</tr>
-    				<tr>
-    					<td><a href="http://www.1060research.com"><img src="http://www.1060research.com/netkernel/poweredbynetkernel.png"/></a><a href="http://stardog.com"><img src="http://stardog.com/img/stardog@2x.png" height="100"/></a></td>
-    				</tr>
-				</table>
-    		</div>
-		</div>
-		<!-- Le javascript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-   	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>KBO as linked open data</title>
+        <style type="text/css">
+            @import url(/css/page.css);
+            @import url(/css/documentation.css);
+            @import url(/css/explorer.css);
+            @import url(/css/responsive.css);
+            @import url(/css/print.css);
+   	    </style>
+        <link rel="shortcut icon" href="/img/favicon.png"/>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href=""><span>KBO DATA</span></a>
+            </div>
+        </div>
+        <div id="content">
+            <h1>KBO as linked open data</h1>
+            
+            <h2>KBO</h2>
+
+            <p>The Crossroads Bank for Enterprises (BCE/KBO)is a register containing comprehensive identification data related to businesses and their ‘establishment units’ (i.e. business locations). It includes data from the national register of legal entities and the trade register and VAT and NSSO information and is kept up to date by the relevant bodies which enter data there.
+            More info: <a href="http://economie.fgov.be/en/">KBO</a></p>
+
+            <h2>KBO as Open Data</h2>
+
+            <p>Starting from May 9th the KBO will become available as Open Data: data which can be freely reused.</p>
+
+            <h2>KBO as Linked Open Data</h2>
+
+            <p>This site aims to be a showcase how these open data can be published according to the Linked Data publishing principles and best practices, being data published on the web in such a way that (Bizer, 2009)</p>
+
+            <ul>
+            <li>it is machine-readable</li>
+            <li>its meaning is explicitly defined</li>
+            <li>it is linked to other external datasets</li>
+            <li>can in turn be linked to from external datasets,
+            meaning that every entity of the KBO dataset has a http uri, where information on this entity can be found.</li>
+            </ul>
+
+
+            <p>Some examples:</p>
+
+            <ul>
+            <li><a href="http://data.kbodata.be/organisation/2_146_784_105#id">http://data.kbodata.be/organisation/2_146_784_105#id</a> for the organisation with KBO code 2.146.784.105</li>
+            <li><a href="http://data.kbodata.be/organisation/2_198_544_392#id">http://data.kbodata.be/organisation/2_198_544_392#id</a> for the organisation with KBO code 2.198.544.392</li>
+            </ul>
+
+
+            <p>For more info see the <a href="/kbo_linked_data_technical_info.html">technical documentation</a>.</p>
+
+            <h3>machine readable</h3>
+
+            <p>Using this identifier one can retrieve, next to a html page aimed at humans, the following machine readable formats: rdf/xml, json-ld, turtle, n-triples.</p>
+
+            <p>For more info see the technical documentation.</p>
+
+            <h3>the meaning is explicitly defined</h3>
+
+            <p>All entities are described using classes and properties from well-known standard vocabularies such as: <a href="http://www.w3.org/ns/org#">org</a> for describing organisations, <a href="http://www.w3.org/TR/vocab-regorg/">regorg</a> for registered organisations, <a href="http://xmlns.com/foaf/0.1/">foaf</a> for describing persons, <a href="http://www.w3.org/2006/vcard/ns#">vcard</a> for contact information, <a href="http://www.w3.org/ns/locn.html">core location</a> for describing locations, ...
+            All these classes and properties have their own http address and can be looked up to see how they are defined and which semantics they carry.</p>
+
+            <p>For more info see the technical documentation.</p>
+
+            <h3>linked to other datasets</h3>
+
+            <p>Not yet, but we are working on this.</p>
+
+            <h3>linked to from other datasets</h3>
+
+            <p>We know already of one other linked open data application that will point to the identifiers used in this dataset.
+            This is in fact one of the main purposes of publishing linked open data.
+            The authoritive maintainer and source of a dataset (e.g. KBO) publishes the data and all other applications can point to the used identifiers, freeing other applications of maintaining this information by themselves.
+            To aid people in pointing to the correct identifiers we offer a reconciliation service where you can send a label (string) to and the service responds with the corresponding identifier.</p>
+
+            <h2>Explore the dataset</h2>
+            <div id="explorer">
+                <div class="api active" data-api="search">
+                    <h4>Search by keyword</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <input name="keyword" type="text" placeholder="Enter a keyword" />
+                            <select class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Search keyword</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="api" data-api="sparql">
+                    <h4>Search with a query</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <textarea name="query" placeholder="Enter a SPARQL query"></textarea>
+                            <select class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Run Query</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="api" data-api="lookup">
+                    <h4>Lookup a resource by its identifier</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <input name="identifier" type="text" placeholder="Enter an identifier" />
+                            <select class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Lookup identifier</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="api" data-api="reconciliation">
+                    <h4>Retrieve identifiers for a label</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <input name="label" type="text" placeholder="Enter a label" />
+                            <select class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Reconcile labels</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div>
+                <span class="copyright">
+                    <span>&copy; 2014</span>
+                    <a class="proxml" href="http://www.proxml.be"><span>ProXML</span></a>
+                    <a class="elephantbird" href="http://netkernelbook.org"><span>Elephant Bird Consulting</span></a>
+                </span>
+                <span class="powered-by">
+                    <a class="netkernel" href="http://www.1060research.com"><span>NetKernel</span></a>
+                    <a class="stardog" href="http://stardog.com"><span>Stardog</span></a>
+                </span>
+            </div>
+        </div>
+        <script type="text/javascript" src="/lib/jquery/jquery-1.11.0.min.js"></script>      
+        <script type="text/javascript" src="/config/kbodata-config.js"></script>      
+        <script type="text/javascript" src="/js/kbodata-explorer.js"></script>      
+    </body>
 </html>

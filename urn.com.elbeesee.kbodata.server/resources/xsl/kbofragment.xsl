@@ -75,7 +75,15 @@
 									<xsl:value-of select="normalize-space(rdf:RDF/rdf:Description/hydra:totalItems)"/>
 								</p>
 							</div>
-						</div>					
+						</div>
+						<div class="predicate">
+							<a class="label" href="http://www.w3.org/ns/hydra/core#itemsPerPage">itemsPerPage</a>
+							<div class="objects">
+								<p>
+									<xsl:value-of select="normalize-space(rdf:RDF/rdf:Description/hydra:itemsPerPage)"/>
+								</p>
+							</div>
+						</div>
 					</div>
 					
 					<ul class="triples">

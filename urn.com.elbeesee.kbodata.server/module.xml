@@ -52,6 +52,11 @@
         	<rewrite>res:/resources/ux/img/$1</rewrite>
         </fileset>
         
+        <fileset>
+        	<regex>res:/config/(.*)</regex>
+        	<rewrite>res:/resources/ux/config/$1</rewrite>
+        </fileset>
+        
 		<fileset>
 			<regex>res:/resources/gif/.*\.gif</regex>
 		</fileset>
@@ -88,6 +93,24 @@
 							</grammar>
 							<request>
 								<identifier>res:/resources/html/defaultRoot.html</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>kbo_linked_data_technical_info.html</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatatechnical</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>res:/resources/html/kbo_linked_data_technical_info.html</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
