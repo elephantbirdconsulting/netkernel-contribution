@@ -1,0 +1,28 @@
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:org:javamag:helloworld</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>java magazine / hello world</name>
+			<description>java magazine / hello world</description>
+		</info>
+	</meta>
+	
+	<system>
+		<dynamic/>
+	</system>
+	
+	<rootspace 
+		name="javamag helloworld"
+		public="true"
+		uri="urn:org:javamag:helloworld">
+	</rootspace>
+	
+	<rootspace 
+		name="javamag helloworld internal"
+		public="false"
+		uri="urn:org:javamag:helloworld:internal">
+	</rootspace>
+</module>
