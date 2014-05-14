@@ -7,10 +7,11 @@ CONSTRUCT {
  <${url}${query}> rdf:type hydra:Collection, hydra:PagedCollection .
  <${url}${query}> dcterms:source <${dataset}> .
  <${url}${query}> hydra:entrypoint <${dataset}> .
- <${url}${query}> hydra:nextPage "${next}" .
- <${url}${query}> hydra:previousPage "${previous}" .
+ <${url}${query}> hydra:nextPage <${next}> .
+ <${url}${query}> hydra:previousPage <${previous}> .
  <${url}${query}> void:triples ?triples .
  <${url}${query}> hydra:totalItems ?triples .
+ <${url}${query}> hydra:itemsPerPage ${limit} .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/RDF_XML> .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/Turtle> .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/N-Triples> .

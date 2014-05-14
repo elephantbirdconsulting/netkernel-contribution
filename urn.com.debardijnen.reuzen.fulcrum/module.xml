@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:debardijnen:reuzen:fulcrum</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>debardijnen / reuzen / fulcrum</name>
+			<description>debardijnen / reuzen / fulcrum</description>
+		</info>
+	</meta>
+	
+	<system>
+	</system>
+	
+	<rootspace 
+		name="debardijnen reuzen fulcrum" 
+		public="false" 
+		private-filter="false">
+		<endpoint>
+			<id>fulcrum.frontend.HTTPTransport</id>
+			<prototype>HTTPTransport</prototype>
+			<private/>
+		</endpoint>
+		<overlay>
+			<prototype>HTTPBridge</prototype>
+			<exceptionHandler>res:/introspect/exceptionhandler</exceptionHandler>
+			<config>
+				<rewrite>
+					<match>https?://[^/]*/([^?]*)(\?.*)?</match>
+					<to>res:/$1</to>
+				</rewrite>
+				<rewrite>
+					<match>ws://[^/]*/([^\?]*)(\?.*)?</match>
+					<to>ws:/$1</to>
+				</rewrite>
+			</config>
+			<space name="Frontend Fulcrum HTTP Bridge Overlay">
+				<!--Import application modules here-->
+				
+				<!--Dynamic Imports-->
+				<endpoint>
+					<prototype>SimpleImportDiscovery</prototype>
+					<grammar>active:SimpleImportDiscovery</grammar>
+					<type>Reuzen</type>
+				</endpoint>
+				<endpoint>
+					<prototype>DynamicImport</prototype>
+					<config>active:SimpleImportDiscovery</config>
+				</endpoint>
+				<import>
+					<uri>urn:org:netkernel:ext:layer1</uri>
+					<private/>
+				</import>
+				<!--Default Root -->
+				<mapper>
+					<config>
+						<endpoint>
+							<grammar>res:/</grammar>
+							<request>
+								<identifier>res:/defaultRoot.html</identifier>
+							</request>
+							<header name="mime">text/html</header>
+						</endpoint>
+					</config>
+					<space>
+						<fileset>
+							<regex>res:/defaultRoot.html</regex>
+						</fileset>
+					</space>
+				</mapper>
+				<import>
+					<uri>urn:org:netkernel:ext:system</uri>
+					<private/>
+				</import>
+			</space>
+		</overlay>
+		<fileset>
+			<private/>
+			<glob>etc/HTTPServerConfig.xml</glob>
+		</fileset>
+		<import>
+			<private/>
+			<uri>urn:org:netkernel:ext:system</uri>
+		</import>
+		<import>
+			<private/>
+			<uri>urn:org:netkernel:xml:core</uri>
+		</import>
+		<import>
+			<private/>
+			<uri>urn:org:netkernel:tpt:http</uri>
+		</import>
+		<import>
+			<private/>
+			<uri>urn:org:netkernel:mod:security</uri>
+		</import>
+		<import>
+			<private/>
+			<uri>urn:org:netkernel:nkse:style</uri>
+		</import>
+		<mapper>
+			<config>
+				<endpoint>
+					<request>
+						<identifier>meta:ExceptionStyler</identifier>
+					</request>
+				</endpoint>
+			</config>
+			<space>
+				<import>
+					<uri>urn:org:netkernel:ext:introspect</uri>
+				</import>
+			</space>
+		</mapper>
+	</rootspace>
+</module>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:triplestore:utility</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / triplestore / utility</name>
+			<description>elbeesee / triplestore / utility</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee triplestore utility" 
+		public="true"
+		uri="urn:com:elbeesee:triplestore:utility">
+		
+		<accessor>
+			<id>elbeesee:triplestore:utility:rdfxmltransform:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:rdfxml2rdfxml</identifier>
+					<identifier>active:rdfxml2turtle</identifier>
+					<identifier>active:rdfxml2ntriple</identifier>
+					<identifier>active:rdfxml2jsonld</identifier>
+					<argument name="operand" desc="incoming rdfxml" max="1" min="1"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.utility.RDFXMLTransformAccessor</class>
+		</accessor>
+
+		<import>
+			<uri>urn:com:elbeesee:triplestore:utility:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee triplestore utility internal" 
+		public="false"
+		uri="urn:com:elbeesee:triplestore:utility:internal">
+
+		<import>
+			<!-- active:jRDFParseXML, active:active:jRDFSerializeXXXXXX -->
+			<uri>urn:org:netkernel:rdf:jena</uri>
+		</import>		
+	</rootspace>
+</module>

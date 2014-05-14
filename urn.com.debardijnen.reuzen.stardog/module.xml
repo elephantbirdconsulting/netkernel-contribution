@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:debardijnen:reuzen:stardog</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>debardijnen / reuzen / stardog</name>
+			<description>debardijnen / reuzen / stardog</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+	<rootspace 
+		name="debardijnen reuzen stardog" 
+		public="true"
+		uri="urn:com:debardijnen:reuzen:stardog">		
+		
+		<literal type="string" uri="reuzen:database">reuzen</literal>
+		
+		<literal type="string" uri="reuzen:query">SELECT ?s ?o WHERE {?s &lt;http://www.w3.org/2004/02/skos/core#prefLabel&gt; ?o .} LIMIT 10</literal>
+		
+		<literal type="string" uri="reuzen:accept">application/sparql-results+xml</literal>
+		
+		<literal type="long" uri="reuzen:expiry">86400000</literal>
+		
+		<literal type="string" uri="reuzen:mimetypes-keywordsearch-allowed">text/html,application/sparql-results+json,application/sparql-results+xml</literal>
+		<literal type="string" uri="reuzen:mimetypes-keywordsearch-default">application/sparql-results+xml</literal>
+
+		<literal type="hds" uri="reuzen:credentials">
+			<httpCredentials>
+				<host>localhost</host>
+				<port>5820</port>
+				<username>anonymous</username>
+				<password>anonymous</password>
+			</httpCredentials>
+		</literal>
+		
+		<literal type="string" uri="reuzen:baseurl">http://localhost:8090</literal>
+	</rootspace>
+</module>

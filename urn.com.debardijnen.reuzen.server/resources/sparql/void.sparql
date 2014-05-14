@@ -1,0 +1,51 @@
+CONSTRUCT {
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Entity> .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/hydra/core#Collection> .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/2000/01/rdf-schema#label> "Reuzen"@nl .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/2000/01/rdf-schema#label> "Geants"@fr .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/2000/01/rdf-schema#label> "Giants"@en .
+	<http://localhost:8090/dataset/reuzen#id> <http://www.w3.org/ns/prov#generatedAtTime> ?today .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#exampleResource> ?giant .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#exampleResource> ?address .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#exampleResource> ?birth .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#uriRegexPattern> "^http://localhost:8090/(giant|address|birth)/(.*)#id$"	.
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#triples> ?triples .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#distinctSubjects> ?subjects .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#distinctObjects> ?objects .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#properties> ?properties .
+	<http://localhost:8090/dataset/reuzen#id> <http://rdfs.org/ns/void#entities> ?entities
+}
+WHERE {
+	{ SELECT (count(*) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
+		WHERE { 
+			?a ?b ?c.
+			FILTER (contains(<http://www.w3.org/2001/XMLSchema#string>(?a),'localhost'))
+		}
+	}
+  	{ SELECT (count(distinct ?a) as ?entities)
+  		WHERE {
+  			?a ?b ?c.
+  			FILTER (isURI(?a) && contains(<http://www.w3.org/2001/XMLSchema#string>(?a),'localhost'))
+  		}
+  	}
+	{SELECT ?giant
+		WHERE {
+			?giant <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+		}
+		LIMIT 2
+	}
+	{SELECT ?address
+		WHERE {
+			?address <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .
+		}
+		LIMIT 2
+	}
+	{SELECT ?birth
+		WHERE {
+			?birth <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/bio/0.1/Birth> .
+		}
+		LIMIT 2
+	}
+  	{ BIND (now() as ?today) }
+}
