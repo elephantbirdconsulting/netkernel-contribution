@@ -16,71 +16,41 @@
     <body>
         <div id="header">
             <div id="logo">
-                <a href=""><span>KBO DATA</span></a>
+                <a href="/"><span>KBO DATA</span></a>
             </div>
         </div>
         <div id="content">
-            <h1>KBO as linked open data</h1>
+            <h1>KBO as Linked Open Data</h1>
             
             <h2>KBO</h2>
 
-            <p>The Crossroads Bank for Enterprises (BCE/KBO)is a register containing comprehensive identification data related to businesses and their ‘establishment units’ (i.e. business locations). It includes data from the national register of legal entities and the trade register and VAT and NSSO information and is kept up to date by the relevant bodies which enter data there.
+            <p>The Crossroads Bank for Enterprises (BCE/KBO) is a register containing comprehensive identification data related to businesses and their ‘establishment units’ (i.e. business locations). It includes data from the national register of legal entities, the trade register and VAT and NSSO information.
             More info: <a href="http://economie.fgov.be/en/">KBO</a></p>
 
             <h2>KBO as Open Data</h2>
-
-            <p>Starting from May 9th the KBO will become available as Open Data: data which can be freely reused.</p>
+            <p>Starting from May 9th 2014, the KBO data will become available as Open Data: data which can be freely reused.</p>
 
             <h2>KBO as Linked Open Data</h2>
-
-            <p>This site aims to be a showcase how these open data can be published according to the Linked Data publishing principles and best practices, being data published on the web in such a way that (Bizer, 2009)</p>
-
-            <ul>
-            <li>it is machine-readable</li>
-            <li>its meaning is explicitly defined</li>
-            <li>it is linked to other external datasets</li>
-            <li>can in turn be linked to from external datasets,
-            meaning that every entity of the KBO dataset has a http uri, where information on this entity can be found.</li>
-            </ul>
-
-
-            <p>Some examples:</p>
-
-            <ul>
-            <li><a href="http://data.kbodata.be/organisation/2_146_784_105#id">http://data.kbodata.be/organisation/2_146_784_105#id</a> for the organisation with KBO code 2.146.784.105</li>
-            <li><a href="http://data.kbodata.be/organisation/2_198_544_392#id">http://data.kbodata.be/organisation/2_198_544_392#id</a> for the organisation with KBO code 2.198.544.392</li>
-            </ul>
-
-
-            <p>For more info see the <a href="/kbo_linked_data_technical_info.html">technical documentation</a>.</p>
-
-            <h3>machine readable</h3>
-
-            <p>Using this identifier one can retrieve, next to a html page aimed at humans, the following machine readable formats: rdf/xml, json-ld, turtle, n-triples.</p>
-
-            <p>For more info see the technical documentation.</p>
-
-            <h3>the meaning is explicitly defined</h3>
-
-            <p>All entities are described using classes and properties from well-known standard vocabularies such as: <a href="http://www.w3.org/ns/org#">org</a> for describing organisations, <a href="http://www.w3.org/TR/vocab-regorg/">regorg</a> for registered organisations, <a href="http://xmlns.com/foaf/0.1/">foaf</a> for describing persons, <a href="http://www.w3.org/2006/vcard/ns#">vcard</a> for contact information, <a href="http://www.w3.org/ns/locn.html">core location</a> for describing locations, ...
-            All these classes and properties have their own http address and can be looked up to see how they are defined and which semantics they carry.</p>
-
-            <p>For more info see the technical documentation.</p>
-
-            <h3>linked to other datasets</h3>
-
-            <p>Not yet, but we are working on this.</p>
-
-            <h3>linked to from other datasets</h3>
-
-            <p>We know already of one other linked open data application that will point to the identifiers used in this dataset.
-            This is in fact one of the main purposes of publishing linked open data.
-            The authoritive maintainer and source of a dataset (e.g. KBO) publishes the data and all other applications can point to the used identifiers, freeing other applications of maintaining this information by themselves.
-            To aid people in pointing to the correct identifiers we offer a reconciliation service where you can send a label (string) to and the service responds with the corresponding identifier.</p>
+            <p>This site aims to be a showcase how Open Data can be published according to the <a href="/kbo_linked_data_info.html">Linked Open Data</a> publishing principles and best practices.</p>
 
             <h2>Explore the dataset</h2>
             <div id="explorer">
-                <div class="api active" data-api="search">
+                <div class="api active" data-api="lookup">
+                    <h4>Lookup a resource by its identifier</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <input name="identifier" type="text" placeholder="Enter an identifier" />
+                            <select class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Lookup identifier</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="api" data-api="search">
                     <h4>Search by keyword</h4>
                     <div class="form-area">
                         <form action="#" method="GET">
@@ -96,7 +66,7 @@
                     </div>
                 </div>
                 <div class="api" data-api="sparql">
-                    <h4>Search with a query</h4>
+                    <h4>Search with a query (<a href="http://www.w3.org/TR/sparql11-query/">SPARQL</a>)</h4>
                     <div class="form-area">
                         <form action="#" method="GET">
                             <textarea name="query" placeholder="Enter a SPARQL query"></textarea>
@@ -110,23 +80,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="api" data-api="lookup">
-                    <h4>Lookup a resource by its identifier</h4>
-                    <div class="form-area">
-                        <form action="#" method="GET">
-                            <input name="identifier" type="text" placeholder="Enter an identifier" />
-                            <select class="samples" size="1">
-                                <option value="">Examples...</option>
-                            </select>
-                            <div class="buttons">
-                                <button type="submit">Lookup identifier</button>
-                                <button type="reset">Reset</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <div class="api" data-api="reconciliation">
-                    <h4>Retrieve identifiers for a label</h4>
+                    <h4>Retrieve identifiers for a label (<a href="https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation-Service-Api">Reconciliation Service API</a>)</h4>
                     <div class="form-area">
                         <form action="#" method="GET">
                             <input name="label" type="text" placeholder="Enter a label" />
@@ -135,6 +90,29 @@
                             </select>
                             <div class="buttons">
                                 <button type="submit">Reconcile labels</button>
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="api" data-api="fragments">
+                    <h4>Request a fragment (<a href="http://linkeddatafragments.org/">Linked Data Fragments</a>)</h4>
+                    <div class="form-area">
+                        <form action="#" method="GET">
+                            <input name="rdfsubject" type="text" placeholder="Enter a subject"/>
+                            <select id="samplessubject" class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <input name="rdfpredicate" type="text" placeholder="Enter a predicate"/>
+                            <select id="samplespredicate" class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <input name="rdfobject" type="text" placeholder="Enter an object"/>
+                            <select id="samplesobject" class="samples" size="1">
+                                <option value="">Examples...</option>
+                            </select>
+                            <div class="buttons">
+                                <button type="submit">Find matching triples</button>
                                 <button type="reset">Reset</button>
                             </div>
                         </form>

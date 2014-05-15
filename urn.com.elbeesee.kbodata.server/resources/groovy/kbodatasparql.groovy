@@ -32,7 +32,6 @@ INKFRequestContext aContext = (INKFRequestContext)context;
 //
 
 String vQuery = aContext.source("httpRequest:/param/query", String.class);
-String vAcceptHeader = aContext.source("httpRequest:/header/Accept", String.class);
 
 // processing
 if (vQuery != null) {
@@ -40,20 +39,31 @@ if (vQuery != null) {
 	Pattern vInjectionPattern = Pattern.compile("(?i)\\bINSERT|DELETE|LOAD|CLEAR|CREATE|DROP|COPY|MOVE|ADD\\b");
 	Matcher vInjectionMatcher = vInjectionPattern.matcher(vQuery);
 	Boolean vInjectionFound = vInjectionMatcher.find();
-	
+
 	if (vInjectionFound) {
 		vQuery = null;
 	}
 }
 
+Pattern vConstructPattern = Pattern.compile("(?i)\\bCONSTRUCT\\b");
+Matcher vConstructMatcher = vConstructPattern.matcher(vQuery);
+Boolean vConstructFound = vConstructMatcher.find();
+
+Pattern vDescribePattern = Pattern.compile("(?i)\\bDESCRIBE\\b");
+Matcher vDescribeMatcher = vDescribePattern.matcher(vQuery);
+Boolean vDescribeFound = vDescribeMatcher.find();
+
+Pattern vAskPattern = Pattern.compile("(?i)\\bASK\\b");
+Matcher vAskMatcher = vAskPattern.matcher(vQuery);
+Boolean vAskFound = vAskMatcher.find();
+
+String vAcceptHeader = (String)aContext.source("httpRequest:/header/Accept", String.class);
 if (vAcceptHeader == null) {
-	// provide sensible default Accept
-	Pattern vConstructPattern = Pattern.compile("(?i)\\bCONSTRUCT\\b");
-	Matcher vConstructMatcher = vConstructPattern.matcher(vQuery);
-	Boolean vConstructFound = vConstructMatcher.find();
-	
-	if (vConstructFound) {
+	if (vConstructFound || vDescribeFound) {
 		vAcceptHeader = "application/rdf+xml";
+	}
+	else if (vAskFound) {
+		vAcceptHeader = "text/boolean";
 	}
 	else {
 		vAcceptHeader = "application/sparql-results+xml";
@@ -70,13 +80,60 @@ else {
 }
 sparqlrequest.addArgument("expiry", "kbodata:expiry");
 sparqlrequest.addArgument("credentials", "kbodata:credentials");
-sparqlrequest.addArgumentByValue("accept", vAcceptHeader);
+if (vAcceptHeader.startsWith("text/html")) {
+	if (vConstructFound || vDescribeFound) {
+		sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+	}
+	else if (vAskFound) {
+		sparqlrequest.addArgumentByValue("accept", "text/boolean");
+	}
+	else {
+		sparqlrequest.addArgumentByValue("accept", "application/sparql-results+xml");
+	}
+}
+else {
+	sparqlrequest.addArgumentByValue("accept", vAcceptHeader);
+}
 Object vResult = aContext.issueRequest(sparqlrequest);
 //
 
+String vMimetype = null;
+if (vAcceptHeader.startsWith("text/html")) {
+	if (vConstructFound || vDescribeFound) {
+		vMimetype = "application/rdf+xml";
+	}
+	else if (vAskFound) {
+		vMimetype = "text/boolean";
+	}
+	else {
+		vMimetype = "text/html";
+	}
+}
+else {
+	vMimetype = vAcceptHeader;
+}
 
-INKFResponse vResponse = aContext.createResponseFrom(vResult);
-vResponse.setMimeType(vAcceptHeader);
+// response
+INKFResponse vResponse = null;
+if (vAcceptHeader.startsWith("text/html")) {
+
+	if (vConstructFound || vDescribeFound || vAskFound) {
+		vResponse = aContext.createResponseFrom(vResult);
+	}
+	else {
+		
+		INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
+		xsltrequest.addArgumentByValue("operand", vResult);
+		xsltrequest.addArgument("operator", "res:/resources/xsl/kbosparql.xsl");
+		Object vHTML = aContext.issueRequest(xsltrequest);
+		
+		vResponse = aContext.createResponseFrom(vHTML);
+	}
+}
+else {
+	vResponse = aContext.createResponseFrom(vResult);
+}
+vResponse.setMimeType(vMimetype);
 String vCORSOrigin = null;
 try {
 	vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);

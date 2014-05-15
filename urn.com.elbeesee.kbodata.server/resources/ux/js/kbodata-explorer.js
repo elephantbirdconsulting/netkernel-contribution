@@ -1,9 +1,8 @@
-
 /* kbodata-explorer.js */
 
 (function($) {
-	
-	var lib = {
+  
+  var lib = {
         
         initAccordion: function() {
             $('#explorer .api h4').on('click', lib.toggleApi);
@@ -30,11 +29,12 @@
         
         initExamples: function() {
             lib.injectSearchExamples();
+            lib.injectFragmentExamples();
             lib.injectSparqlExamples();
             lib.injectLookupExamples();
             lib.injectReconciliationExamples();
             $('#explorer .api select.samples').on('change', function() {
-                $(this).parents('form').find('input, textarea').val($(this).val().replace(/\&quot\;/, '-'));
+                $(this).prev().val($(this).val().replace(/\&quot\;/, '-'));
                 $(this).val('');
             });
         },
@@ -50,8 +50,7 @@
                     }
                 });
             });
-        },
-        
+        },      
         injectSparqlExamples: function() {
             var src = window['kbodata-config']['sparqlExamples'];
             var container = $('#explorer .api[data-api="sparql"] select.samples');
@@ -79,18 +78,41 @@
             });
         },
         
-        injectLookupExamples: function() {
-            var src = window['kbodata-config']['lookupExamples'];
-            var container = $('#explorer .api[data-api="lookup"] select.samples');
+        injectFragmentExamples: function() {
+            var src = window['kbodata-config']['fragmentExamples'];
+            var containersubject = $('#samplessubject');
+            var containerpredicate = $('#samplespredicate');
+            var containerobject = $('#samplesobject');
             $.get(src, function(data) {
                 var lines = data.split(/[\r\n]+/);
                 $.each(lines, function(index, value) {
                     if (!value.match(/^#/) && !value.match(/^\s*$/)) {
-                        var parts = value.split(/^([^\s]+)\s+(.+)$/);
-                        container.append('<option value="' + parts[1] + '">' + parts[2] + '</option>');
+                      var parts = value.split(/^(.+),,(.+),,(.+)$/);
+                      if (parts[3].match(/^subject/)) {
+                        containersubject.append('<option value="' + parts[1].replace(/\"/g, '&quot;') + '">' + parts[2] + '</option>');                        
+                      }
+                      if (parts[3].match(/^object/)) {
+                        containerobject.append('<option value="' + parts[1].replace(/\"/g, '&quot;') + '">' + parts[2] + '</option>');
+                      }
+                      if (parts[3].match(/^predicate/)) {
+                        containerpredicate.append('<option value="' + parts[1].replace(/\"/g, '&quot;') + '">' + parts[2] + '</option>');
+                      }
                     }
                 });
             });
+        },
+        injectLookupExamples: function() {
+          var src = window['kbodata-config']['lookupExamples'];
+          var container = $('#explorer .api[data-api="lookup"] select.samples');
+          $.get(src, function(data) {
+              var lines = data.split(/[\r\n]+/);
+              $.each(lines, function(index, value) {
+                  if (!value.match(/^#/) && !value.match(/^\s*$/)) {
+                      var parts = value.split(/^([^\s]+)\s+(.+)$/);
+                      container.append('<option value="' + parts[1] + '">' + parts[2] + '</option>');
+                  }
+              });
+          });
         },
         
         injectReconciliationExamples: function() {
@@ -120,11 +142,20 @@
                 else if (api === 'lookup') {
                     lib.submitLookup($(this).find('[name="identifier"]').val());
                 }
+                else if (api === 'fragments') {
+                  lib.submitFragment($(this).find('[name="rdfsubject"]').val(),$(this).find('[name="rdfpredicate"]').val(),$(this).find('[name="rdfobject"]').val());
+                }
                 else if (api === 'reconciliation') {
                     lib.submitReconciliation($(this).find('[name="label"]').val());
                 }
-                form.find('.buttons').append('<span class="status">Please wait...</span>');
+                form.find('.buttons')
+                    .find('.status').remove().end()
+                    .append('<span class="status">Please wait...</span>')
+                ;
                 lib.pulsate.call(form.find('.status'));
+            });
+            $(window).on("beforeunload", function() {
+                form.find('.status').remove();
             });
         },
         
@@ -133,37 +164,27 @@
         },
         
         submitSearch: function(keyword) {
-            var type = window['kbodata-config']['searchImplementation'];
-            var pattern;
-            var query = 'SELECT ?id ?label WHERE { ?id ?p ?o ; <http://www.w3.org/2004/02/skos/core#prefLabel> ?label .';
-            if (type === 'regex') {
-                pattern = keyword
-                    .replace(/\"/g, '\\\\"')    // regex-escape quotation marks
-                    .replace(/\./g, '\\\\.')    // escape dots
-                    .replace(/\s+/, '.*')       // low-end AND-querying in case of multiple keywords
-                ;
-                query += ' FILTER(REGEX(STR(?o), "' + pattern + '", "i"))}';
-            }
-            else if (type === 'larq') {
-                pattern = keyword
-                    .replace(/\"/g, '\\"')    // escape quotation marks
-                ;
-                query += ' ?o <http://jena.hpl.hp.com/ARQ/property#textMatch> "' + pattern + '"}';
-            }
-            query += ' LIMIT 10';
-            var endpoint = window['kbodata-config']['sparqlEndpoint'];
-            var url = endpoint + '?query=' + encodeURIComponent(query);
-            location.href = url;
+          var endpoint = window['kbodata-config']['searchEndpoint'];
+          var url = endpoint + '?search=' + encodeURIComponent(keyword) + "&limit=10";
+          location.href = url;
         },
-        
+
         submitSparql: function(query) {
             var endpoint = window['kbodata-config']['sparqlEndpoint'];
             var url = endpoint + '?query=' + encodeURIComponent(query);
             location.href = url;
         },
         
+        submitFragment: function(rdfsubject, rdfpredicate, rdfobject) {
+            var endpoint = window['kbodata-config']['fragmentEndpoint'];
+            var url = endpoint + '?subject=' + encodeURIComponent(rdfsubject);
+            url = url + '&predicate=' + encodeURIComponent(rdfpredicate);
+            url = url + '&object=' + encodeURIComponent(rdfobject);
+            location.href = url;
+        },
+        
         submitLookup: function(identifier) {
-            location.href = identifier.replace(/\#.+$/, '') + '.ttl';
+            location.href = identifier.replace(/\#.+$/, '') + '.html';
         },
         
         submitReconciliation: function(label) {
@@ -172,14 +193,14 @@
             location.href = url;
         },
         
-		init: function() {
+    init: function() {
             lib.initAccordion();
             lib.initExamples();
             lib.initForms();
-		}
-	
-	};
-	
-	$(lib.init);	
- 	
+    }
+  
+  };
+  
+  $(lib.init);  
+  
 })(jQuery);

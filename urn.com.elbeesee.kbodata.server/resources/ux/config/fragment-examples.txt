@@ -1,0 +1,5 @@
+# one entry per line {subject/predicate/object},,{label},,{type}
+<http://www.w3.org/2000/01/rdf-schema#label>,,label,,predicate
+<http://www.w3.org/ns/locn#postCode>,,postcode,,predicate
+<http://data.kbodata.be/address/2_146_795_783#id>,,2_146_795_783,,subject
+"1500",,halle,,object

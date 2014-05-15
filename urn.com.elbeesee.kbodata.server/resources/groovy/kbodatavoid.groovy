@@ -66,14 +66,27 @@ else {
 	}
 }
 //
+Object vSparqlResult = null;
 
-INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
-sparqlrequest.addArgument("database", "kbodata:database");
-sparqlrequest.addArgument("expiry", "kbodata:expiry");
-sparqlrequest.addArgument("credentials", "kbodata:credentials");
-sparqlrequest.addArgument("query", "res:/resources/sparql/void.sparql");
-sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
-Object vSparqlResult = aContext.issueRequest(sparqlrequest);
+INKFRequest incacherequest = aContext.createRequest("pds:/dataset_kbo");
+incacherequest.setVerb(INKFRequestReadOnly.VERB_EXISTS);
+incacherequest.setRepresentationClass(Boolean.class);
+Boolean vInCache = (Boolean)aContext.issueRequest(incacherequest);
+
+if (vInCache) {
+	vSparqlResult = aContext.source("pds:/dataset_kbo");
+}
+else {
+	INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
+	sparqlrequest.addArgument("database", "kbodata:database");
+	sparqlrequest.addArgument("expiry", "kbodata:expiry");
+	sparqlrequest.addArgument("credentials", "kbodata:credentials");
+	sparqlrequest.addArgument("query", "res:/resources/sparql/void.sparql");
+	sparqlrequest.addArgumentByValue("accept", "application/rdf+xml");
+	vSparqlResult = aContext.issueRequest(sparqlrequest);
+	
+	aContext.sink("pds:/dataset_kbo", vSparqlResult);
+}
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);

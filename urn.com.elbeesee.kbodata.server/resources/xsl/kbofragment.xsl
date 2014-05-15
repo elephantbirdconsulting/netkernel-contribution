@@ -22,7 +22,7 @@
 	xmlns:hydra="http://www.w3.org/ns/hydra/core#"
 	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt hydra"
 	version="2.0">
-	<xsl:output indent="yes" method="xhtml"/>
+	<xsl:output indent="yes" method="xhtml" encoding="UTF-8"/>
 	<xsl:param name="url" nk:class="java.lang.String" />
 	<xsl:param name="dataset" nk:class="java.lang.String" />
 	
@@ -37,31 +37,28 @@
 				<style type="text/css">
 					@import url(/css/page.css);
 					@import url(/css/resource.css);
-					@import url(/css/responsive.css);</style>
+					@import url(/css/responsive.css);
+					@import url(/css/print.css);</style>
 				<link rel="shortcut icon" href="/img/favicon.png"/>
 			</head>
 			<body>
 				<div id="header">
 					<div id="logo">
-						<a href="">
+						<a href="/">
 							<span>KBO DATA</span>
 						</a>
 					</div>
 				</div>
 				<div id="content">
 					<div class="export-options">
-						<a href="http://creativecommons.org/publicdomain/zero/1.0/">
-							<img src="/img/cc-zero-80x15.png"
-								alt="License: CC Public DOmain Zero 1.0"/>
-						</a>
 					</div>
 					<h1><span>KBO fragment server</span></h1>
 					<div id="fragment-nav">
 						<xsl:variable name="previous">
-							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:previousPage"/>
+							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:previousPage/@rdf:resource"/>
 						</xsl:variable>
 						<xsl:variable name="next">
-							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:nextPage"/>
+							<xsl:value-of select="rdf:RDF/rdf:Description/hydra:nextPage/@rdf:resource"/>
 						</xsl:variable>
 						<a href="{$previous}">PREVIOUS</a>
 						<a href="{$next}">NEXT</a>

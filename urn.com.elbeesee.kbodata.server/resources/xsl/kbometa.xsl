@@ -11,7 +11,7 @@
 	xmlns:pt="http://www.proxml.be/xpath/functions/" xmlns:dcterms="http://purl.org/dc/terms/"
 	exclude-result-prefixes="foaf kbo locn org oslo owl rdf rdfs rov schema skos vcard xsd xsl void prov nk dcterms pt"
 	version="2.0">
-	<xsl:output indent="yes" method="xhtml"/>
+	<xsl:output indent="yes" method="xhtml" encoding="UTF-8"/>
 	<xsl:variable name="list"/>
 	<xsl:key name="label" match="rdf:Description" use="@rdf:about"/>
 	<xsl:function name="pt:q2uri">
@@ -72,13 +72,14 @@
 				<style type="text/css">
 					@import url(/css/page.css);
 					@import url(/css/resource.css);
-					@import url(/css/responsive.css);</style>
+					@import url(/css/responsive.css);
+					@import url(/css/print.css);</style>
 				<link rel="shortcut icon" href="/img/favicon.png"/>
 			</head>
 			<body>
 				<div id="header">
 					<div id="logo">
-						<a href="">
+						<a href="/">
 							<span>KBO DATA</span>
 						</a>
 					</div>
@@ -95,10 +96,6 @@
 						<a href="{$docid}.ttl">TURTLE</a>
 						<a href="{$docid}.nt">N-TRIPLES</a>
 						<a href="{$docid}.rdf">XML</a>
-						<a href="http://creativecommons.org/publicdomain/zero/1.0/">
-							<img src="/img/cc-zero-80x15.png"
-								alt="License: CC Public DOmain Zero 1.0"/>
-						</a>
 					</div>
 					<h1>
 						<xsl:choose>

@@ -121,6 +121,7 @@ public class SPARQLAccessor extends StandardAccessorImpl {
         vConfig.pushNode("config");
         vConfig.addNode("expectContinue", false);
         vConfig.addNode("followRedirects", false);
+        vConfig.addNode("timeout", 1800000);
         vConfig.popNode();
         
         String vHost = (String)aCredentials.getFirstValue("/httpCredentials/host");

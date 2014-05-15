@@ -1,4 +1,6 @@
 # one entry per line => {uri}{space}{label}
 http://data.kbodata.be/organisation/2_146_815_480#id Zuiderpoort Office Park
 http://data.kbodata.be/address/0314_595_348#id Vooruitgangsstraat 50
-http://data.kbodata.be/juridicalsituation/000#id Normal status
+http://data.kbodata.be/organisation/0421_446_093#id Artsen Zonder Grenzen
+http://data.kbodata.be/organisation/0843_536_051#id Elephant Bird Consulting
+http://data.kbodata.be/organisation/0476_068_080#id ProXML

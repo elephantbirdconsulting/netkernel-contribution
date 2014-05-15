@@ -29,7 +29,5 @@ SELECT ?org ?label WHERE {
         a rov:RegisteredOrganization ;
         org:hasSite <http://data.kbodata.be/organisation/2_146_815_480#id> ;
         skos:prefLabel ?label .
-    ?test skos:foo "bar", "baz" .
-        
 }
 LIMIT 10

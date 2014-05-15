@@ -116,6 +116,24 @@
 						<endpoint>
 							<meta>
 								<rest>
+									<simple>kbo_linked_data_info.html</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatainfo</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>res:/resources/html/kbo_linked_data_info.html</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
 									<simple>reconcile</simple>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -128,6 +146,23 @@
 							</grammar>
 							<request>
 								<identifier>active:kbodatareconcile</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>keywordsearch</simple>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatarekeywordsearchrestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatakeywordsearch</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
@@ -169,7 +204,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>download/kbo.ttl</simple>
+									<simple>download/kbo.zip</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -181,7 +216,7 @@
 								</active>
 							</grammar>
 							<request>
-								<identifier>file:/var/opt/stardog/data/kbo.ttl</identifier>
+								<identifier>file:/var/opt/stardog/data/kbo.zip</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
@@ -263,7 +298,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(activity|activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
+									<simple>{owner:(address|organisation)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -287,7 +322,31 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(activity|activitygroup|address|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|organisation|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}</simple>
+									<simple>{owner:(activity|activitygroup|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatabyidlimitedwithextensionrestoverlay</identifier>
+									<argument name="owner"/>
+									<argument name="id"/>
+									<argument name="extension"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatabyidlimited</identifier>
+								<argument name="owner" method="as-string">[[arg:owner]]</argument>
+								<argument name="id" method="as-string">[[arg:id]]</argument>
+								<argument name="extension" method="as-string">[[arg:extension]]</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>{owner:(address|organisation)}/{id}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -302,6 +361,28 @@
 							</grammar>
 							<request>
 								<identifier>active:kbodatabyid</identifier>
+								<argument name="owner" method="as-string">[[arg:owner]]</argument>
+								<argument name="id" method="as-string">[[arg:id]]</argument>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
+									<simple>{owner:(activity|activitygroup|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatabyidlimitedrestoverlay</identifier>
+									<argument name="owner"/>
+									<argument name="id"/>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:kbodatabyidlimited</identifier>
 								<argument name="owner" method="as-string">[[arg:owner]]</argument>
 								<argument name="id" method="as-string">[[arg:id]]</argument>
 							</request>
@@ -353,7 +434,20 @@
 					<prototype>GroovyPrototype</prototype>
 					<script>res:/resources/groovy/kbodatabyid.groovy</script>
 				</accessor>
-		
+				
+				<accessor>
+					<grammar>
+						<active>
+							<identifier>active:kbodatabyidlimited</identifier>
+							<argument name="owner" desc="owner" max="1" min="1"/>				
+							<argument name="id" desc="id" max="1" min="1"/>				
+							<argument name="extension" desc="extension" max="1" min="0"/>				
+						</active>
+					</grammar>
+					<prototype>GroovyPrototype</prototype>
+					<script>res:/resources/groovy/kbodatabyidlimited.groovy</script>
+				</accessor>
+
 				<accessor>
 					<grammar>
 						<active>
@@ -374,6 +468,16 @@
 					</grammar>
 					<prototype>GroovyPrototype</prototype>
 					<script>res:/resources/groovy/kbodatavoid.groovy</script>
+				</accessor>
+				
+				<accessor>
+					<grammar>
+						<active>
+							<identifier>active:kbodatakeywordsearch</identifier>			
+						</active>
+					</grammar>
+					<prototype>GroovyPrototype</prototype>
+					<script>res:/resources/groovy/kbodatakeywordsearch.groovy</script>
 				</accessor>
 			</space>
 		</overlay>
@@ -536,6 +640,11 @@
 			<!-- active:reconcile -->
 			<uri>urn:com:elbeesee:triplestore:httpclient:reconcile:larq</uri>
 			<version-min>1.0.0</version-min>
+		</import>
+		<import>
+			<!-- active:keywordsearch -->
+			<uri>urn:com:elbeesee:triplestore:httpclient:kws:larq</uri>
+			<version-min>1.3.0</version-min>
 		</import>
 	</rootspace>
 </module>

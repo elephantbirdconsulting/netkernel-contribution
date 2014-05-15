@@ -110,7 +110,7 @@ if (vInCache) {
 }
 else {
 	INKFRequest freemarkerrequest = aContext.createRequest("active:freemarker");
-	freemarkerrequest.addArgument("operator", "res:/resources/freemarker/construct.freemarker");
+	freemarkerrequest.addArgument("operator", "res:/resources/freemarker/constructlimited.freemarker");
 	freemarkerrequest.addArgumentByValue("owner", aOwner);
 	freemarkerrequest.addArgumentByValue("id", aID);
 	freemarkerrequest.addArgumentByValue("extension", aExtension);
@@ -176,10 +176,10 @@ if (aExtension.equals("html")) {
 	xsltrequest.addArgument("operator", "res:/resources/xsl/kbo.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	
-	//INKFRequest serializerequest = aContext.createRequest("active:saxonSerialize");
-	//serializerequest.addArgumentByValue("operand", vHTML);
-	//serializerequest.addArgumentByValue("operator", "<serialize><indent>yes</indent><omit-declaration>yes</omit-declaration><encoding>UTF-8</encoding><method>xhtml</method><mimeType>text/html</mimeType></serialize>");
-	//IReadableBinaryStreamRepresentation vRBSHTML = (IReadableBinaryStreamRepresentation)aContext.issueRequest(serializerequest);
+	// INKFRequest serializerequest = aContext.createRequest("active:saxonSerialize");
+	// serializerequest.addArgumentByValue("operand", vHTML);
+	// serializerequest.addArgumentByValue("operator", "<serialize><indent>yes</indent><omit-declaration>yes</omit-declaration><encoding>UTF-8</encoding><method>xhtml</method><mimeType>text/html</mimeType></serialize>");
+	// IReadableBinaryStreamRepresentation vRBSHTML = (IReadableBinaryStreamRepresentation)aContext.issueRequest(serializerequest);
 	
 	vResponse = aContext.createResponseFrom(vHTML);
 }
