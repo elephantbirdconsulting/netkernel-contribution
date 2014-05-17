@@ -222,6 +222,24 @@
 						<endpoint>
 							<meta>
 								<rest>
+									<simple>robots.txt</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:kbodatarobots</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>res:/resources/txt/robots.txt</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
 									<simple>dataset/kbo.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
@@ -561,6 +579,10 @@
 
 		<fileset>
 			<regex>res:/resources/sparql/.*</regex>
+		</fileset>
+
+		<fileset>
+			<regex>res:/resources/txt/.*</regex>
 		</fileset>
 		
 		<import>

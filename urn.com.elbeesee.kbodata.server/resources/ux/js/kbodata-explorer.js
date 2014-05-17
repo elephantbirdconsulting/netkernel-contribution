@@ -5,7 +5,18 @@
   var lib = {
         
         initAccordion: function() {
-            $('#explorer .api h4').on('click', lib.toggleApi);
+            $('#explorer .api h4')
+                .on('click', lib.toggleApi)
+                .each(function() {
+                    // inject anchor
+                    var type = $(this).parents('.api').attr('data-api');
+                    $('<a name="' + type + '"></a>').insertBefore($(this));
+                    // expand
+                    if (!$(this).parents('.api').is('.active') && (location.hash === '#' + type)) {
+                        $(this).trigger('click');
+                    }
+                })
+            ;
         },
         
         toggleApi: function() {
@@ -25,6 +36,8 @@
                     $(this).css('height', 'auto');
                 });
             }
+            // set state
+            location.hash = api.attr('data-api');
         },
         
         initExamples: function() {
@@ -51,6 +64,7 @@
                 });
             });
         },      
+        
         injectSparqlExamples: function() {
             var src = window['kbodata-config']['sparqlExamples'];
             var container = $('#explorer .api[data-api="sparql"] select.samples');
@@ -101,6 +115,7 @@
                 });
             });
         },
+        
         injectLookupExamples: function() {
           var src = window['kbodata-config']['lookupExamples'];
           var container = $('#explorer .api[data-api="lookup"] select.samples');
@@ -155,7 +170,7 @@
                 lib.pulsate.call(form.find('.status'));
             });
             $(window).on("beforeunload", function() {
-                form.find('.status').remove();
+                $('#explorer .api form .status').remove();
             });
         },
         
@@ -193,11 +208,11 @@
             location.href = url;
         },
         
-    init: function() {
+        init: function() {
             lib.initAccordion();
             lib.initExamples();
             lib.initForms();
-    }
+        }
   
   };
   

@@ -89,6 +89,10 @@
     border-bottom: none;
 }
 
+#content .predicate .objects > .has-better-label {
+    display: none;
+}
+
 #content .predicate .objects > a {
     color: #aa322b;
 }

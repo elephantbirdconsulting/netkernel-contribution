@@ -50,6 +50,7 @@ form textarea
     border: 2px solid #ccc;
     border-radius: 4px;
     vertical-align: top;
+    margin-bottom: 5px;
 }
 
 form select.samples {

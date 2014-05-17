@@ -17,11 +17,22 @@
             $('body').attr('data-lang', lang);
             $.cookie('kbodata.lang', lang, {path: '/'});
             $('.predicate .objects').each(function() {
-                // flag last visible element
+                // reset helper classes
                 $(this).parents('.predicate').removeClass('empty');
-                $(this).find(' > *').removeClass('last');
+                $(this).find(' > *')
+                    .removeClass('last')
+                    .removeClass('has-better-label')
+                ;
+                // hide objects w/o lang attribute when there is a localised label available for the same id
+                var objects = $(this);
+                objects.find(' > [xml\\:lang="' + lang + '"]').each(function() {
+                    var id = $(this).attr('href');
+                    var alternatives = objects.find(' > [href="' + id + '"]').not('[xml\\:lang]');
+                    alternatives.addClass('has-better-label');
+                });
+                // flag last visible element
                 var lastEl = $(this).find(' > *').filter(function() {
-                    if (!$(this).attr('xml:lang')) {
+                    if (!$(this).attr('xml:lang') && !$(this).is('.has-better-label')) {
                         return true;
                     }
                     if ($(this).attr('xml:lang') === lang) {
