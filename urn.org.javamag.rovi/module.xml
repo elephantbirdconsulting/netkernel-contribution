@@ -1,0 +1,104 @@
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:org:javamag:rovi</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>java magazine / rovi</name>
+			<description>java magazine / rovi</description>
+		</info>
+	</meta>
+	
+	<system>
+		<dynamic/>
+	</system>
+	
+	<rootspace 
+		name="javamag rovi"
+		public="true"
+		uri="urn:org:javamag:rovi">
+		
+		<overlay>
+			<prototype>layer1.Concurrency.Throttle</prototype>
+			<config>
+				<concurrency>1</concurrency>
+				<queue>10</queue>
+			</config>
+			<space>
+				<accessor>
+					<id>javamag:rovirelease:accessor</id>
+					<class>org.javamag.rovi.ReleaseAccessor</class>
+					<grammar>
+						<active>
+							<identifier>active:rovirelease</identifier>
+							<argument name="apikey" desc="apikey" max="1" min="1"/>
+							<argument name="secretkey" desc="secret key" max="1" min="1"/>
+							<argument name="category" desc="release category" max="1" min="1"/>
+							<argument name="expiry" desc="expiry duration" max="1" min="1"/>
+							<argument name="upcid" desc="universal product code" max="1" min="1"/>
+						</active>
+					</grammar>
+				</accessor>
+			</space>
+		</overlay>
+		
+		<import>
+			<uri>urn:org:javamag:rovi:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+	<rootspace 
+		name="javamag rovi internal" 
+		public="false"
+		uri="urn:org:javamag:rovi:internal">
+
+		<literal type="string" uri="rovi:allowedcategories">movie,music</literal>
+		<literal type="string" uri="rovi:musicreleaseurl">http://api.rovicorp.com/data/v1.1/release/info</literal>
+		<literal type="string" uri="rovi:moviereleaseurl">http://api.rovicorp.com/data/v1.1/movierelease/info</literal>
+
+		<accessor>
+			<id>javamag:rovimd5:accessor</id>
+			<class>org.javamag.rovi.MD5Accessor</class>
+			<grammar>
+				<active>
+					<identifier>active:rovimd5</identifier>
+					<argument name="apikey" desc="apikey" max="1" min="1"/>
+					<argument name="secretkey" desc="secret key" max="1" min="1"/>
+				</active>
+			</grammar>
+		</accessor>
+
+		<import>
+			<!-- contains active:md5 -->
+			<uri>urn:org:netkernel:mod:security</uri>
+		</import>
+
+		<import>
+			<!-- contains data:/ scheme and throttle overlay -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+		
+		<import>
+			<!-- contains active:httpGet -->
+			<uri>urn:org:netkernel:client:http</uri>
+		</import>
+		
+		<literal type="xml" uri="res:/etc/pdsConfig.xml">
+			<config>
+				<zone>Rovi</zone>
+			</config>
+		</literal>
+				
+		<import>
+			<!-- pds:/ scheme -->
+			<uri>urn:org:netkernel:mod:pds</uri>
+		</import>
+
+		<import>
+			<!-- pds backend -->
+			<uri>urn:org:netkernel:mod:pds:rdbms:local</uri>
+		</import>
+	</rootspace>
+</module>
