@@ -3,7 +3,7 @@ package com.elbeesee.triplestore.httpclient;
 /**
  * 
  * Elephant Bird Consulting - triplestore http client.
- * @author Tom Geudens. 2014/03/17.
+ * @author Tom Geudens. 2014/05/18.
  * 
  */
 
@@ -21,7 +21,7 @@ import org.netkernel.layer0.representation.IHDSNode;
 
 /**
  *
- * Fragment Accessor.
+ * Fragments Accessor.
  *
  * @param  database  database name
  * @param  expiry  expiry 
@@ -35,8 +35,8 @@ import org.netkernel.layer0.representation.IHDSNode;
  * @param  limit  fragment limit
  */
 
-public class FragmentAccessor extends StandardAccessorImpl {
-	public FragmentAccessor() {
+public class FragmentsAccessor extends StandardAccessorImpl {
+	public FragmentsAccessor() {
 		this.declareThreadSafe();
 		this.declareArgument(new SourcedArgumentMetaImpl("database",null,null,new Class[] {String.class}));
 		this.declareArgument(new SourcedArgumentMetaImpl("expiry",null,null,new Class[] {Long.class}));
@@ -113,10 +113,10 @@ public class FragmentAccessor extends StandardAccessorImpl {
 			}
 		}
 		else {
-			aURL = "http://localhost/fragment";
+			aURL = "http://localhost/fragments";
 		}
 		if (aURL.equals("")) {
-			aURL = "http://localhost/fragment";
+			aURL = "http://localhost/fragments";
 		}
 		//
 		
@@ -249,30 +249,30 @@ public class FragmentAccessor extends StandardAccessorImpl {
 		}
 		//
 		
-		INKFRequest buildfragment = aContext.createRequest("active:freemarker");
-		buildfragment.addArgument("operator", "res:/resources/freemarker/fragment.freemarker");
-		buildfragment.addArgumentByValue("dataset", aDataset);
-		buildfragment.addArgumentByValue("query", (aQuery.equals("")) ? "" : "?" + aQuery);
-		buildfragment.addArgumentByValue("url", aURL);
-		buildfragment.addArgumentByValue("subject", aSubject);
-		buildfragment.addArgumentByValue("predicate", aPredicate);
-		buildfragment.addArgumentByValue("object", aObject);
-		buildfragment.addArgumentByValue("offset", aOffset.toString());
-		buildfragment.addArgumentByValue("limit", aLimit.toString());
+		INKFRequest buildfragments = aContext.createRequest("active:freemarker");
+		buildfragments.addArgument("operator", "res:/resources/freemarker/fragments.freemarker");
+		buildfragments.addArgumentByValue("dataset", aDataset);
+		buildfragments.addArgumentByValue("query", (aQuery.equals("")) ? "" : "?" + aQuery);
+		buildfragments.addArgumentByValue("url", aURL);
+		buildfragments.addArgumentByValue("subject", aSubject);
+		buildfragments.addArgumentByValue("predicate", aPredicate);
+		buildfragments.addArgumentByValue("object", aObject);
+		buildfragments.addArgumentByValue("offset", aOffset.toString());
+		buildfragments.addArgumentByValue("limit", aLimit.toString());
 		Long vPrevious = aOffset - aLimit;
 		if (vPrevious < 0L) {
 			vPrevious = 0L;
 		}
 		Long vNext = aOffset + aLimit;
 		String vQueryWithoutPosition = ("?" + aQuery).replaceAll("(?<=[?&;])offset=.*?($|[&;])", "").replaceAll("(?<=[?&;])limit=.*?($|[&;])", "").replaceAll("&$","");
-		buildfragment.addArgumentByValue("previous", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
-		buildfragment.addArgumentByValue("next", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vNext.toString() + "&limit=" + aLimit.toString());
-		buildfragment.setRepresentationClass(String.class);
-		String vFragment = (String)aContext.issueRequest(buildfragment);
+		buildfragments.addArgumentByValue("previous", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
+		buildfragments.addArgumentByValue("next", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vNext.toString() + "&limit=" + aLimit.toString());
+		buildfragments.setRepresentationClass(String.class);
+		String vFragments = (String)aContext.issueRequest(buildfragments);
 		
 		INKFRequest sparqlrequest = aContext.createRequest("active:sparql");
 		sparqlrequest.addArgumentByValue("database", aDatabase);
-		sparqlrequest.addArgumentByValue("query", vFragment);
+		sparqlrequest.addArgumentByValue("query", vFragments);
 		sparqlrequest.addArgumentByValue("accept", aAccept);
 		sparqlrequest.addArgumentByValue("expiry", aExpiry);
 		sparqlrequest.addArgumentByValue("credentials", aCredentials);

@@ -9,7 +9,6 @@ WHERE {
   ?id rdf:type ?type .
   (?label ?score ) pf:textMatch ('${search}' 0.0 ${limit}) .
   ?id (rdfs:label|skos:prefLabel|skos:altLabel) ?label .
-  FILTER (contains(xsd:string(?id),'${baseurl}'))
   ${typefilterclause}
 }
 ORDER BY DESC(?score)

@@ -21,7 +21,7 @@ import org.netkernel.layer0.representation.impl.*;
 
 /**
  *
- * KBO data fragment Accessor.
+ * KBO data fragments Accessor.
  *
  */
 
@@ -64,38 +64,38 @@ catch (Exception e) {
 	aExtension = "rdf";
 }
 
-INKFRequest fragmentrequest = aContext.createRequest("active:fragment");
-fragmentrequest.addArgument("database", "kbodata:database");
+INKFRequest fragmentsrequest = aContext.createRequest("active:fragments");
+fragmentsrequest.addArgument("database", "kbodata:database");
 if (vSubject != null) {
-	fragmentrequest.addArgumentByValue("subject", vSubject);
+	fragmentsrequest.addArgumentByValue("subject", vSubject);
 }
 if (vPredicate != null) {
-	fragmentrequest.addArgumentByValue("predicate", vPredicate);
+	fragmentsrequest.addArgumentByValue("predicate", vPredicate);
 }
 if (vObject != null) {
-	fragmentrequest.addArgumentByValue("object", vObject);
+	fragmentsrequest.addArgumentByValue("object", vObject);
 }
 if (vLimit != null) {
-	fragmentrequest.addArgumentByValue("limit", vLimit);
+	fragmentsrequest.addArgumentByValue("limit", vLimit);
 }
 if (vOffset != null) {
-	fragmentrequest.addArgumentByValue("offset", vOffset);
+	fragmentsrequest.addArgumentByValue("offset", vOffset);
 }
 if (vURL != null) {
-	fragmentrequest.addArgumentByValue("url", vURL);
+	fragmentsrequest.addArgumentByValue("url", vURL);
 }
 if (vQuery != null) {
-	fragmentrequest.addArgumentByValue("query", vQuery);
+	fragmentsrequest.addArgumentByValue("query", vQuery);
 }
-fragmentrequest.addArgument("dataset", "kbodata:dataset");
-fragmentrequest.addArgument("expiry", "kbodata:expiry");
-fragmentrequest.addArgument("credentials", "kbodata:credentials");
-fragmentrequest.addArgumentByValue("accept", "application/rdf+xml");
-Object vFragmentResult = aContext.issueRequest(fragmentrequest);
+fragmentsrequest.addArgument("dataset", "kbodata:dataset");
+fragmentsrequest.addArgument("expiry", "kbodata:expiry");
+fragmentsrequest.addArgument("credentials", "kbodata:credentials");
+fragmentsrequest.addArgumentByValue("accept", "application/rdf+xml");
+Object vFragmentsResult = aContext.issueRequest(fragmentsrequest);
 //
 
 INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
-jenaparserequest.addArgumentByValue("operand",vFragmentResult);
+jenaparserequest.addArgumentByValue("operand",vFragmentsResult);
 Object vJenaParseResult = aContext.issueRequest(jenaparserequest);
 
 IReadableBinaryStreamRepresentation vRBS = null;
@@ -135,7 +135,7 @@ if (aExtension.equals("html")) {
 	xsltrequest.addArgumentByValue("operand", vRBS);
 	xsltrequest.addArgumentByValue("url", vURL);
 	xsltrequest.addArgument("dataset", "kbodata:dataset");
-	xsltrequest.addArgument("operator", "res:/resources/xsl/kbofragment.xsl");
+	xsltrequest.addArgument("operator", "res:/resources/xsl/kbofragments.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	
 	vResponse = aContext.createResponseFrom(vHTML);

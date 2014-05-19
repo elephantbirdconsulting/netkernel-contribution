@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:kbodata:server</uri>
-			<version>1.2.0</version>
+			<version>1.4.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / kbodata / server</name>
@@ -176,11 +176,11 @@
 							</meta>
 							<grammar>
 								<active>
-									<identifier>active:kbodatastardogfragmentrestoverlay</identifier>
+									<identifier>active:kbodatastardogfragmentsrestoverlay</identifier>
 								</active>
 							</grammar>
 							<request>
-								<identifier>active:kbodatafragment</identifier>
+								<identifier>active:kbodatafragments</identifier>
 							</request>
 						</endpoint>
 						<endpoint>
@@ -548,11 +548,11 @@
 				<accessor>
 					<grammar>
 						<active>
-							<identifier>active:kbodatafragment</identifier>			
+							<identifier>active:kbodatafragments</identifier>			
 						</active>
 					</grammar>
 					<prototype>GroovyPrototype</prototype>
-					<script>res:/resources/groovy/kbodatafragment.groovy</script>
+					<script>res:/resources/groovy/kbodatafragments.groovy</script>
 				</accessor>
 			</space>
 		</overlay>
@@ -654,9 +654,9 @@
 			<version-min>1.0.0</version-min>
 		</import>
 		<import>
-			<!-- active:fragment -->
-			<uri>urn:com:elbeesee:triplestore:httpclient:fragment</uri>
-			<version-min>1.1.0</version-min>
+			<!-- active:fragments -->
+			<uri>urn:com:elbeesee:triplestore:httpclient:fragments</uri>
+			<version-min>1.4.0</version-min>
 		</import>
 		<import>
 			<!-- active:reconcile -->

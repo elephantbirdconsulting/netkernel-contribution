@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
-			<version>1.3.0</version>
+			<version>1.4.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / triplestore / httpclient</name>
@@ -46,23 +46,23 @@
 			<private/>
 		</import>
 	</rootspace>
-	
+		
 	<rootspace
-		name="elbeesee triplestore httpclient fragment "
+		name="elbeesee triplestore httpclient fragments"
 		public="true"
-		uri="urn:com:elbeesee:triplestore:httpclient:fragment">
+		uri="urn:com:elbeesee:triplestore:httpclient:fragments">
 		
 		<accessor>
-			<id>elbeesee:triplestore:httpclient:fragment:accessor</id>
+			<id>elbeesee:triplestore:httpclient:fragments:accessor</id>
 			<grammar>
 				<active>
-					<identifier>active:fragment</identifier>
+					<identifier>active:fragments</identifier>
 					<!-- database access arguments -->
 					<argument name="database" desc="database name" max="1" min="1"/>
 					<argument name="expiry" desc="expiry" max="1" min="1"/>
 					<argument name="credentials" desc="http credentials" max="1" min="1"/>
 					<argument name="accept" desc="accept header" max="1" min="1"/>
-					<!-- fragment specific arguments -->
+					<!-- fragments specific arguments -->
 					<argument name="query" desc="query" max="1" min="0"/>
 					<argument name="dataset" desc="dataset" max="1" min="0"/>
 					<argument name="url" desc="url" max="1" min="0"/>
@@ -74,7 +74,7 @@
 					<argument name="offset" desc="offset" max="1" min="0"/>
 				</active>
 			</grammar>
-			<class>com.elbeesee.triplestore.httpclient.FragmentAccessor</class>
+			<class>com.elbeesee.triplestore.httpclient.FragmentsAccessor</class>
 		</accessor>
 		
 		<import>

@@ -70,7 +70,16 @@ else {
 			vLimit = vReconcileQuery.getLong("limit");
 		}
 		catch (JSONException e) {
-			// not a problem, limit is not mandatory
+			// not a problem, limit is not mandatory, it may however have been passed as a url param
+			try {
+				String aLimit = aContext.source("httpRequest:/param/limit", String.class);
+				if (aLimit != null) {
+					vLimit = Long.parseLong(aLimit);
+				}
+			}
+			catch (Exception e2) {
+				// well, we tried
+			}
 		}
 		
 		String vType = null;
