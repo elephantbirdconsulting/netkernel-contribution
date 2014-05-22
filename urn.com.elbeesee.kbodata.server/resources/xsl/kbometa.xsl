@@ -47,7 +47,26 @@
 			
 		</div>
 	</xsl:template>
-	
+	<xsl:template name="atomictablerow">
+		<xsl:param name="key" as="node()"/>
+		<div class="predicate">
+			<a class="label" href="{pt:q2uri($key)}">
+				<xsl:value-of select="local-name($key)"/>
+			</a>
+			<div class="objects">
+				<xsl:for-each select="$key">
+					<p>
+						<xsl:if test="@xml:lang">
+							<xsl:attribute name="xml:lang">
+								<xsl:value-of select="@xml:lang"/>
+							</xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="normalize-space(.)"/>
+					</p>
+				</xsl:for-each>
+			</div>
+		</div>
+	</xsl:template>
 	<xsl:template match="/">
 		<xsl:apply-templates select="rdf:RDF/rdf:Description[rdf:type]"/>
 	</xsl:template>
@@ -112,11 +131,20 @@
 						</xsl:choose>
 					</h1>
 					<div class="properties">
-						<xsl:for-each select="*[@xml:lang]">
+						<xsl:for-each-group select="*[@xml:lang]" group-by="name()">
+							<xsl:for-each select="current-group()[1]">
 							<xsl:call-template name="atomiclangrow">
 								<xsl:with-param name="key" select="."/>
 							</xsl:call-template>
 						</xsl:for-each>
+						</xsl:for-each-group>
+						<xsl:for-each-group select="*[not(@rdf:resource) and not(@xml:lang)]" group-by="name()">
+							<xsl:for-each select="current-group()[1]">
+								<xsl:call-template name="atomictablerow">
+									<xsl:with-param name="key" select="."/>
+								</xsl:call-template>
+							</xsl:for-each>
+						</xsl:for-each-group>
 					</div>
 					<div class="links outbound">
 						<xsl:for-each-group select="*[@rdf:resource][not(contains(@rdf:resource,'uuid'))]" group-by="local-name(.)">

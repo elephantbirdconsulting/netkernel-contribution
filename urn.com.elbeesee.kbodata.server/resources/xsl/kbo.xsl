@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:kbo="http://data.kbodata.be/def#"
+<xsl:stylesheet 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:kbo="http://data.kbodata.be/def#"
 	xmlns:locn="http://www.w3.org/ns/locn#" xmlns:org="http://www.w3.org/ns/org#"
 	xmlns:oslo="http://purl.org/oslo/ns/localgov#" xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
