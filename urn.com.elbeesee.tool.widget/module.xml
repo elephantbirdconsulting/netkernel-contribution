@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:tool:widget</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / tool / widget</name>
+			<description>elbeesee / tool / widget</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee tool widget"
+		public="true"
+		uri="urn:com:elbeesee:tool:widget">
+		
+		<accessor>
+			<id>com:elbeesee:tool:widget:accessor</id>
+			<class>com.elbeesee.tool.widget.WidgetAccessor</class>
+			<grammar>
+				<active>
+					<identifier>active:widgetCurrentYear</identifier>
+					<identifier>active:widgetOther</identifier>
+				</active>
+			</grammar>
+		</accessor>
+								
+		<import>
+			<uri>urn:com:elbeesee:tool:widget:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee tool widget internal"
+		public="false"
+		uri="urn:com:elbeesee:tool:widget:internal">
+		
+		<literal type="long" uri="widget:expiryCurrentYear">86400000</literal> <!-- one day -->
+	</rootspace>
+</module>

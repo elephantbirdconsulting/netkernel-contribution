@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:demo:xrl</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / demo / xrl</name>
+			<description>elbeesee / demo / xrl</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+
+	<rootspace 
+		name="elbeesee demo xrl"
+		public="true"
+		uri="urn:com:elbeesee:demo:xrl">
+
+        <literal type="xml" uri="res:/etc/system/SimpleDynamicImportHook.xml">
+			<connection>
+				<type>HTTPFulcrum</type>
+			</connection>
+        </literal>
+        
+		<mapper>
+			<config>
+				<endpoint>
+					<grammar>res:/elbeesee/demo/xml/footer</grammar>
+					<request>
+						<identifier>res:/resources/xml/footer.xml</identifier>
+					</request>
+				</endpoint>
+				<endpoint>
+					<grammar>res:/elbeesee/demo/xrl/footer</grammar>
+					<request>
+						<identifier>active:xrl2</identifier>
+						<argument name="template">res:/resources/xrl/footer.xrl</argument>
+					</request>
+				</endpoint>
+			</config>
+			<space>
+				<import>
+					<uri>urn:com:elbeesee:demo:xrl:internal</uri>
+					<private/>
+				</import>
+			</space>
+		</mapper>
+	</rootspace>
+
+
+	<rootspace 
+		name="elbeesee demo xrl internal"
+		public="false"
+		uri="urn:com:elbeesee:demo:xrl:internal">
+		
+		<fileset>
+			<regex>res:/resources/xml/.*\.xml</regex>
+		</fileset>
+		
+		<fileset>
+			<regex>res:/resources/xrl/.*\.xrl</regex>
+		</fileset>
+		
+		<import>
+			<uri>urn:org:netkernel:lang:xrl</uri>
+		</import>
+		
+		<import>
+			<uri>urn:com:elbeesee:tool:widget</uri>
+		</import>
+	</rootspace>
+</module>
