@@ -169,6 +169,11 @@ public class FragmentsAccessor extends StandardAccessorImpl {
 		if (aSubject.equals("")) {
 			aSubject = "?s";
 		}
+		if (!aSubject.equals("?s")) {
+			if (! aSubject.startsWith("<")) {
+				aSubject = "<" + aSubject + ">";
+			}
+		}
 		//
 		
 		// predicate
@@ -186,7 +191,12 @@ public class FragmentsAccessor extends StandardAccessorImpl {
 		}
 		if (aPredicate.equals("")) {
 			aPredicate = "?p";
-		}		
+		}	
+		if (!aPredicate.equals("?p")) {
+			if (! aPredicate.startsWith("<")) {
+				aPredicate = "<" + aPredicate + ">";
+			}
+		}
 		//
 
 		// object
@@ -204,7 +214,12 @@ public class FragmentsAccessor extends StandardAccessorImpl {
 		}
 		if (aObject.equals("")) {
 			aObject = "?o";
-		}		
+		}
+		if (!aObject.equals("?o")) {
+			if ( (! aObject.startsWith("<")) && (! aObject.startsWith("'")) && (! aObject.startsWith("\""))) {
+				aObject = "<" + aObject + ">";
+			}
+		}
 		//
 		
 		// offset
@@ -248,6 +263,28 @@ public class FragmentsAccessor extends StandardAccessorImpl {
 			aLimit = 100L;
 		}
 		//
+		INKFRequest buildfragmentscount = aContext.createRequest("active:freemarker");
+		buildfragmentscount.addArgument("operator", "res:/resources/freemarker/fragmentscount.freemarker");
+		buildfragmentscount.addArgumentByValue("subject", aSubject);
+		buildfragmentscount.addArgumentByValue("predicate", aPredicate);
+		buildfragmentscount.addArgumentByValue("object", aObject);
+		String vFragmentsCount = (String)aContext.issueRequest(buildfragmentscount);
+
+		INKFRequest sparqlcountrequest = aContext.createRequest("active:sparql");
+		sparqlcountrequest.addArgumentByValue("database", aDatabase);
+		sparqlcountrequest.addArgumentByValue("query", vFragmentsCount);
+		sparqlcountrequest.addArgumentByValue("accept", "application/sparql-results+xml");
+		sparqlcountrequest.addArgumentByValue("expiry", aExpiry);
+		sparqlcountrequest.addArgumentByValue("credentials", aCredentials);
+		Object vSparqlCountResult = aContext.issueRequest(sparqlcountrequest);
+		
+		INKFRequest xsltcrequest = aContext.createRequest("active:xsltc");
+		xsltcrequest.addArgumentByValue("operand", vSparqlCountResult);
+		xsltcrequest.addArgument("operator", "res:/resources/xsl/sparqlresult_to_count.xsl");
+		xsltcrequest.setRepresentationClass(String.class);
+		String vCount = (String)aContext.issueRequest(xsltcrequest);
+		
+		Long vCountLong = Long.parseLong(vCount);
 		
 		INKFRequest buildfragments = aContext.createRequest("active:freemarker");
 		buildfragments.addArgument("operator", "res:/resources/freemarker/fragments.freemarker");
@@ -259,14 +296,16 @@ public class FragmentsAccessor extends StandardAccessorImpl {
 		buildfragments.addArgumentByValue("object", aObject);
 		buildfragments.addArgumentByValue("offset", aOffset.toString());
 		buildfragments.addArgumentByValue("limit", aLimit.toString());
+		buildfragments.addArgumentByValue("count", vCount);
 		Long vPrevious = aOffset - aLimit;
-		if (vPrevious < 0L) {
-			vPrevious = 0L;
-		}
 		Long vNext = aOffset + aLimit;
 		String vQueryWithoutPosition = ("?" + aQuery).replaceAll("(?<=[?&;])offset=.*?($|[&;])", "").replaceAll("(?<=[?&;])limit=.*?($|[&;])", "").replaceAll("&$","");
-		buildfragments.addArgumentByValue("previous", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
-		buildfragments.addArgumentByValue("next", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vNext.toString() + "&limit=" + aLimit.toString());
+		if (vPrevious >= 0L) {
+			buildfragments.addArgumentByValue("previous", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vPrevious.toString() + "&limit=" + aLimit.toString());
+		}
+		if (vNext <= vCountLong) {
+			buildfragments.addArgumentByValue("next", aURL + vQueryWithoutPosition + (aQuery.equals("") ? "" : "&") + "offset=" + vNext.toString() + "&limit=" + aLimit.toString());
+		}
 		buildfragments.setRepresentationClass(String.class);
 		String vFragments = (String)aContext.issueRequest(buildfragments);
 		

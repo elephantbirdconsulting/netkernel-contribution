@@ -34,6 +34,7 @@ CONSTRUCT {
 		void:feature <http://www.w3.org/ns/formats/JSON-LD>;
 		void:sparqlEndpoint <http://data.kbodata.be/sparql>;
 		api:endpoint <http://data.kbodata.be/reconcile>;
+		api:endpoint <http://data.kbodata.be/fragments>;
 		void:exampleResource ?organisatie ;
 		void:exampleResource ?site;
 		void:exampleResource ?conceptscheme;
@@ -77,7 +78,6 @@ WHERE {
 	{SELECT (count(*) as ?triples) (count (distinct ?a) as ?subjects) (count (distinct ?c) as ?objects) (count (distinct ?b) as ?properties)
 		WHERE {
 			?a ?b ?c.
-			FILTER (contains(xsd:string(?a),'kbodata'))
 		}
 	}
 	{SELECT (count (distinct ?x) as ?classes)
@@ -89,7 +89,7 @@ WHERE {
   	{SELECT (count(distinct ?a) as ?entities)
   		WHERE {
   			?a ?b ?c.
-  			FILTER (isURI(?a) && contains(xsd:string(?a),'kbodata'))
+  			FILTER (isURI(?a))
   		}
   	}
   	{SELECT ?organisatie

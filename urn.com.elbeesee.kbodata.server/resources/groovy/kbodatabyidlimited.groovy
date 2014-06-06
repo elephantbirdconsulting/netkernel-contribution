@@ -176,12 +176,12 @@ if (aExtension.equals("html")) {
 	xsltrequest.addArgument("operator", "res:/resources/xsl/kbo.xsl");
 	Object vHTML = aContext.issueRequest(xsltrequest);
 	
-	// INKFRequest serializerequest = aContext.createRequest("active:saxonSerialize");
-	// serializerequest.addArgumentByValue("operand", vHTML);
-	// serializerequest.addArgumentByValue("operator", "<serialize><indent>yes</indent><omit-declaration>yes</omit-declaration><encoding>UTF-8</encoding><method>xhtml</method><mimeType>text/html</mimeType></serialize>");
-	// IReadableBinaryStreamRepresentation vRBSHTML = (IReadableBinaryStreamRepresentation)aContext.issueRequest(serializerequest);
+	INKFRequest serializerequest = aContext.createRequest("active:saxonSerialize");
+	serializerequest.addArgumentByValue("operand", vHTML);
+	serializerequest.addArgumentByValue("operator", "<serialize><indent>yes</indent><omit-declaration>yes</omit-declaration><encoding>UTF-8</encoding><method>xhtml</method><mimeType>text/html</mimeType></serialize>");
+	IReadableBinaryStreamRepresentation vRBSHTML = (IReadableBinaryStreamRepresentation)aContext.issueRequest(serializerequest);
 	
-	vResponse = aContext.createResponseFrom(vHTML);
+	vResponse = aContext.createResponseFrom(vRBSHTML);
 }
 else {
 	vResponse = aContext.createResponseFrom(vRBS);
@@ -195,11 +195,14 @@ catch (Exception e){
 	//
 }
 if (vCORSOrigin != null) {
-	// No CORS verification yet, I just allow the origin
-	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+	// No CORS verification yet, I just allow everything
+	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
 }
 if (vIsModelEmpty) {
 	vResponse.setHeader("httpResponse:/code",404);
+}
+else {
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
 }
 vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

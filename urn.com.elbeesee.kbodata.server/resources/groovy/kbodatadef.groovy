@@ -79,6 +79,11 @@ INKFRequest jenaparserequest = aContext.createRequest("active:jRDFParseXML");
 jenaparserequest.addArgumentByValue("operand",vSparqlResult);
 Object vJenaParseResult = aContext.issueRequest(jenaparserequest);
 
+INKFRequest modelemptyrequest = aContext.createRequest("active:jRDFModelIsEmpty");
+modelemptyrequest.addArgumentByValue("operand", vJenaParseResult);
+modelemptyrequest.setRepresentationClass(Boolean.class);
+Boolean vIsModelEmpty = (Boolean)aContext.issueRequest(modelemptyrequest);
+
 IReadableBinaryStreamRepresentation vRBS = null;
 String vMimetype = null;
 INKFRequest jenaserializerequest = null;
@@ -132,8 +137,14 @@ catch (Exception e){
 	//
 }
 if (vCORSOrigin != null) {
-	// No CORS verification yet, I just allow the origin
-	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+	// No CORS verification yet, I just allow everything
+	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
+}
+if (vIsModelEmpty) {
+	vResponse.setHeader("httpResponse:/code",404);
+}
+else {
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
 }
 vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

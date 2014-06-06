@@ -142,8 +142,9 @@ catch (Exception e){
 	//
 }
 if (vCORSOrigin != null) {
-	// No CORS verification yet, I just allow the origin
-	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+	// No CORS verification yet, I just allow everything
+	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
 }
+vResponse.setHeader("httpResponse:/header/Vary","Accept");
 vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

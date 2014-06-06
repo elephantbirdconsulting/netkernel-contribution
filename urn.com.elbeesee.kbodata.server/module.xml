@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:kbodata:server</uri>
-			<version>1.4.0</version>
+			<version>1.5.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / kbodata / server</name>
@@ -63,7 +63,7 @@
 		        
 		<endpoint>
 			<prototype>Limiter</prototype>
-			<grammar>res:/etc/system/
+			<grammar>res:/etc/
 				<regex type="anything"/>
 			</grammar>
 		</endpoint>
@@ -316,7 +316,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(address|organisation)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
+									<simple>{owner:(address|conceptscheme|organisation)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -340,7 +340,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(activity|activitygroup|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
+									<simple>{owner:(activity|activitygroup|classification|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -364,7 +364,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(address|organisation)}/{id}</simple>
+									<simple>{owner:(address|conceptscheme|organisation)}/{id}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -386,7 +386,7 @@
 						<endpoint>
 							<meta>
 								<rest>
-									<simple>{owner:(activity|activitygroup|classification|conceptscheme|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}</simple>
+									<simple>{owner:(activity|activitygroup|classification|contacttype|entitycontact|juridicalform|juridicalsituation|language|nace2003|nace2008|status|typeofaddress|typeofdenomination|typeofenterprise)}/{id}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
 									<compress/>
@@ -641,6 +641,11 @@
 		<import>
 			<!-- pds backend -->
 			<uri>urn:org:netkernel:mod:pds:rdbms:local</uri>
+		</import>
+
+		<import>
+			<!-- contains active:md5 -->
+			<uri>urn:org:netkernel:mod:security</uri>
 		</import>
 		
 		<import>

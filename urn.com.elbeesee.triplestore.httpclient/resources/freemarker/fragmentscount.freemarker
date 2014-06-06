@@ -1,0 +1,4 @@
+SELECT (count(*) as ?triples)
+WHERE {
+	${subject} ${predicate} ${object} .
+}

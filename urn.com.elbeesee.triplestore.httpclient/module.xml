@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
-			<version>1.4.0</version>
+			<version>1.5.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / triplestore / httpclient</name>

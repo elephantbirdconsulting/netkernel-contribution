@@ -203,9 +203,10 @@ if (vCallback == null ) {
 		//
 	}
 	if (vCORSOrigin != null) {
-		// No CORS verfication yet, I just allow the origin
-		vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin",vCORSOrigin);
+		// No CORS verfication yet, I just allow everything
+		vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
 	}
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
 	vResponse.setMimeType("application/json");
 	vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 }
@@ -218,6 +219,7 @@ else {
 	String vResultCallback = (String)aContext.issueRequest(callback);
 	
 	INKFResponse vResponse = aContext.createResponseFrom(vResultCallback);
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
 	vResponse.setMimeType("application/javascript");
 	vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 }

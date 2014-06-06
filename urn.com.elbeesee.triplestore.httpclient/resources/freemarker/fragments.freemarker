@@ -7,10 +7,14 @@ CONSTRUCT {
  <${url}${query}> rdf:type hydra:Collection, hydra:PagedCollection .
  <${url}${query}> dcterms:source <${dataset}> .
  <${url}${query}> hydra:entrypoint <${dataset}> .
+<#if next??>
  <${url}${query}> hydra:nextPage <${next}> .
+</#if>
+<#if previous??>
  <${url}${query}> hydra:previousPage <${previous}> .
- <${url}${query}> void:triples ?triples .
- <${url}${query}> hydra:totalItems ?triples .
+</#if>
+ <${url}${query}> void:triples ${count} .
+ <${url}${query}> hydra:totalItems ${count} .
  <${url}${query}> hydra:itemsPerPage ${limit} .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/RDF_XML> .
  <${url}${query}> void:feature <http://www.w3.org/ns/formats/Turtle> .
@@ -39,11 +43,6 @@ WHERE {
   }
   OFFSET ${offset}
   LIMIT ${limit}
- }
- {SELECT (count(*) as ?triples)
-		WHERE {
-			${subject} ${predicate} ${object} .
-		}
  }
  { 
  	BIND(UUID() as ?tripplePattern)
