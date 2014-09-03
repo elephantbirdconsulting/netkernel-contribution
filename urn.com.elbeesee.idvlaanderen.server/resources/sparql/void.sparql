@@ -1,0 +1,31 @@
+CONSTRUCT {
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/ns/void#Dataset> .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Entity> .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/hydra/core#Collection> .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://www.w3.org/2000/01/rdf-schema#label> "ID Vlaanderen"@nl .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://www.w3.org/ns/prov#generatedAtTime> ?today .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://rdfs.org/ns/void#exampleResource> ?licentie .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://rdfs.org/ns/void#exampleResource> ?organisatie .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://rdfs.org/ns/void#uriRegexPattern> "^http://id.vlaanderen.be/(licentie|organisatie)/(.*)#id$" .
+	<http://id.vlaanderen.be/dataset/idvlaanderen#id> <http://rdfs.org/ns/void#triples> ?triples .
+}
+WHERE {
+	{ SELECT (count(*) as ?triples)
+		WHERE { 
+			?a ?b ?c.
+		}
+	}
+	{SELECT ?licentie
+		WHERE {
+			?licentie <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://creativecommons.org/ns#License> .
+		}
+		LIMIT 2
+	}
+	{SELECT ?organisatie
+		WHERE {
+			?organisatie <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/org#Organization> .
+		}
+		LIMIT 2
+	}
+  	{ BIND (now() as ?today) }
+}

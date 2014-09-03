@@ -1,0 +1,20 @@
+CONSTRUCT {
+ <${baseurl}/${owner}/${id}#id> ?predicate ?object .
+ <${baseurl}/${owner}/${id}#id> ?outgoingpredicate ?outgoingobject .
+ ?outgoingobject <http://www.w3.org/2000/01/rdf-schema#label> ?outgoinglabel .
+ ?incomingsubject ?incomingpredicate <${baseurl}/${owner}/${id}#id> .
+ ?incomingsubject <http://www.w3.org/2000/01/rdf-schema#label> ?incominglabel .
+}
+WHERE {
+  { <${baseurl}/${owner}/${id}#id> ?predicate ?object .
+    FILTER (isLiteral(?object))
+    <${baseurl}/${owner}/${id}#id> ?outgoingpredicate ?outgoingobject .
+    FILTER (isURI(?outgoingobject))
+    OPTIONAL {?outgoingobject <http://www.w3.org/2000/01/rdf-schema#label> ?outgoinglabel}
+  }
+  UNION
+  { ?incomingsubject ?incomingpredicate <${baseurl}/${owner}/${id}#id> 
+    OPTIONAL {?incomingsubject <http://www.w3.org/2000/01/rdf-schema#label> ?incominglabel}
+  }
+}
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:com:elbeesee:idvlaanderen:virtuoso</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / idvlaanderen / virtuoso</name>
+			<description>elbeesee / idvlaanderen / virtuoso</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic/>
+	</system>
+
+	<rootspace 
+		name="elbeesee idvlaanderen virtuoso" 
+		public="true"
+		uri="urn:com:elbeesee:idvlaanderen:virtuoso">		
+		
+		<literal type="string" uri="idvlaanderen:database">http://localhost:8890/sparql</literal>
+		
+		<literal type="string" uri="idvlaanderen:query">SELECT ?s ?o WHERE {?s &lt;http://www.w3.org/2004/02/skos/core#prefLabel&gt; ?o .} LIMIT 10</literal>
+		
+		<literal type="string" uri="idvlaanderen:accept">application/sparql-results+xml</literal>
+		
+		<literal type="long" uri="idvlaanderen:expiry">86400000</literal>
+		
+		<literal type="string" uri="idvlaanderen:mimetypes-keywordsearch-allowed">text/html,application/sparql-results+json,application/sparql-results+xml</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-keywordsearch-default">application/sparql-results+xml</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlselect-allowed">text/html,application/sparql-results+json,application/sparql-results+xml</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlselect-default">application/sparql-results+xml</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlconstruct-allowed">application/rdf+xml,application/x-turtle,text/turtle,text/plain,application/x-trig,application/trix,text/x-nquads,application/ld+json</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlconstruct-default">application/rdf+xml</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlask-allowed">text/boolean</literal>
+		<literal type="string" uri="idvlaanderen:mimetypes-sparqlask-default">text/boolean</literal>
+
+		<literal type="hds" uri="idvlaanderen:credentials">
+			<httpCredentials>
+				<host>localhost</host>
+				<port>8890</port>
+				<username>dba</username>
+				<password>dba</password>
+			</httpCredentials>
+		</literal>
+		
+		<literal type="string" uri="idvlaanderen:baseurl">http://id.vlaanderen.be</literal>
+		<literal type="string" uri="idvlaanderen:localurl">http://localhost:8094</literal>
+	</rootspace>
+</module>

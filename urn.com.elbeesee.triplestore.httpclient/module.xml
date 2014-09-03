@@ -3,7 +3,7 @@
 	<meta>
 		<identity>
 			<uri>urn:com:elbeesee:triplestore:httpclient</uri>
-			<version>1.5.0</version>
+			<version>1.6.0</version>
 		</identity>
 		<info>
 			<name>elbeesee / triplestore / httpclient</name>
@@ -132,6 +132,34 @@
 				</active>
 			</grammar>
 			<class>com.elbeesee.triplestore.httpclient.KeywordSearchLARQAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:triplestore:httpclient:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+	<rootspace 
+		name="elbeesee triplestore httpclient kws bif "
+		public="true"
+		uri="urn:com:elbeesee:triplestore:httpclient:kws:bif">
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:kws:bif:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:keywordsearch</identifier>
+					<!-- database access arguments -->
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+					<argument name="accept" desc="accept header" max="1" min="1"/>
+					<!-- search specific arguments -->
+					<argument name="search" desc="search" max="1" min="1"/>
+					<argument name="limit" desc="limit" max="1" min="0"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.KeywordSearchBIFAccessor</class>
 		</accessor>
 		
 		<import>
