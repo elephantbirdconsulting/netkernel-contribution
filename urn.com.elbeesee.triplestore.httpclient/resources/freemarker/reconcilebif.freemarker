@@ -1,0 +1,16 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+
+SELECT distinct ?id ?type ?sc ?label
+WHERE {
+  ?id rdf:type ?type .
+  ?id ?p ?label .
+  ?label bif:contains '${search}'
+  OPTION (score ?sc) .
+  ${typefilterclause}
+}
+ORDER BY DESC(?sc)
+

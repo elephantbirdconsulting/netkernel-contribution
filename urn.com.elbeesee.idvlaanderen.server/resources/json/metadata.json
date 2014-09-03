@@ -1,0 +1,4 @@
+"name" : "ID Vlaanderen Reconciliation",
+"identifierSpace" : "http://id.vlaanderen.be",
+"schemaSpace" : "http://id.vlaanderen.be/def",
+"view":{"url":"{{id}}"}

@@ -139,6 +139,24 @@
 						<endpoint>
 							<meta>
 								<rest>
+									<simple>reconcile</simple>
+									<method>GET</method>
+									<Etag>MD5</Etag>
+									<compress/>
+								</rest>
+							</meta>
+							<grammar>
+								<active>
+									<identifier>active:idvlaanderenreconcilerestoverlay</identifier>
+								</active>
+							</grammar>
+							<request>
+								<identifier>active:idvlaanderenreconcile</identifier>
+							</request>
+						</endpoint>
+						<endpoint>
+							<meta>
+								<rest>
 									<simple>dataset/idvlaanderen.{extension:(rdf|ttl|nt|jsonld|html)}</simple>
 									<method>GET</method>
 									<Etag>MD5</Etag>
@@ -349,6 +367,16 @@
 			<prototype>GroovyPrototype</prototype>
 			<script>res:/resources/groovy/idvlaanderensparql.groovy</script>
 		</accessor>
+		
+		<accessor>
+			<grammar>
+				<active>
+					<identifier>active:idvlaanderenreconcile</identifier>
+				</active>
+			</grammar>
+			<prototype>GroovyPrototype</prototype>
+			<script>res:/resources/groovy/idvlaanderenreconcile.groovy</script>
+		</accessor>
 								
 		<accessor>
 			<grammar>
@@ -425,6 +453,11 @@
 			<!-- httpRequest:/, httpResponse:/ scheme -->
 			<uri>urn:org:netkernel:tpt:http</uri>
 		</import>
+		
+		<import>
+			<!-- JSONObject -->
+			<uri>urn:org:netkernel:json:core</uri>
+		</import>
 
 		<import>
 			<!-- idvlaanderen literals for virtuoso -->
@@ -447,6 +480,12 @@
 		<import>
 			<!-- active:keywordsearch -->
 			<uri>urn:com:elbeesee:triplestore:httpclient:kws:bif</uri>
+			<version-min>1.6.0</version-min>
+		</import>
+
+		<import>
+			<!-- active:reconcile -->
+			<uri>urn:com:elbeesee:triplestore:httpclient:reconcile:bif</uri>
 			<version-min>1.6.0</version-min>
 		</import>
 		

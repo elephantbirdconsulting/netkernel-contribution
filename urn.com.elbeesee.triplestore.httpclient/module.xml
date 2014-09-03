@@ -113,6 +113,35 @@
 	</rootspace>
 
 	<rootspace 
+		name="elbeesee triplestore httpclient reconcile bif "
+		public="true"
+		uri="urn:com:elbeesee:triplestore:httpclient:reconcile:bif">
+		<accessor>
+			<id>elbeesee:triplestore:httpclient:reconcile:bif:accessor</id>
+			<grammar>
+				<active>
+					<identifier>active:reconcile</identifier>
+					<!-- database access arguments -->
+					<argument name="database" desc="database name" max="1" min="1"/>
+					<argument name="expiry" desc="expiry" max="1" min="1"/>
+					<argument name="credentials" desc="http credentials" max="1" min="1"/>
+					<!-- reconcile specific arguments -->
+					<argument name="search" desc="search" max="1" min="1"/>
+					<argument name="baseurl" desc="baseurl" max="1" min="1"/>
+					<argument name="limit" desc="limit" max="1" min="0"/>
+					<argument name="type" desc="type" max="1" min="0"/>
+				</active>
+			</grammar>
+			<class>com.elbeesee.triplestore.httpclient.ReconcileBIFAccessor</class>
+		</accessor>
+		
+		<import>
+			<uri>urn:com:elbeesee:triplestore:httpclient:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+
+	<rootspace 
 		name="elbeesee triplestore httpclient kws larq "
 		public="true"
 		uri="urn:com:elbeesee:triplestore:httpclient:kws:larq">
