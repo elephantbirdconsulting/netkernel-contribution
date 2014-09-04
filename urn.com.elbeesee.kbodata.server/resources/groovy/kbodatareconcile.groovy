@@ -164,28 +164,38 @@ else {
 				reconcilerequest.addArgumentByValue("type", vType);
 			}
 			reconcilerequest.setRepresentationClass(String.class);
-	
-			INKFAsyncRequestHandle vHandle = aContext.issueAsyncRequest(reconcilerequest);
-			vResponseMap.put(vKey,vHandle);
-		}
-
-		for (Map.Entry<String, INKFAsyncRequestHandle> vEntry : vResponseMap.entrySet()) {
-			String vKey = vEntry.getKey();
-			INKFAsyncRequestHandle vHandle = vEntry.getValue();
 			
 			StringBuilder vSingleResult = new StringBuilder("\"" + vKey + "\": {");
-			
-			Object vResponse = vHandle.join(5000 * vResponseMap.size());
-			if (vResponse != null) {
-				vSingleResult.append((String)vResponse);
-			}
+			vSingleResult.append(aContext.issueRequest(reconcilerequest));
 			vSingleResult.append("}");
 			
 			if (vResult.toString() != '{') {
 				vResult.append(",");
 			}
 			vResult.append(vSingleResult);
+			
+			//INKFAsyncRequestHandle vHandle = aContext.issueAsyncRequest(reconcilerequest);
+			//vResponseMap.put(vKey,vHandle);
 		}
+
+		//for (Map.Entry<String, INKFAsyncRequestHandle> vEntry : vResponseMap.entrySet()) {
+		//	String vKey = vEntry.getKey();
+		//	INKFAsyncRequestHandle vHandle = vEntry.getValue();
+			
+		//	println "Joining " + vKey;
+		//	StringBuilder vSingleResult = new StringBuilder("\"" + vKey + "\": {");
+			
+		//	Object vResponse = vHandle.join();
+		//	if (vResponse != null) {
+		//		vSingleResult.append((String)vResponse);
+		//	}
+		//	vSingleResult.append("}");
+			
+		//	if (vResult.toString() != '{') {
+		//		vResult.append(",");
+		//	}
+		//	vResult.append(vSingleResult);
+		//}
 	}
 }
 

@@ -94,7 +94,10 @@ if (vAcceptHeader.startsWith("text/html")) {
 else {
 	sparqlrequest.addArgumentByValue("accept", vAcceptHeader);
 }
-Object vResult = aContext.issueRequest(sparqlrequest);
+@SuppressWarnings("rawtypes")
+INKFResponseReadOnly sparqlresponse = aContext.issueRequestForResponse(sparqlrequest);
+String vException = (String)sparqlresponse.getHeader("exception");
+Object vResult = sparqlresponse.getRepresentation();
 //
 
 String vMimetype = null;
@@ -115,36 +118,48 @@ else {
 
 // response
 INKFResponse vResponse = null;
-if (vAcceptHeader.startsWith("text/html")) {
-
-	if (vConstructFound || vDescribeFound || vAskFound) {
-		vResponse = aContext.createResponseFrom(vResult);
-	}
-	else {
-		
-		INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
-		xsltrequest.addArgumentByValue("operand", vResult);
-		xsltrequest.addArgument("operator", "res:/resources/xsl/kbosparql.xsl");
-		Object vHTML = aContext.issueRequest(xsltrequest);
-		
-		vResponse = aContext.createResponseFrom(vHTML);
-	}
+if (vException.equals("true")) {
+	vResponse = aContext.createResponseFrom(vResult);
+	vResponse.setMimeType("text/plain");
+	vResponse.setExpiry(INKFResponse.EXPIRY_ALWAYS);
 }
 else {
-	vResponse = aContext.createResponseFrom(vResult);
+	if (vAcceptHeader.startsWith("text/html")) {
+		
+			if (vConstructFound || vDescribeFound || vAskFound) {
+				vResponse = aContext.createResponseFrom(vResult);
+			}
+			else {
+				
+				INKFRequest xsltrequest = aContext.createRequest("active:xslt2");
+				xsltrequest.addArgumentByValue("operand", vResult);
+				xsltrequest.addArgument("operator", "res:/resources/xsl/kbosparql.xsl");
+				Object vHTML = aContext.issueRequest(xsltrequest);
+		
+				INKFRequest serializerequest = aContext.createRequest("active:saxonSerialize");
+				serializerequest.addArgumentByValue("operand", vHTML);
+				serializerequest.addArgumentByValue("operator", "<serialize><indent>yes</indent><omit-declaration>yes</omit-declaration><encoding>UTF-8</encoding><method>xhtml</method><mimeType>text/html</mimeType></serialize>");
+				IReadableBinaryStreamRepresentation vRBSHTML = (IReadableBinaryStreamRepresentation)aContext.issueRequest(serializerequest);
+			
+				vResponse = aContext.createResponseFrom(vRBSHTML);
+			}
+		}
+	else {
+		vResponse = aContext.createResponseFrom(vResult);
+	}
+	vResponse.setMimeType(vMimetype);
+	String vCORSOrigin = null;
+	try {
+		vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);
+	}
+	catch (Exception e){
+		//
+	}
+	if (vCORSOrigin != null) {
+		// No CORS verification yet, I just allow everything
+		vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
+	}
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
+	vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 }
-vResponse.setMimeType(vMimetype);
-String vCORSOrigin = null;
-try {
-	vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);
-}
-catch (Exception e){
-	//
-}
-if (vCORSOrigin != null) {
-	// No CORS verification yet, I just allow everything
-	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
-}
-vResponse.setHeader("httpResponse:/header/Vary","Accept");
-vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

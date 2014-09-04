@@ -97,36 +97,46 @@ else {
 	sparqlrequest.addArgumentByValue("accept", vMimetype);
 }
 sparqlrequest.addArgumentByValue("query", vQuery);
-Object vResult = aContext.issueRequest(sparqlrequest);
+@SuppressWarnings("rawtypes")
+INKFResponseReadOnly sparqlresponse = aContext.issueRequestForResponse(sparqlrequest);
+String vException = (String)sparqlresponse.getHeader("exception");
+Object vResult = sparqlresponse.getRepresentation();
 //
 
 // response
 INKFResponse vResponse = null;
-if (vMimetype.equals("text/html")) {
-	INKFRequest xsltcrequest = aContext.createRequest("active:xsltc");
-	xsltcrequest.addArgument("operator", "res:/resources/xsl/sparql.xsl");
-	xsltcrequest.addArgumentByValue("operand", vResult);
-	xsltcrequest.addArgument("baseurl","idvlaanderen:baseurl");
-	xsltcrequest.addArgument("localurl", "idvlaanderen:localurl");
-	Object vHTML = aContext.issueRequest(xsltcrequest);
-	
-	vResponse = aContext.createResponseFrom(vHTML);
+if (vException.equals("true")) {
+	vResponse = aContext.createResponseFrom(vResult);
+	vResponse.setMimeType("text/plain");
+	vResponse.setExpiry(INKFResponse.EXPIRY_ALWAYS);
 }
 else {
-	vResponse = aContext.createResponseFrom(vResult);
+	if (vMimetype.equals("text/html")) {
+		INKFRequest xsltcrequest = aContext.createRequest("active:xsltc");
+		xsltcrequest.addArgument("operator", "res:/resources/xsl/sparql.xsl");
+		xsltcrequest.addArgumentByValue("operand", vResult);
+		xsltcrequest.addArgument("baseurl","idvlaanderen:baseurl");
+		xsltcrequest.addArgument("localurl", "idvlaanderen:localurl");
+		Object vHTML = aContext.issueRequest(xsltcrequest);
+		
+		vResponse = aContext.createResponseFrom(vHTML);
+	}
+	else {
+		vResponse = aContext.createResponseFrom(vResult);
+	}
+	vResponse.setMimeType(vMimetype);
+	String vCORSOrigin = null;
+	try {
+		vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);
+	}
+	catch (Exception e){
+		//
+	}
+	if (vCORSOrigin != null) {
+		// No CORS verification yet, I just allow everything
+		vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
+	}
+	vResponse.setHeader("httpResponse:/header/Vary","Accept");
+	vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 }
-vResponse.setMimeType(vMimetype);
-String vCORSOrigin = null;
-try {
-	vCORSOrigin = aContext.source("httpRequest:/header/Origin", String.class);
-}
-catch (Exception e){
-	//
-}
-if (vCORSOrigin != null) {
-	// No CORS verification yet, I just allow everything
-	vResponse.setHeader("httpResponse:/header/Access-Control-Allow-Origin","*");
-}
-vResponse.setHeader("httpResponse:/header/Vary","Accept");
-vResponse.setExpiry(INKFResponse.EXPIRY_DEPENDENT);
 //

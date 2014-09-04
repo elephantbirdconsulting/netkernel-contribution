@@ -16,7 +16,7 @@
 
     <xsl:param name="localurl" nk:class="java.lang.String" />
     <xsl:param name="baseurl" nk:class="java.lang.String" />
-
+    
     <xsl:template match="sp:sparql">
 		<html>
 			<head>

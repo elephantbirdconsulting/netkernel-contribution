@@ -149,7 +149,11 @@ public class SPARQLAccessor extends StandardAccessorImpl {
 		triplestorerequest.addArgumentByValue("nvp",vBody.getRoot());
 		triplestorerequest.addArgumentByValue("config", vConfig.getRoot());
         triplestorerequest.setHeader("exclude-dependencies",true);
-    	Object vTripleStoreResult = aContext.issueRequest(triplestorerequest);        
+        
+		@SuppressWarnings("rawtypes")
+		INKFResponseReadOnly httpresponse = aContext.issueRequestForResponse(triplestorerequest);
+		int vHTTPResponseCode = (Integer)httpresponse.getHeader("HTTP_ACCESSOR_STATUS_CODE_METADATA");
+    	Object vTripleStoreResult = httpresponse.getRepresentation();
         //
         
         // tearing down the session
@@ -160,7 +164,14 @@ public class SPARQLAccessor extends StandardAccessorImpl {
         //
         
 		// response
-		INKFResponse vResponse = aContext.createResponseFrom(vTripleStoreResult);
+		INKFResponse vResponse = null;
+		vResponse = aContext.createResponseFrom(vTripleStoreResult);
+		if (vHTTPResponseCode >= 400) {
+			vResponse.setHeader("exception","true");
+		}
+		else {
+			vResponse.setHeader("exception","false");
+		}
 		vResponse.setExpiry(INKFResponse.EXPIRY_MIN_CONSTANT_DEPENDENT, System.currentTimeMillis() + aExpiry);
 		vResponse.setMimeType(aAccept);
 		//		
