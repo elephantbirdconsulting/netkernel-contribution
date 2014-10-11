@@ -1,13 +1,12 @@
-package org.javamag.helloworld;
-
+package org.tomgeudens.helloworld;
 
 /**
-*
-* Introduction Project.
-* 
-* @author Tom Geudens. 2013/09/25.
-* 
-*/
+ *
+ * Hello World.
+ * 
+ * @author Tom Geudens. 2014/10/11.
+ * 
+ */
 
 /**
  * Accessor Imports.
@@ -15,7 +14,6 @@ package org.javamag.helloworld;
 import org.netkernel.layer0.nkf.*;
 //import org.netkernel.layer0.meta.impl.SourcedArgumentMetaImpl;
 import org.netkernel.module.standard.endpoint.StandardAccessorImpl;
-
 
 /**
  * 
@@ -28,8 +26,7 @@ public class HelloWorldAccessor extends StandardAccessorImpl {
 		this.declareThreadSafe();
 		this.declareSourceRepresentation(String.class);
 	}
-	
-	
+
 	public void onSource(INKFRequestContext aContext) throws Exception {
 		aContext.createResponseFrom("Hello World");
 	}

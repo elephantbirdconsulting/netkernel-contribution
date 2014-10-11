@@ -1,0 +1,64 @@
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:org:tomgeudens:helloworld</uri>
+			<version>1.0.0</version>
+		</identity>
+		<info>
+			<name>tom geudens / hello world</name>
+			<description>tom geudens / hello world</description>
+		</info>
+	</meta>
+
+	<system>
+		<dynamic />
+	</system>
+
+	<rootspace 
+		name="tomgeudens helloworld" 
+		public="true"
+		uri="urn:org:tomgeudens:helloworld">
+		
+		<literal type="xml" uri="res:/etc/system/SimpleDynamicImportHook.xml">
+			<connection>
+				<type>HTTPFulcrum</type>
+			</connection>
+		</literal>
+		
+		<literal type="string" uri="res:/tomgeudens/helloworld-literal">Hello World</literal>
+		
+		<accessor>
+			<id>tomgeudens:helloworld:accessor</id>
+			<class>org.tomgeudens.helloworld.HelloWorldAccessor</class>
+			<grammar>res:/tomgeudens/helloworld-accessor</grammar>
+		</accessor>
+		
+		<mapper>
+			<config>
+				<endpoint>
+					<grammar>res:/tomgeudens/helloworld-data</grammar>
+					<request>
+						<identifier>data:text/plain,Hello World</identifier>
+					</request>
+				</endpoint>
+			</config>
+			<space></space>
+		</mapper>
+
+		<import>
+			<uri>urn:org:tomgeudens:helloworld:internal</uri>
+			<private />
+		</import>
+	</rootspace>
+
+	<rootspace 
+		name="tomgeudens helloworld internal" 
+		public="false"
+		uri="urn:org:tomgeudens:helloworld:internal">
+		
+		<import>
+			<!-- contains data:/ scheme -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+</module>
