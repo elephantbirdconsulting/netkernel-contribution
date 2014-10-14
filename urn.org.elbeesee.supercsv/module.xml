@@ -1,0 +1,109 @@
+<module version="2.0">
+	<meta>
+		<identity>
+			<uri>urn:org:elbeesee:supercsv</uri>
+			<version>2.2.0</version>
+		</identity>
+		<info>
+			<name>elbeesee / supercsv</name>
+			<description>Elephant Bird Consulting / Super CSV</description>
+		</info>
+	</meta>
+	
+	<system>
+		<dynamic/>
+	</system>
+
+	<rootspace 
+		name="elbeesee supercsv"
+		public="true"
+		uri="urn:org:elbeesee:supercsv">
+
+		<accessor>
+			<id>elbeesee:supercsv:freemarker:accessor</id>
+			<class>org.elbeesee.supercsv.CSVFreemarkerAccessor</class>
+			<grammar>
+				<active>
+					<identifier>active:csvfreemarker</identifier>
+					<argument name="infile" desc="input file" max="1" min="1" />
+					<argument name="outfile" desc="output file" max="1" min="1" />
+					<argument name="template" desc="freemarker template" max="1" min="1" />
+				</active>
+			</grammar>
+		</accessor>
+						
+		<import>
+			<uri>urn:org:elbeesee:supercsv:internal</uri>
+			<private/>
+		</import>
+	</rootspace>
+	
+	<rootspace 
+		name="elbeesee supercsv internal"
+		public="false"
+		uri="urn:org:elbeesee:supercsv:internal">
+		
+		<import>
+			<!-- active:freemarker -->
+			<uri>urn:org:netkernel:lang:freemarker</uri>
+		</import>
+		
+		<import>
+			<!-- contains file:/ scheme -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>
+	</rootspace>
+	
+	<rootspace
+		name="elbeesee supercsv unittest"
+		public="true"
+		uri="urn:org:elbeesee:supercsv:unittest">
+		
+		<literal type="hds" uri="res:/etc/system/Tests.xml">
+			<tests>
+				<test>
+					<id>test:elbeesee:supercsv</id>
+					<name>elbeesee supercsv unittest</name>
+					<description>elbeesee supercsv unittest</description>
+					<uri>res:/resources/unittest/supercsv.xml</uri>
+				</test>
+			</tests>
+		</literal>
+		
+		<endpoint>
+			<prototype>Limiter</prototype>
+			<grammar>
+				res:/etc/system/
+				<regex type="anything"/>
+			</grammar>
+		</endpoint>
+		
+		<literal type="hds" uri="res:/resources/unittest/supercsv.xml">
+			<testlist>
+				<test name="csv freemarker">
+					<request>
+						<identifier>active:csvfreemarker+infile@data:text/plain,file:/C:/temp/unittest.csv+outfile@data:text/plain,file:/C:/temp/unittest.txt+template@data:text/plain,unittest</identifier>
+						<header name="forget-dependencies">
+							<literal type="boolean">true</literal>
+						</header>
+					</request>
+					<assert>
+						<stringEquals>file:/C:/temp/unittest.csv is processed</stringEquals>
+					</assert>				
+				</test>
+			</testlist>
+		</literal>
+		
+		<literal type="string" uri="res:/resources/freemarker/unittest.freemarker">${LASTNAME} ${FIRSTNAME}</literal>
+		
+		<import>
+			<!-- public space to test -->
+			<uri>urn:org:elbeesee:supercsv</uri>
+		</import>
+		
+		<import>
+			<!-- contains Limiter -->
+			<uri>urn:org:netkernel:ext:layer1</uri>
+		</import>		
+	</rootspace>
+</module>
